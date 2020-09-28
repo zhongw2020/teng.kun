@@ -1,0 +1,31 @@
+
+/*
+各模块路由：
+{ path: 'bpm', loadChildren: () => import('./bpm/bpm.module').then(m => m.BpmModule), canActivateChild: [ACLGuard], data: { guard: 'Root.Admin.Bpm' } },
+
+各模块组件路由：
+流程管理 模块组件路由数据
+{ path: 'leave-bp', component: LeaveBpComponent, canActivate: [ACLGuard], data: { title: '请假流程管理', reuse: true, guard: 'Root.Admin.Bpm.LeaveBp.Read' } },
+{ path: 'extra-bp', component: ExtraBpComponent, canActivate: [ACLGuard], data: { title: '加班流程管理', reuse: true, guard: 'Root.Admin.Bpm.ExtraBp.Read' } },
+
+
+
+各模块菜单数据：
+流程管理 模块菜单数据
+{
+  "text": "流程管理模块",
+  "group": "true",
+  "icon": "anticon-border",
+  "acl": "Root.Admin.Bpm",
+  "children": [{
+    "text": "请假流程管理",
+    "link": "/bpm/leave-bp",
+    "acl": "Root.Admin.Bpm.LeaveBp"
+  }, {
+    "text": "加班流程管理",
+    "link": "/bpm/extra-bp",
+    "acl": "Root.Admin.Bpm.ExtraBp"
+  }]
+}
+
+*/

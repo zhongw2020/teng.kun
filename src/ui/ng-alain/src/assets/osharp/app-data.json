@@ -1,0 +1,291 @@
+{
+  "app": {
+    "name": "OSharp Framework",
+    "description": "一个开源的基于 .NETCORE 的快速开发框架"
+  },
+  "menu": [
+    {
+      "text": "导航菜单",
+      "i18n": "menu.nav",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "主页",
+          "i18n": "menu.nav.home",
+          "icon": "anticon-dashboard",
+          "link": "/dashboard",
+          "acl": "Root.Admin.Dashboard"
+        }
+      ]
+    },
+
+    {
+      "text": "基础模块",
+
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "基础数据",
+          "group": "true",
+          "icon": "anticon-mail",
+          "acl": "Root.Admin.BaseModule",
+          "children": [
+
+            {
+              "text": "员工数据",
+              "link": "/base-module/emp-basedata",
+              "acl": "Root.Admin.BaseModule.EmpBasedata"
+            },
+            {
+              "text": "供应商数据",
+              "link": "/base-module/sup-basedata",
+              "acl": "Root.Admin.BaseModule.SupBasedata"
+            },
+            {
+              "text": "客户数据",
+              "link": "/base-module/cus-basedata",
+              "acl": "Root.Admin.BaseModule.CusBasedata"
+            },
+            {
+              "text": "物品数据",
+              "link": "/base-module/mat-basedata",
+              "acl": "Root.Admin.BaseModule.MatBasedata"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "业务模块",
+      "i18n": "menu.nav.business",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "入库管理",
+          "group": "true",
+          "icon": "anticon-mail",
+          "acl": "Root.Admin.InStorManager",
+          "children": [
+
+            {
+              "text": "新建入库",
+              "link": "/in-stor-manager/in-stor",
+              "acl": "Root.Admin.InStorManager.InStor"
+            },
+            {
+              "text": "入库审核",
+              "link": "/in-stor-manager/in-verify",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateVerify"
+            },
+            {
+              "text": "入库反冲",
+              "link": "/in-stor-manager/in-recoil",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateRecoil"
+            },
+            {
+              "text": "入库作废",
+              "link": "/in-stor-manager/in-aboish",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateAbolish"
+
+            },
+         
+            {
+              "text": "入库结算",
+              "link": "/in-stor-manager/in-close",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateClose"
+            }
+          ]
+        },
+        {
+          "text": "出库管理",
+          "group": "true",
+          "icon": "anticon-mail",
+          "acl": "Root.Admin.OutStorManager",
+          "children": [
+            {
+              "text": "新建出库",
+              "link": "/out-stor-manager/out-stor",
+              "acl": "Root.Admin.OutStorManager.OutStor"
+            },
+            {
+              "text": "出库反冲",
+              "link": "/out-stor-manager/out-recoil",
+              "acl": "Root.Admin.OutStorManager.OutStor.UpdateRecoil"
+            },
+            {
+              "text": "出库作废",
+              "link": "/out-stor-manager/out-aboish",
+              "acl": "Root.Admin.OutStorManager.OutStor.UpdateAbolish"
+            },
+            {
+              "text": "出库结算",
+              "link": "/out-stor-manager/out-close",
+              "acl": "Root.Admin.OutStorManager.OutStor.UpdateClose"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "流程模块",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "发起流程",
+          "group": "true",
+          "icon": "anticon-mail",
+          "acl": "Root.Admin.Bpm",
+          "children": [
+
+            {
+              "text": "加班流程",
+              "link": "/bpm/leave-bp",
+              "acl": "Root.Admin.Bpm.LeaveBp"
+            },
+            {
+              "text": "请假流程",
+              "link": "/bpm/extra-bp",
+              "acl": "Root.Admin.Bpm.ExtraBp"
+            }
+          ]
+        },
+        {
+          "text": "审批流程",
+          "group": "true",
+          "icon": "anticon-mail",
+          "acl": "Root.Admin.Bpm",
+          "children": [
+            {
+              "text": "发起流程",
+              "link": "/bpm/extra-bp",
+              "acl": "Root.Admin.BaseModule.ExtraBp"
+            },
+            {
+              "text": "流程审批",
+              "link": "/bpm/extra-verify",
+              "acl": "Root.Admin.BaseModule.ExtraBp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "权限模块",
+      "i18n": "menu.nav.permission",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "身份认证",
+          "i18n": "menu.nav.permission.identity",
+          "group": true,
+          "icon": "anticon-user",
+          "acl": "Root.Admin.Identity",
+          "children": [
+            {
+              "text": "用户信息管理",
+              "i18n": "menu.nav.permission.identity.user",
+              "link": "/identity/user",
+              "acl": "Root.Admin.Identity.User"
+            },
+            {
+              "text": "角色信息管理",
+              "i18n": "menu.nav.permission.identity.role",
+              "link": "/identity/role",
+              "acl": "Root.Admin.Identity.Role"
+            },
+            {
+              "text": "用户角色管理",
+              "i18n": "menu.nav.permission.identity.user-role",
+              "link": "/identity/user-role",
+              "acl": "Root.Admin.Identity.UserRole"
+            }
+          ]
+        },
+        {
+          "text": "权限安全",
+          "i18n": "menu.nav.permission.auth",
+          "group": true,
+          "icon": "anticon-safety",
+          "acl": "Root.Admin.Auth",
+          "children": [
+            {
+              "text": "模块信息管理",
+              "i18n": "menu.nav.permission.auth.module",
+              "link": "/auth/module",
+              "acl": "Root.Admin.Auth.Module"
+            },
+            {
+              "text": "功能信息管理",
+              "i18n": "menu.nav.permission.auth.function",
+              "link": "/auth/function",
+              "acl": "Root.Admin.Auth.Function"
+            },
+            {
+              "text": "实体信息管理",
+              "i18n": "menu.nav.permission.auth.entityinfo",
+              "link": "/auth/entityinfo",
+              "acl": "Root.Admin.Auth.EntityInfo"
+            },
+            {
+              "text": "数据权限管理",
+              "i18n": "menu.nav.permission.auth.role-entityinfo",
+              "link": "/auth/role-entityinfo",
+              "acl": "Root.Admin.Auth.RoleEntity"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "系统管理",
+      "i18n": "menu.nav.system",
+      "group": true,
+      "children": [
+        {
+          "text": "系统管理",
+          "i18n": "menu.nav.system.systems",
+          "icon": "anticon-desktop",
+          "acl": "Root.Admin.Systems",
+          "group": true,
+          "children": [
+            {
+              "text": "操作审计",
+              "i18n": "menu.nav.system.systems.audit-operation",
+              "link": "/systems/audit-operation",
+              "acl": "Root.Admin.Systems.AuditOperation"
+            },
+            {
+              "text": "数据审计",
+              "i18n": "menu.nav.system.systems.audit-entity",
+              "link": "/systems/audit-entity",
+              "acl": "Root.Admin.Systems.AuditEntity"
+            },
+            {
+              "text": "系统设置",
+              "i18n": "menu.nav.system.systems.settings",
+              "link": "/systems/settings",
+              "acl": "Root.Admin.Systems.Settings"
+            },
+            {
+              "text": "数据字典",
+              "i18n": "menu.nav.system.systems.data-dictionary",
+              "link": "/systems/data-dictionary",
+              "acl": "Root.Admin.Systems.KeyValues"
+            },
+            {
+              "text": "模块包",
+              "i18n": "menu.nav.system.systems.pack",
+              "link": "/systems/pack",
+              "acl": "Root.Admin.Systems.Pack"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
