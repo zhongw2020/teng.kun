@@ -99,6 +99,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual async Task<AjaxResult> Create(InStorInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
+            dtos[0].InstorVerifyState = "待审核";
             OperationResult result = await InStorManagerContract.CreateInStors(dtos);
             return result.ToAjaxResult();
         }

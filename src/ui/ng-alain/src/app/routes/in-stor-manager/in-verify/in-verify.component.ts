@@ -38,14 +38,17 @@ export class InVerifyComponent extends STComponentBase implements OnInit {
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
+      //{
+      // title: '操作', fixed: 'left', width: 65, buttons: [{
+      //    text: '操作', children: [
+
+      //      { text: '审核', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateVerify', iif: row => row.InstorVerifyState == '待审核', click: row => this.edit(row) },
+      //      { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+      //    ]
+      //  }]
+      //},
       {
-        title: '操作', fixed: 'left', width: 65, buttons: [{
-          text: '操作', children: [
-            { text: '审核', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateVerify', iif:row=> !row.disabled, click: row => this.edit(row) },
-            //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
-          ]
-        }]
-      },
+        title: '审核', fixed: 'left', width: 65, buttons: [{ text: '审核',icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateVerify', iif: row => row.InstorVerifyState == '待审核', click: row => this.edit(row) }] },
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '入库凭证号', index: 'InstorVoucher', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品编码', index: 'MatId', sort: true, readOnly: true,editable: true, filterable: true, ftype: 'string' },
@@ -77,8 +80,6 @@ export class InVerifyComponent extends STComponentBase implements OnInit {
     return columns;
   }
   
-
-
   protected GetSFSchema(): SFSchema {
     let schema: SFSchema = {
       properties: this.ColumnsToSchemas(this.columns),

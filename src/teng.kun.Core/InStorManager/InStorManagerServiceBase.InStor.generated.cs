@@ -74,6 +74,7 @@ namespace teng.kun.InStorManager
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
             //修改库存信息
             MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].Id);
+            
             matdb.CurrStock = matdb.CurrStock + dtos[0].InstorNum;
             MatBasedataRepository.Update(matdb);
 

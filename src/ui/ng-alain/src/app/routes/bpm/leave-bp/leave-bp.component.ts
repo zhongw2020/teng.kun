@@ -45,7 +45,7 @@ export class LeaveBpComponent extends STComponentBase implements OnInit {
       { title: '流程编码', index: 'BpId', sort: true,  editable: true, filterable: true, ftype: 'string' },
       { title: '标题', index: 'BpTitle', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '状态', index: 'BpState', sort: true, readOnly: true,  editable: true, filterable: true, ftype: 'string', enum:['提起','审批中','完成','终止'] },
-      { title: '发起人', index: 'BpSponsor', sort: true, readOnly: true,  editable: true, filterable: true, ftype: 'string' },
+      { title: '发起人', index: 'BpSponsor', sort: true, editable: true, filterable: true, ftype: 'string' },
      // { title: '上一节点', index: 'PrevNode', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '当前节点', index: 'CurrNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '下一节点', index: 'NextNode', sort: true, readOnly: true,  editable: true, filterable: true, type: 'number' },

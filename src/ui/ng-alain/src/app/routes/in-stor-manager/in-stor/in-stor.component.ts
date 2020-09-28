@@ -14,6 +14,7 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
+import { STData } from '@delon/abc';
 
 @Component({
   selector: 'app-in-stor',
@@ -36,8 +37,9 @@ export class InStorComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', click: row => this.edit(row) },
+            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+            { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
           ]
         }]
       },
@@ -51,7 +53,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, readOnly: true,editable: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核',},
       //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, readOnly: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -78,6 +80,26 @@ export class InStorComponent extends STComponentBase implements OnInit {
       required: ['InstorVoucher', 'MatId', 'SupId', 'InstorPrice', 'InstorNum', 'InstorName']
     };
     return schema;
+  }
+
+  read(value: STData)
+  {
+    if (!value || !this.editModal) return;
+    this.schema = {
+      properties: {
+          Id:{ title: '编号',   readOnly: true,   type: 'number' },
+        InstorVoucher: { title: '入库凭证号', readOnly: true,  type: 'string' },
+        MatId: { title: '物品编码', readOnly: true,  type: 'string' },
+        SupId: { title: '供应商编码', readOnly: true,  type: 'string' },
+        InstorPrice: { title: '价格', readOnly: true,  type: 'number' },
+        InstorNum: { title: '数量', readOnly: true, type: 'number' },
+      },
+     
+    };
+    this.ui = this.GetSFUISchema();
+    this.editRow = value;
+    this.editTitle = "查看";
+    this.editModal.open();
   }
 
   protected GetSFUISchema(): SFUISchema {
