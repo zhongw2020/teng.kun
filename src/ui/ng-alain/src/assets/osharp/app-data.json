@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "OSharp Framework",
-    "description": "一个开源的基于 .NETCORE 的快速开发框架"
+    "name": "CDTK",
+    "description": "成都腾坤科技软件"
   },
   "menu": [
     {
