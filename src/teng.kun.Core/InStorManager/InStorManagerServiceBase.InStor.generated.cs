@@ -24,7 +24,7 @@ using OSharp.Data;
 using OSharp.Dependency;
 using OSharp.Extensions;
 using OSharp.Mapping;
-
+using teng.kun.BaseModule.Entities;
 using teng.kun.InStorManager.Dtos;
 using teng.kun.InStorManager.Entities;
 
@@ -64,6 +64,42 @@ namespace teng.kun.InStorManager
         }
         
         /// <summary>
+        /// 更新入库审核信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult> UpdateVerifyInStors(InStorInputDto[] dtos)
+        {
+
+            Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
+            //修改库存信息
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].Id);
+            matdb.CurrStock = matdb.CurrStock + dtos[0].InstorNum;
+            MatBasedataRepository.Update(matdb);
+
+            return await InStorRepository.UpdateAsync(dtos).ConfigureAwait(false);
+        }
+        /// <summary>
+        /// 更新入库反冲信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult> UpdateRecoilInStors(InStorInputDto[] dtos)
+        {
+
+            Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
+
+            //修改库存信息
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].Id);
+         
+            matdb.CurrStock = matdb.CurrStock - dtos[0].InstorNum;
+
+            MatBasedataRepository.Update(matdb);
+
+            return await InStorRepository.UpdateAsync(dtos).ConfigureAwait(false);
+        }
+        
+        /// <summary>
         /// 更新入库信息
         /// </summary>
         /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
@@ -73,7 +109,8 @@ namespace teng.kun.InStorManager
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
             return InStorRepository.UpdateAsync(dtos);
         }
-        
+
+
         /// <summary>
         /// 删除入库信息
         /// </summary>

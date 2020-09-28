@@ -29,6 +29,8 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
 
   ngOnInit() {
     super.InitBase();
+    this.updateUrl = `api/admin/${this.moduleName}/UpdateRecoil`;
+ 
   }
 
   protected GetSTColumns(): OsharpSTColumn[] {

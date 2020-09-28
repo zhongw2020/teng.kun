@@ -14,6 +14,9 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
+import { STData } from '@delon/abc';
+import { AjaxResult } from '../../../shared/osharp/osharp.model';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-in-stor',
@@ -29,14 +32,16 @@ export class InVerifyComponent extends STComponentBase implements OnInit {
 
   ngOnInit() {
     super.InitBase();
+    this.updateUrl = `api/admin/${this.moduleName}/updateverify`;
   }
+
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '审核', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateVerify', click: row => this.edit(row) },
+            { text: '审核', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateVerify', iif:row=> !row.disabled, click: row => this.edit(row) },
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -71,6 +76,8 @@ export class InVerifyComponent extends STComponentBase implements OnInit {
     ];
     return columns;
   }
+  
+
 
   protected GetSFSchema(): SFSchema {
     let schema: SFSchema = {

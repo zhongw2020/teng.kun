@@ -29,7 +29,7 @@ using Microsoft.Extensions.Logging;
 
 using teng.kun.InStorManager.Dtos;
 using teng.kun.InStorManager.Entities;
-
+using teng.kun.BaseModule.Entities;
 
 namespace teng.kun.InStorManager
 {
@@ -63,7 +63,7 @@ namespace teng.kun.InStorManager
         /// 获取或设置 入库信息仓储对象
         /// </summary>
         protected IRepository<InStor, int> InStorRepository => ServiceProvider.GetService<IRepository<InStor, int>>();
-        
+        protected IRepository<MatBasedata, int> MatBasedataRepository => ServiceProvider.GetService<IRepository<MatBasedata, int>>();
         /// <summary>
         /// 获取 事件总线
         /// </summary>

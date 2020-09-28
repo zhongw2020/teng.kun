@@ -61,7 +61,22 @@ namespace teng.kun.InStorManager
         /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
         /// <returns>业务操作结果</returns>
         Task<OperationResult> UpdateInStors(params InStorInputDto[] dtos);
-            
+
+
+        /// <summary>
+        /// 更新入库审核信息信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> UpdateVerifyInStors(params InStorInputDto[] dtos); 
+
+        /// <summary>
+        /// 更新入库反冲信息信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的入库信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> UpdateRecoilInStors(params InStorInputDto[] dtos); 
+
         /// <summary>
         /// 删除入库信息信息
         /// </summary>

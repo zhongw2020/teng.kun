@@ -165,7 +165,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual async Task<AjaxResult> UpdateRecoil(InStorInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
-            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            OperationResult result = await InStorManagerContract.UpdateRecoilInStors(dtos);
             return result.ToAjaxResult();
         }
         /// <summary>
@@ -181,7 +181,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual async Task<AjaxResult> UpdateVerify(InStorInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
-            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            OperationResult result = await InStorManagerContract.UpdateVerifyInStors(dtos);
             return result.ToAjaxResult();
         }
         /// <summary>
