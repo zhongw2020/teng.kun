@@ -40,7 +40,6 @@ export class InStorComponent extends STComponentBase implements OnInit {
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
             { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
-             { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
           ]
         }]
       },
@@ -83,46 +82,23 @@ export class InStorComponent extends STComponentBase implements OnInit {
     return schema;
   }
 
-  insert()
+  read(value: STData)
   {
-
+    if (!value || !this.editModal) return;
     this.schema = {
       properties: {
-        Id: {
-          type: 'string',
-          title: 'ID',
-        },
-        InstorVoucher: {
-          type: 'string',
-          title: '凭证',
-        },
-        product: {
-            type: 'array',
-            title: '物品清单',
-            maxItems: 10,
-            items: {
-              type: 'object',
-              properties: {
-                MatId: {
-                  type: 'string',
-                  title: '物品编码',
-                },
-                SupId: {
-                  type: 'string',
-                  title: '供应商编码',
-                 
-                },
-              },
-             
-            },
-          
-          },
-        },
+          Id:{ title: '编号',   readOnly: true,   type: 'number' },
+        InstorVoucher: { title: '入库凭证号', readOnly: true,  type: 'string' },
+        MatId: { title: '物品编码', readOnly: true,  type: 'string' },
+        SupId: { title: '供应商编码', readOnly: true,  type: 'string' },
+        InstorPrice: { title: '价格', readOnly: true,  type: 'number' },
+        InstorNum: { title: '数量', readOnly: true, type: 'number' },
+      },
      
     };
     this.ui = this.GetSFUISchema();
-    this.editRow = {};
-    this.editTitle = "新增";
+    this.editRow = value;
+    this.editTitle = "查看";
     this.editModal.open();
   }
 
