@@ -11,10 +11,13 @@
 // -----------------------------------------------------------------------
 
 import { Component, OnInit, Injector } from '@angular/core';
-import { SFUISchema, SFSchema } from '@delon/form';
+import { SFUISchema, SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
 import { STData } from '@delon/abc';
+import { FilterOperate, FilterRule } from '@shared/osharp/osharp.model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-in-stor',
@@ -39,7 +42,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
-            { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
+            // { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
              { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
           ]
         }]
@@ -145,6 +148,124 @@ export class InStorComponent extends STComponentBase implements OnInit {
       $SupCloseAccuntsRemark: { grid: { span: 24 } }
     };
     return ui;
+  }
+  private getRepositoryOfOptionData(url:string,name: string,key_name: string , keyword?: string): Observable<string[]>{
+    let rule = new FilterRule(name,keyword);
+    rule.Operate = FilterOperate.Contains;
+    this.request.FilterGroup.Rules=[];
+    this.request.FilterGroup.Rules.push(rule);
+    return this.http.post(url, this.request).pipe(map((resp: any)=>{
+      const arr = [];
+      const list = resp.Rows;
+      if(list && list.length){
+        list.forEach(element => {
+          arr.push({label: element[key_name],value:element.Id});
+        });
+      }
+      return arr;
+    }),
+    );
+  }
+  private addSelectOption(optionList: any[]) {
+    const option = {};
+    if(true){//加上你的判断条件
+      // option['label'] = '下拉项文字';
+      // option['value'] = '下拉项的值';
+
+      //判断数据是否已存在
+      const isExist = optionList.some((item) => {
+        return item.value == option['value'];
+      });
+      if(!isExist){
+        optionList.push(option);
+      }
+    }
+    return optionList;
+  }
+  select_ui(url:string,name: string,key_name:string){
+    return {
+      widget: 'select',
+      placeholder: '请选择',
+      allowClear: true,
+      serverSearch: true,
+      notFoundContent: '没有任何数据',
+      //懒加载数据，利用管道，插入数据项
+      //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
+      //方法getRepositoryOfOptionData返回的是observable
+      asyncData:() => this.getRepositoryOfOptionData(url,name,key_name).pipe(map((
+      value: any) => {
+        return this.addSelectOption(value)
+      })),
+      onSearch: (keyword: string) =>this.getRepositoryOfOptionData(url,name,key_name,keyword).toPromise(),}
+  }
+  find(){
+    this.schema = {
+      properties: {
+        InstorVoucher: {
+          type: 'string',
+          title: '入库凭证号',
+        },
+        MatId: {
+          type: 'string',
+          title: '物料编码',
+          default: '请选择',
+          ui: this.select_ui('api/Admin/MatBasedata/Read','MatId','MatId')
+        },
+        SupId: {
+          type: 'string',
+          title: '供应商编码',
+          default: '请选择',
+          ui: this.select_ui('api/Admin/SupBasedata/Read','SupId','SupId')
+        },
+        InstorPrice: {
+          type: 'number',
+          title: '价格'
+        },
+        InstorNum: {
+          type: 'number',
+          title: '数量'
+        },
+        InstorName: {
+          type: 'string',
+          title: '入库操作人员',
+          default: '请选择',
+          ui: this.select_ui('api/Admin/EmpBasedata/Read','EmpId','EmpId')
+        },
+        StorName: {
+          type: 'string',
+          title: '仓库名称'
+        },
+        InstorVerifyState: {
+          type: 'string',
+          title: '入库状态审核',
+          enum:[
+            { label: '待支付', value: 'WAIT_BUYER_PAY', otherData: 1 },
+            { label: '已支付', value: 'TRADE_SUCCESS' },
+            { label: '交易完成', value: 'TRADE_FINISHED' },
+          ],
+          default: 'WAIT_BUYER_PAY',
+          ui: {
+            widget: 'select',
+            placeholder: '请选择',
+            allowClear: true,
+            //懒加载数据，利用管道，插入数据项
+            //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
+            //方法getRepositoryOfOptionData返回的是observable
+            
+          }
+        },
+        InstorRemark: {
+          type: 'string',
+          title: '备注',
+
+        }
+        },
+      
+      
+    };
+    this.editRow = {};
+    this.editTitle = '新增';
+    this.editModal.open();
   }
 }
 

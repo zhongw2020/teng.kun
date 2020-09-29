@@ -3,10 +3,12 @@ import { ViewChild, Injector } from '@angular/core';
 import { SFSchema, SFUISchema, SFSchemaEnumType } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { NzModalComponent } from 'ng-zorro-antd';
-import { PageRequest, PageCondition, SortCondition, ListSortDirection, AjaxResult } from '../osharp.model';
+import { PageRequest, PageCondition, SortCondition, ListSortDirection, AjaxResult, FilterRule, FilterOperate } from '../osharp.model';
 import { OsharpService } from '../services/osharp.service';
 import { AlainService } from '../services/alain.service';
 import { OsharpSTColumn } from '../services/alain.types';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export abstract class STComponentBase {
   moduleName: string;
@@ -200,6 +202,7 @@ export abstract class STComponentBase {
       });
     });
   }
+  
 
   // #endregion
 
