@@ -39,8 +39,8 @@ export class InStorComponent extends STComponentBase implements OnInit {
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
-            { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
-             { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
+            //{ text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
+            // { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Create', click: row => this.insert() },
           ]
         }]
       },
