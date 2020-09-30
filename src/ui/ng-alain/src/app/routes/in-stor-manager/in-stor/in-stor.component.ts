@@ -11,11 +11,11 @@
 // -----------------------------------------------------------------------
 
 import { Component, OnInit, Injector } from '@angular/core';
-import { SFUISchema, SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { SFUISchema, SFSchema, SFSelectWidgetSchema, SFArrayWidgetSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
 import { STData } from '@delon/abc';
-import { FilterOperate, FilterRule } from '@shared/osharp/osharp.model';
+import { AjaxResult, FilterOperate, FilterRule } from '@shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -113,15 +113,11 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 SupId: {
                   type: 'string',
                   title: '供应商编码',
-                 
                 },
               },
-             
             },
-          
           },
         },
-     
     };
     this.ui = this.GetSFUISchema();
     this.editRow = {};
@@ -149,7 +145,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     };
     return ui;
   }
-  private getRepositoryOfOptionData(url:string,name: string,key_name: string , keyword?: string): Observable<string[]>{
+  private getRepositoryOfOptionData(url:string,name: string,key_names: string[] , keyword?: string): Observable<string[]>{
     let rule = new FilterRule(name,keyword);
     rule.Operate = FilterOperate.Contains;
     this.request.FilterGroup.Rules=[];
@@ -159,7 +155,9 @@ export class InStorComponent extends STComponentBase implements OnInit {
       const list = resp.Rows;
       if(list && list.length){
         list.forEach(element => {
-          arr.push({label: element[key_name],value:element.Id});
+          let label=''
+          key_names.forEach(s=>{label+=(label!==''?' | ':'')+element[s]}) 
+          arr.push({label:label,value:element.Id});
         });
       }
       return arr;
@@ -167,22 +165,22 @@ export class InStorComponent extends STComponentBase implements OnInit {
     );
   }
   private addSelectOption(optionList: any[]) {
-    const option = {};
-    if(true){//加上你的判断条件
-      // option['label'] = '下拉项文字';
-      // option['value'] = '下拉项的值';
+    // const option = {};
+    // if(true){//加上你的判断条件
+    //   // option['label'] = '下拉项文字';
+    //   // option['value'] = '下拉项的值';
 
-      //判断数据是否已存在
-      const isExist = optionList.some((item) => {
-        return item.value == option['value'];
-      });
-      if(!isExist){
-        optionList.push(option);
-      }
-    }
+    //   //判断数据是否已存在
+    //   const isExist = optionList.some((item) => {
+    //     return item.value == option['value'];
+    //   });
+    //   if(!isExist){
+    //     optionList.push(option);
+    //   }
+    // }
     return optionList;
   }
-  select_ui(url:string,name: string,key_name:string){
+  select_ui(url:string,name: string,key_names:string[]){
     return {
       widget: 'select',
       placeholder: '请选择',
@@ -192,11 +190,11 @@ export class InStorComponent extends STComponentBase implements OnInit {
       //懒加载数据，利用管道，插入数据项
       //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
       //方法getRepositoryOfOptionData返回的是observable
-      asyncData:() => this.getRepositoryOfOptionData(url,name,key_name).pipe(map((
+      asyncData:() => this.getRepositoryOfOptionData(url,name,key_names).pipe(map((
       value: any) => {
         return this.addSelectOption(value)
       })),
-      onSearch: (keyword: string) =>this.getRepositoryOfOptionData(url,name,key_name,keyword).toPromise(),}
+      onSearch: (keyword: string) =>this.getRepositoryOfOptionData(url,name,key_names,keyword).toPromise(),}
   }
   find(){
     this.schema = {
@@ -209,13 +207,13 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '物料编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/MatBasedata/Read','MatId','MatId')
+          ui: this.select_ui('api/Admin/MatBasedata/Read','MatId',['MatId','MatName'])
         },
         SupId: {
           type: 'string',
           title: '供应商编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/SupBasedata/Read','SupId','SupId')
+          ui: this.select_ui('api/Admin/SupBasedata/Read','SupId',['SupId','SupName'])
         },
         InstorPrice: {
           type: 'number',
@@ -229,7 +227,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '入库操作人员',
           default: '请选择',
-          ui: this.select_ui('api/Admin/EmpBasedata/Read','EmpId','EmpId')
+          ui: this.select_ui('api/Admin/EmpBasedata/Read','EmpName',['EmpId','EmpName'])
         },
         StorName: {
           type: 'string',
@@ -258,7 +256,27 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '备注',
 
-        }
+        },
+        product: {
+          type: 'array',
+          title: '产品清单',
+          maxItems: 4,
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                title: '名称',
+              },
+              price: {
+                type: 'number',
+                title: '单价',
+                minimum: 1,
+              },
+            },
+            required: ['name', 'price'],
+          },
+        },
         },
       
       
@@ -266,6 +284,16 @@ export class InStorComponent extends STComponentBase implements OnInit {
     this.editRow = {};
     this.editTitle = '新增';
     this.editModal.open();
+  }
+
+  save(value: STData) {
+    let url = value.Id ? this.updateUrl : this.createUrl;
+    this.http.post<AjaxResult>(url, [value]).subscribe(result => {
+      this.osharp.ajaxResult(result, () => {
+        this.st.reload();
+        this.editModal.destroy();
+      });
+    });
   }
 }
 
