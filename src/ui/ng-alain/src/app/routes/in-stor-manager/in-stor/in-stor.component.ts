@@ -40,10 +40,10 @@ export class InStorComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
+            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState === '待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
             // { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
-             { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
+            { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
           ]
         }]
       },
@@ -53,23 +53,23 @@ export class InStorComponent extends STComponentBase implements OnInit {
       { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '入库时间', index: 'InstorDate', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
+      // { title: '入库时间', index: 'InstorDate', sort: true, editable: true, filterable: true, type: 'date' },
+      // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核',},
-      //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, readOnly: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核', },
+      // { title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '反冲状态', index: 'RecoilState', sort: true, editable: true, readOnly: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
+      // { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
+      // { title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '创建者', index: 'CreatorId', type: 'number' },
       { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
       { title: '更新者', index: 'LastUpdaterId', type: 'number' },
@@ -86,8 +86,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     return schema;
   }
 
-  insert()
-  {
+  insert() {
 
     this.schema = {
       properties: {
@@ -100,24 +99,24 @@ export class InStorComponent extends STComponentBase implements OnInit {
           title: '凭证',
         },
         product: {
-            type: 'array',
-            title: '物品清单',
-            maxItems: 10,
-            items: {
-              type: 'object',
-              properties: {
-                MatId: {
-                  type: 'string',
-                  title: '物品编码',
-                },
-                SupId: {
-                  type: 'string',
-                  title: '供应商编码',
-                },
+          type: 'array',
+          title: '物品清单',
+          maxItems: 10,
+          items: {
+            type: 'object',
+            properties: {
+              MatId: {
+                type: 'string',
+                title: '物品编码',
+              },
+              SupId: {
+                type: 'string',
+                title: '供应商编码',
               },
             },
           },
         },
+      },
     };
     this.ui = this.GetSFUISchema();
     this.editRow = {};
@@ -127,7 +126,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
 
   protected GetSFUISchema(): SFUISchema {
     let ui: SFUISchema = {
-      '*': { spanLabelFixed: 100, grid: { span: 12 } },
+      '*': { spanLabelFixed: 100, grid: { span: 24 } },
       $InstorVoucher: { grid: { span: 24 } },
       $MatId: { grid: { span: 24 } },
       $SupId: { grid: { span: 24 } },
@@ -141,23 +140,24 @@ export class InStorComponent extends STComponentBase implements OnInit {
       $AbolishEmpId: { grid: { span: 24 } },
       $SupCloseAccuntsDate: { grid: { span: 24 } },
       $SupCloseAccuntsEmpId: { grid: { span: 24 } },
-      $SupCloseAccuntsRemark: { grid: { span: 24 } }
+      $SupCloseAccuntsRemark: { grid: { span: 24 } },
+
     };
     return ui;
   }
-  private getRepositoryOfOptionData(url:string,name: string,key_names: string[] , keyword?: string): Observable<string[]>{
-    let rule = new FilterRule(name,keyword);
+  private getRepositoryOfOptionData(url: string, name: string, key_names: string[], keyword?: string): Observable<string[]> {
+    let rule = new FilterRule(name, keyword);
     rule.Operate = FilterOperate.Contains;
-    this.request.FilterGroup.Rules=[];
+    this.request.FilterGroup.Rules = [];
     this.request.FilterGroup.Rules.push(rule);
-    return this.http.post(url, this.request).pipe(map((resp: any)=>{
+    return this.http.post(url, this.request).pipe(map((resp: any) => {
       const arr = [];
       const list = resp.Rows;
-      if(list && list.length){
+      if (list && list.length) {
         list.forEach(element => {
           let label=''
           key_names.forEach(s=>{label+=(label!==''?' | ':'')+element[s]}) 
-          arr.push({label:label,value:element.Id});
+          arr.push({label,value:element.Id});
         });
       }
       return arr;
@@ -180,16 +180,16 @@ export class InStorComponent extends STComponentBase implements OnInit {
     // }
     return optionList;
   }
-  select_ui(url:string,name: string,key_names:string[]){
+  select_ui(url: string, name: string, key_names: string[]) {
     return {
       widget: 'select',
       placeholder: '请选择',
       allowClear: true,
       serverSearch: true,
       notFoundContent: '没有任何数据',
-      //懒加载数据，利用管道，插入数据项
-      //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
-      //方法getRepositoryOfOptionData返回的是observable
+      // 懒加载数据，利用管道，插入数据项
+      // 如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
+      // 方法getRepositoryOfOptionData返回的是observable
       asyncData:() => this.getRepositoryOfOptionData(url,name,key_names).pipe(map((
       value: any) => {
         return this.addSelectOption(value)
@@ -207,13 +207,13 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '物料编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/MatBasedata/Read','MatId',['MatId','MatName'])
+          ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatId', ['MatId', 'MatName'])
         },
         SupId: {
           type: 'string',
           title: '供应商编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/SupBasedata/Read','SupId',['SupId','SupName'])
+          ui: this.select_ui('api/Admin/SupBasedata/Read', 'SupId', ['SupId', 'SupName'])
         },
         InstorPrice: {
           type: 'number',
@@ -227,7 +227,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '入库操作人员',
           default: '请选择',
-          ui: this.select_ui('api/Admin/EmpBasedata/Read','EmpName',['EmpId','EmpName'])
+          ui: this.select_ui('api/Admin/EmpBasedata/Read', 'EmpName', ['EmpId', 'EmpName'])
         },
         StorName: {
           type: 'string',
@@ -236,7 +236,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
         InstorVerifyState: {
           type: 'string',
           title: '入库状态审核',
-          enum:[
+          enum: [
             { label: '待支付', value: 'WAIT_BUYER_PAY', otherData: 1 },
             { label: '已支付', value: 'TRADE_SUCCESS' },
             { label: '交易完成', value: 'TRADE_FINISHED' },
@@ -246,9 +246,9 @@ export class InStorComponent extends STComponentBase implements OnInit {
             widget: 'select',
             placeholder: '请选择',
             allowClear: true,
-            //懒加载数据，利用管道，插入数据项
-            //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
-            //方法getRepositoryOfOptionData返回的是observable
+            // 懒加载数据，利用管道，插入数据项
+            // 如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
+            // 方法getRepositoryOfOptionData返回的是observable
             
           }
         },
@@ -259,8 +259,6 @@ export class InStorComponent extends STComponentBase implements OnInit {
         },
         product: {
           type: 'array',
-          title: '产品清单',
-          maxItems: 4,
           items: {
             type: 'object',
             properties: {
@@ -274,12 +272,12 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 minimum: 1,
               },
             },
-            required: ['name', 'price'],
           },
-        },
-        },
-      
-      
+          ui: { spanLabel: 5, grid: { arraySpan: 24, span: 24 } }
+        }
+      },
+
+
     };
     this.editRow = {};
     this.editTitle = '新增';
@@ -288,12 +286,37 @@ export class InStorComponent extends STComponentBase implements OnInit {
 
   save(value: STData) {
     let url = value.Id ? this.updateUrl : this.createUrl;
-    this.http.post<AjaxResult>(url, [value]).subscribe(result => {
-      this.osharp.ajaxResult(result, () => {
-        this.st.reload();
-        this.editModal.destroy();
-      });
-    });
+    let values =[]
+    let item={}
+    //遍历value的属性
+    for(let key_1 in value){
+      //如果是数组
+      if(value[key_1] instanceof Array){
+        //遍历数组
+        value[key_1].forEach(element => {
+          //遍历元素的属性
+          for(let key_2 in element){
+            item[key_2]=element[key_2]
+          }
+          //再次遍历value
+          for(let key_3 in value){
+            //判断Key_1是否和key_3相同（是不是数组元素）
+            if(key_1!==key_3){
+              item[key_3]=value[key_3]
+            }
+          }
+          values.push(item);
+          item={}
+        });
+      }
+    }
+    console.log(values);
+    // this.http.post<AjaxResult>(url, [value]).subscribe(result => {
+    //   this.osharp.ajaxResult(result, () => {
+    //     this.st.reload();
+    //     this.editModal.destroy();
+    //   });
+    // });
   }
 }
 
