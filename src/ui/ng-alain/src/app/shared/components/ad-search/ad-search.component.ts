@@ -59,7 +59,7 @@ export class AdSearchComponent implements OnInit {
         : FilterOperate.Equal;
     let group = new FilterGroup();
     group.Rules.push(rule);
-    this.request.FilterGroup = group;
+    this.request.FilterGroup = group;   
     if (this.submited) {
       this.submited.emit(this.request);
     }
