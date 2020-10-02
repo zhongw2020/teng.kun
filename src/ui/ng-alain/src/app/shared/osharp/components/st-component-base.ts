@@ -184,6 +184,7 @@ export abstract class STComponentBase {
 
   save(value: STData) {
     let url = value.Id ? this.updateUrl : this.createUrl;
+
     this.http.post<AjaxResult>(url, [value]).subscribe(result => {
       this.osharp.ajaxResult(result, () => {
         this.st.reload();

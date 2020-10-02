@@ -60,6 +60,9 @@ namespace teng.kun.InStorManager
         public virtual Task<OperationResult> CreateInStors(params InStorInputDto[] dtos)
         {
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
+
+
+
             return InStorRepository.InsertAsync(dtos);
         }
         

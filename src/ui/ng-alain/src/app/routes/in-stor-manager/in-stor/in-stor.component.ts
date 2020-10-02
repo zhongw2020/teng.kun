@@ -43,7 +43,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState=='待审核', click: row => this.edit(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
             // { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
-             { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
+            // { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
           ]
         }]
       },
@@ -51,6 +51,8 @@ export class InStorComponent extends STComponentBase implements OnInit {
       { title: '入库凭证号', index: 'InstorVoucher', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品规格', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
       //{ title: '入库时间', index: 'InstorDate', sort: true, editable: true, filterable: true, type: 'date' },
@@ -109,6 +111,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 MatId: {
                   type: 'string',
                   title: '物品编码',
+                 
                 },
                 SupId: {
                   type: 'string',
@@ -149,7 +152,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     };
     return ui;
   }
-  private getRepositoryOfOptionData(url:string,name: string,key_name: string , keyword?: string): Observable<string[]>{
+  private getRepositoryOfOptionData(url: string, name: string, key_name: string,  keyword?: string): Observable<string[]>{
     let rule = new FilterRule(name,keyword);
     rule.Operate = FilterOperate.Contains;
     this.request.FilterGroup.Rules=[];
@@ -157,10 +160,10 @@ export class InStorComponent extends STComponentBase implements OnInit {
     return this.http.post(url, this.request).pipe(map((resp: any)=>{
       const arr = [];
       const list = resp.Rows;
-      if(list && list.length){
-        list.forEach(element => {
-          arr.push({label: element[key_name],value:element.Id});
-        });
+      if (list && list.length) {
+          list.forEach(element => {
+            arr.push({ label: element[key_name], value: element.Id });
+          });
       }
       return arr;
     }),
@@ -182,7 +185,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     }
     return optionList;
   }
-  select_ui(url:string,name: string,key_name:string){
+  select_ui(url: string, name: string, key_name: string){
     return {
       widget: 'select',
       placeholder: '请选择',
@@ -192,11 +195,11 @@ export class InStorComponent extends STComponentBase implements OnInit {
       //懒加载数据，利用管道，插入数据项
       //如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
       //方法getRepositoryOfOptionData返回的是observable
-      asyncData:() => this.getRepositoryOfOptionData(url,name,key_name).pipe(map((
+      asyncData: () => this.getRepositoryOfOptionData(url, name, key_name).pipe(map((
       value: any) => {
         return this.addSelectOption(value)
       })),
-      onSearch: (keyword: string) =>this.getRepositoryOfOptionData(url,name,key_name,keyword).toPromise(),}
+      onSearch: (keyword: string) => this.getRepositoryOfOptionData(url, name, key_name,keyword).toPromise(),}
   }
   find(){
     this.schema = {
@@ -209,8 +212,21 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '物料编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/MatBasedata/Read','MatId','MatId')
+          ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', 'MatId')
         },
+        MatName:{
+        type: 'string',
+        title: '物料名称',
+        default: '请选择',
+          ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName','MatName')
+        }, 
+        MatParameter: {
+          type: 'string',
+          title: '物料规格',
+          default: '请选择',
+          ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatParameter', 'MatParameter')
+        },
+
         SupId: {
           type: 'string',
           title: '供应商编码',
@@ -235,10 +251,13 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '仓库名称'
         },
+
+
+
         InstorVerifyState: {
           type: 'string',
           title: '入库状态审核',
-          enum:[
+          enum: [
             { label: '待支付', value: 'WAIT_BUYER_PAY', otherData: 1 },
             { label: '已支付', value: 'TRADE_SUCCESS' },
             { label: '交易完成', value: 'TRADE_FINISHED' },
@@ -258,9 +277,35 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           title: '备注',
 
-        }
         },
-      
+          product: {
+          type: 'array',
+          title: '产品清单',
+          maxItems: 4,
+          items: {
+            type: 'object',
+            properties: {
+              MatName: {
+                type: 'string',
+                title: '物料名称',
+                default: '请选择',
+                ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', 'MatName')
+              },
+              MatId: {
+                type: 'string',
+                title: '物料名称',
+                default: '请选择',
+                ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', 'MatName')
+              },
+            },
+            ui: {
+              width: 500,
+            }
+          },
+          
+        },
+        },
+    
       
     };
     this.editRow = {};
