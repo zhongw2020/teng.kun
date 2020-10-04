@@ -35,21 +35,25 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
+      //{
+      //  title: '操作', fixed: 'left', width: 65, buttons: [{
+      //    text: '操作', children: [
+      //      { text: '反冲', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateRecoil', iif: row => !(row.RecoilState || (!(row.InstorVerifyState=="已通过"))||row.Abolishflag),click: row => this.edit(row) },
+      //      //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+      //    ]
+      //  }]
+      //},
       {
-        title: '操作', fixed: 'left', width: 65, buttons: [{
-          text: '操作', children: [
-            { text: '反冲', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateRecoil', iif: row => !(row.RecoilState || (row.InstorVerifyState=="待审核")),click: row => this.edit(row) },
-            //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
-          ]
-        }]
+        title: '反冲', fixed: 'left', width: 65, buttons: [{ text: '反冲', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateRecoil', iif: row => !(row.RecoilState || (!(row.InstorVerifyState == "已通过")) || row.Abolishflag),click: row => this.edit(row) }]
       },
+
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品编码', index: 'MatId', sort: true, readOnly: true,editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
-     // { title: '入库数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品编码', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '价格', index: 'InstorPrice', readOnly: true,sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库数量', index: 'InstorNum', readOnly: true,sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -61,7 +65,7 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '反冲人员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },

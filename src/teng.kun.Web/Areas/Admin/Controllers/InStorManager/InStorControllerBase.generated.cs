@@ -138,6 +138,44 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
             return result.ToAjaxResult();
         }
+
+
+        /// <summary>
+        /// 更新入库信息
+        /// </summary>
+        /// <param name="dtos">入库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("入库对账")]
+        public virtual async Task<AjaxResult> UpdateReconciliation(InStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+        /// <summary>
+        /// 更新入库信息
+        /// </summary>
+        /// <param name="dtos">入库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("入库收票")]
+        public virtual async Task<AjaxResult> UpdateSupticket(InStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+
+
         /// <summary>
         /// 更新入库信息
         /// </summary>Recoil

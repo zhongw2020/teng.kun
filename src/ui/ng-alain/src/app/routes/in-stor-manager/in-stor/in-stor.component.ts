@@ -41,23 +41,20 @@ export class InStorComponent extends STComponentBase implements OnInit {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => !(row.InstorVerifyState == '已通过'), click: row => this.edit(row) },
-            { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', iif: row => (row.InstorVerifyState == '待审核'),click: row => this.delete(row) },
-            // { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
+            //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', iif: row => (row.InstorVerifyState == '待审核'),click: row => this.delete(row) },
+             //{ text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
       
           ]
         }]
       },
+
      // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true,  sort: true, editable: true, filterable: true, ftype: 'string' },
-    //  { title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string', },
-    //  { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
-
-      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
-
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品编码', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      // { title: '入库时间', index: 'InstorDate', sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -90,44 +87,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     return schema;
   }
 
-  insert() {
-
-    this.schema = {
-      properties: {
-        Id: {
-          type: 'string',
-          title: 'ID',
-        },
-        InstorVoucher: {
-          type: 'string',
-          title: '凭证',
-        },
-        product: {
-          type: 'array',
-          title: '物品清单',
-          maxItems: 10,
-          items: {
-            type: 'object',
-            properties: {
-              MatId: {
-                type: 'string',
-                title: '物品编码',
-              },
-              SupId: {
-                type: 'string',
-                title: '供应商编码',
-              },
-            },
-          },
-        },
-      },
-    };
-    this.ui = this.GetSFUISchema();
-    this.editRow = {};
-    this.editTitle = "新增";
-    this.editModal.open();
-  }
-
+ 
   protected GetSFUISchema(): SFUISchema {
     let ui: SFUISchema = {
       '*': { spanLabelFixed: 100, grid: { span: 24 } },
@@ -201,7 +161,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       onSearch: (keyword: string) => this.getRepositoryOfOptionData(url, name, key_names, keyword).toPromise(),
     }
   }
-  find() {
+  create() {
     this.schema = {
       properties: {
         InstorVoucher: {
@@ -238,7 +198,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
           title: '备注',
 
         },
-        product: {
+        产品列表: {
           type: 'array',
           items: {
             type: 'object',

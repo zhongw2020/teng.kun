@@ -18,6 +18,8 @@ import { InAbolishComponent } from './in-aboish/in-aboish.component';
 import { InCloseComponent } from './in-close/in-close.component';
 import { InRecoilComponent } from './in-recoil/in-recoil.component';
 import { InVerifyComponent } from './in-verify/in-verify.component';
+import { InReconciliationComponent } from './in-reconciliation/in-reconciliation.component';
+import { InSupticketComponent } from './in-supticket/in-supticket.component';
 
 const routes: Routes = [
   { path: 'in-stor', component: InStorComponent, canActivate: [ACLGuard], data: { title: '新建入库', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'in-recoil', component: InRecoilComponent, canActivate: [ACLGuard], data: { title: '入库反冲', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
   { path: 'in-close', component: InCloseComponent, canActivate: [ACLGuard], data: { title: '入库结算', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
   { path: 'in-aboish', component: InAbolishComponent, canActivate: [ACLGuard], data: { title: '入库作废', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
+  { path: 'in-reconciliation', component: InReconciliationComponent, canActivate: [ACLGuard], data: { title: '入库对账', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
+  { path: 'in-supticket', component: InSupticketComponent, canActivate: [ACLGuard], data: { title: '入库收票', reuse: true, guard: 'Root.Admin.InStorManager.InStor.Read' } },
 ];
 
 @NgModule({

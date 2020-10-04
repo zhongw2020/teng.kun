@@ -33,25 +33,29 @@ export class InAbolishComponent extends STComponentBase implements OnInit {
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
+      //{
+      //  title: '操作', fixed: 'left', width: 65, buttons: [{
+      //    text: '操作', children: [
+      //      { text: '作废', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateAbolish', iif: row => !(row.Abolishflag || (!(row.InstorVerifyState == "已通过"))),click: row => this.edit(row) },
+      //      //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+      //    ]
+      //  }]
+      //},
+
       {
-        title: '操作', fixed: 'left', width: 65, buttons: [{
-          text: '操作', children: [
-            { text: '作废', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateAbolish', iif: row => !(row.Abolishflag || (row.InstorVerifyState == "待审核")),click: row => this.edit(row) },
-            //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
-          ]
-        }]
+        title: '作废', fixed: 'left', width: 65, buttons: [{ text: '作废', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateAbolish', iif: row => !(row.Abolishflag || (!(row.InstorVerifyState == "已通过"))), click: row => this.edit(row) }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '入库凭证号', index: 'InstorVoucher', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品编码', index: 'MatId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '物品编码', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '价格', index: 'InstorPrice', readOnly: true, sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库数量', index: 'InstorNum', readOnly: true, sort: true, editable: true, filterable: true, type: 'number' },
       //{ title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', readOnly: true, sort: true, editable: true, filterable: true,  ftype: 'string' },
       //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -60,7 +64,7 @@ export class InAbolishComponent extends STComponentBase implements OnInit {
       //{ title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       { title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '作废人员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },

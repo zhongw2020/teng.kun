@@ -29,7 +29,7 @@ using Microsoft.Extensions.Logging;
 
 using teng.kun.OutStorManager.Dtos;
 using teng.kun.OutStorManager.Entities;
-
+using teng.kun.BaseModule.Entities;
 
 namespace teng.kun.OutStorManager
 {
@@ -63,7 +63,14 @@ namespace teng.kun.OutStorManager
         /// 获取或设置 出库信息仓储对象
         /// </summary>
         protected IRepository<OutStor, int> OutStorRepository => ServiceProvider.GetService<IRepository<OutStor, int>>();
-        
+        protected IRepository<MatBasedata, int> MatBasedataRepository => ServiceProvider.GetService<IRepository<MatBasedata, int>>();
+
+        protected IRepository<SupBasedata, int> SupBasedataRepository => ServiceProvider.GetService<IRepository<SupBasedata, int>>();
+
+        protected IRepository<CusBasedata, int> CusBasedataRepository => ServiceProvider.GetService<IRepository<CusBasedata, int>>();
+
+        protected IRepository<EmpBasedata, int> EmpBasedataRepository => ServiceProvider.GetService<IRepository<EmpBasedata, int>>();
+
         /// <summary>
         /// 获取或设置 test09信息仓储对象
         /// </summary>

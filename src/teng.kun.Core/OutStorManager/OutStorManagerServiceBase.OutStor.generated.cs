@@ -24,7 +24,7 @@ using OSharp.Data;
 using OSharp.Dependency;
 using OSharp.Extensions;
 using OSharp.Mapping;
-
+using teng.kun.BaseModule.Entities;
 using teng.kun.OutStorManager.Dtos;
 using teng.kun.OutStorManager.Entities;
 
@@ -57,10 +57,28 @@ namespace teng.kun.OutStorManager
         /// </summary>
         /// <param name="dtos">要添加的出库信息DTO信息</param>
         /// <returns>业务操作结果</returns>
-        public virtual Task<OperationResult> CreateOutStors(params OutStorInputDto[] dtos)
+        public virtual async Task<OperationResult> CreateOutStors(params OutStorInputDto[] dtos)
         {
             Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
-            return OutStorRepository.InsertAsync(dtos);
+
+            //通过ID获取Name
+
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
+            SupBasedata supdb = await SupBasedataRepository.GetAsync(dtos[0].SupId);
+            CusBasedata cusdb = await CusBasedataRepository.GetAsync(dtos[0].CusId);
+            EmpBasedata empdb = await EmpBasedataRepository.GetAsync(dtos[0].OutEmpId);
+
+            dtos[0].MatName = matdb.MatName;
+            dtos[0].SupName = supdb.SupName;
+            dtos[0].CusName = cusdb.CusName;
+            dtos[0].OutEmpName = empdb.EmpName;
+
+            //修改人员工作状态
+
+            empdb.EmpWorkState = true;
+            EmpBasedataRepository.Update(empdb);
+
+            return await OutStorRepository.InsertAsync(dtos);
         }
         
         /// <summary>

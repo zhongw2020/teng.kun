@@ -33,24 +33,20 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
+  
       {
-        title: '操作', fixed: 'left', width: 65, buttons: [{
-          text: '操作', children: [
-            { text: '反冲', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateRecoil', click: row => this.edit(row) },
-            //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.OutStorManager.OutStor.Delete', click: row => this.delete(row) },
-          ]
-        }]
+        title: '反冲', fixed: 'left', width: 65, buttons: [{ text: '反冲', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateRecoil', iif: row => !(row.RecoilState || row.Abolishflag), click: row => this.edit(row) }]
       },
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '出库凭证号', index: 'OutstorVoucher', sort: true, readOnly: true,editable: true, filterable: true, ftype: 'string' },
-      { title: '所属公司', index: 'OutstorComName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '出账公司', index: 'OutstorComName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '客户编码', index: 'CusId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品编码', index: 'MatId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '供应商编码', index: 'SupId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '单价', index: 'OutstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '出库时间', index: 'OutstorDate', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '数量', index: 'OutstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '派单人', index: 'OutEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '单价', index: 'OutstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      //{ title: '出库时间', index: 'OutstorDate',  readOnly: true,sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '出库数量', index: 'OutstorNum', readOnly: true,sort: true, editable: true, filterable: true, type: 'number' },
+      //{ title: '业务员', index: 'OutEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '客户结算标记', index: 'CusCloseAccuntsFlag', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记人', index: 'CusCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算说明', index: 'CusCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -58,6 +54,8 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
       //{ title: '作废日期', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '反冲数量', index: 'RecoilNum', sort: true, editable: true, filterable: true, type: 'number' },
+
       //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '打印状态', index: 'PrintState', sort: true, editable: true, filterable: true, type: 'yn' },

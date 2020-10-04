@@ -38,9 +38,9 @@ namespace teng.kun.OutStorManager.Entities
         public string OutstorVoucher { get; set; }
 
         /// <summary>
-        /// 获取或设置 所属公司
+        /// 获取或设置 出账公司
         /// </summary>
-        [DisplayName("所属公司"), Required]
+        [DisplayName("出账公司"), Required]
         public string OutstorComName { get; set; }
 
         /// <summary>
@@ -61,6 +61,32 @@ namespace teng.kun.OutStorManager.Entities
         [DisplayName("供应商编码"), Required]
         public int SupId { get; set; }
 
+
+        /// <summary>
+        /// 获取或设置 客户名称
+        /// </summary>
+        [DisplayName("客户名称")]
+        public string CusName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 物品名称
+        /// </summary>
+        [DisplayName("物品名称")]
+        public string MatName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 供应商名称
+        /// </summary>
+        [DisplayName("供应商名称")]
+        public string SupName { get; set; }
+        /// <summary>
+        /// 获取或设置 业务员名称
+        /// </summary>
+        [DisplayName("业务员名称")]
+        public string OutEmpName { get; set; }
+
+
+
         /// <summary>
         /// 获取或设置 单价
         /// </summary>
@@ -80,9 +106,9 @@ namespace teng.kun.OutStorManager.Entities
         public double OutstorNum { get; set; }
 
         /// <summary>
-        /// 获取或设置 派单人
+        /// 获取或设置 业务员
         /// </summary>
-        [DisplayName("派单人")]
+        [DisplayName("业务员")]
         public int OutEmpId { get; set; }
 
         /// <summary>
@@ -126,6 +152,12 @@ namespace teng.kun.OutStorManager.Entities
         /// </summary>
         [DisplayName("反冲状态")]
         public bool RecoilState { get; set; }
+
+        /// <summary>
+        /// 获取或设置 反冲数量
+        /// </summary>
+        [DisplayName("反冲数量")]
+        public double RecoilNum { get; set; }
 
         /// <summary>
         /// 获取或设置 反冲日期

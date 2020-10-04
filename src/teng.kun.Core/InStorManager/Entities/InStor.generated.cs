@@ -189,6 +189,25 @@ namespace teng.kun.InStorManager.Entities
         public string SupCloseAccuntsRemark { get; set; }
 
         /// <summary>
+        /// 获取或设置 收票标记
+        /// </summary>
+        [DisplayName("收票标记")]
+        public bool SupTicketRemark { get; set; }
+
+        /// <summary>
+        /// 获取或设置 对账标记
+        /// </summary>
+        [DisplayName("对账标记")]
+        public bool ReconciliationRemark { get; set; }
+
+
+
+
+
+
+
+
+        /// <summary>
         /// 获取或设置 创建者
         /// </summary>
         [DisplayName("创建者")]

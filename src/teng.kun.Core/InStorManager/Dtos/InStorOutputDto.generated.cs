@@ -76,6 +76,9 @@ namespace teng.kun.InStorManager.Dtos
             CreatedTime = entity.CreatedTime;
             LastUpdaterId = entity.LastUpdaterId;
             LastUpdatedTime = entity.LastUpdatedTime;
+
+            SupTicketRemark = entity.SupTicketRemark;
+            ReconciliationRemark = entity.ReconciliationRemark;
         }
 
         /// <summary>
@@ -263,6 +266,17 @@ namespace teng.kun.InStorManager.Dtos
         /// </summary>
         [DisplayName("更新时间")]
         public DateTime? LastUpdatedTime { get; set; }
+        /// <summary>
+        /// 获取或设置 收票标记
+        /// </summary>
+        [DisplayName("收票标记")]
+        public bool SupTicketRemark { get; set; }
+
+        /// <summary>
+        /// 获取或设置 对账标记
+        /// </summary>
+        [DisplayName("对账标记")]
+        public bool ReconciliationRemark { get; set; }
 
     }
 }

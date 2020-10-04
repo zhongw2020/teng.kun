@@ -91,7 +91,18 @@
               "acl": "Root.Admin.InStorManager.InStor.UpdateAbolish"
 
             },
-         
+            {
+              "text": "入库对账",
+              "link": "/in-stor-manager/in-reconciliation",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateReconciliation"
+            },
+            {
+              "text": "入库收票",
+              "link": "/in-stor-manager/in-supticket",
+              "acl": "Root.Admin.InStorManager.InStor.UpdateSupticket"
+
+            },
+
             {
               "text": "入库结算",
               "link": "/in-stor-manager/in-close",
@@ -121,7 +132,7 @@
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateAbolish"
             },
             {
-              "text": "出库结算",
+              "text": "出库签回",
               "link": "/out-stor-manager/out-close",
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateClose"
             }

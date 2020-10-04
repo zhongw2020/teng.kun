@@ -19,6 +19,8 @@ import { InVerifyComponent } from './in-verify/in-verify.component';
 import { InRecoilComponent } from './in-recoil/in-recoil.component';
 import { InCloseComponent } from './in-close/in-close.component';
 import { InAbolishComponent } from './in-aboish/in-aboish.component';
+import { InReconciliationComponent } from './in-reconciliation/in-reconciliation.component';
+import { InSupticketComponent } from './in-supticket/in-supticket.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { InAbolishComponent } from './in-aboish/in-aboish.component';
     InRecoilComponent,
     InCloseComponent,
     InAbolishComponent,
+    InReconciliationComponent,
+    InSupticketComponent,
   ]
 })
 export class InStorManagerModule { }

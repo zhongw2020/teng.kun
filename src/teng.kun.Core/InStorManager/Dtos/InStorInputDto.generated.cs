@@ -196,6 +196,17 @@ namespace teng.kun.InStorManager.Dtos
         /// </summary>
         [DisplayName("结算备注")]
         public string SupCloseAccuntsRemark { get; set; }
+        /// <summary>
+        /// 获取或设置 收票标记
+        /// </summary>
+        [DisplayName("收票标记")]
+        public bool SupTicketRemark { get; set; }
+
+        /// <summary>
+        /// 获取或设置 对账标记
+        /// </summary>
+        [DisplayName("对账标记")]
+        public bool ReconciliationRemark { get; set; }
 
     }
 }

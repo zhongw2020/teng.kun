@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OSharp.Entity;
 
 namespace teng.kun.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201004085455_OutStorV2")]
+    partial class OutStorV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1012,9 +1014,6 @@ namespace teng.kun.Web.Migrations
                     b.Property<bool>("RecoilState")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("ReconciliationRemark")
-                        .HasColumnType("bit");
-
                     b.Property<string>("StorName")
                         .HasColumnType("nvarchar(max)");
 
@@ -1035,9 +1034,6 @@ namespace teng.kun.Web.Migrations
 
                     b.Property<string>("SupName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SupTicketRemark")
-                        .HasColumnType("bit");
 
                     b.Property<string>("VerifyOpinion")
                         .HasColumnType("nvarchar(max)");
@@ -1259,8 +1255,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<DateTime>("RecoilDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("RecoilNum")
-                        .HasColumnType("float");
+                    b.Property<bool>("RecoilNum")
+                        .HasColumnType("bit");
 
                     b.Property<string>("RecoilReason")
                         .HasColumnType("nvarchar(max)");

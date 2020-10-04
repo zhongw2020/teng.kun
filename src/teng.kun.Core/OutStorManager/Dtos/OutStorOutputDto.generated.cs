@@ -50,6 +50,12 @@ namespace teng.kun.OutStorManager.Dtos
             CusId = entity.CusId;
             MatId = entity.MatId;
             SupId = entity.SupId;
+
+            CusName = entity.CusName;
+            MatName = entity.MatName;
+            SupName = entity.SupName;
+            OutEmpName = entity.OutEmpName;
+
             OutstorPrice = entity.OutstorPrice;
             OutstorDate = entity.OutstorDate;
             OutstorNum = entity.OutstorNum;
@@ -61,6 +67,7 @@ namespace teng.kun.OutStorManager.Dtos
             AbolishDate = entity.AbolishDate;
             AbolishReason = entity.AbolishReason;
             RecoilState = entity.RecoilState;
+            RecoilNum = entity.RecoilNum;
             RecoilDate = entity.RecoilDate;
             RecoilReason = entity.RecoilReason;
             PrintState = entity.PrintState;
@@ -107,7 +114,28 @@ namespace teng.kun.OutStorManager.Dtos
         /// </summary>
         [DisplayName("供应商编码")]
         public int SupId { get; set; }
+        /// <summary>
+        /// 获取或设置 客户名称
+        /// </summary>
+        [DisplayName("客户名称")]
+        public string CusName { get; set; }
 
+        /// <summary>
+        /// 获取或设置 物品名称
+        /// </summary>
+        [DisplayName("物品名称")]
+        public string MatName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 供应商名称
+        /// </summary>
+        [DisplayName("供应商名称")]
+        public string SupName { get; set; }
+        /// <summary>
+        /// 获取或设置 业务员名称
+        /// </summary>
+        [DisplayName("业务员名称")]
+        public string OutEmpName { get; set; }
         /// <summary>
         /// 获取或设置 单价
         /// </summary>
@@ -173,6 +201,12 @@ namespace teng.kun.OutStorManager.Dtos
         /// </summary>
         [DisplayName("反冲状态")]
         public bool RecoilState { get; set; }
+
+        /// <summary>
+        /// 获取或设置 反冲数量
+        /// </summary>
+        [DisplayName("反冲数量")]
+        public double RecoilNum { get; set; }
 
         /// <summary>
         /// 获取或设置 反冲日期
