@@ -36,7 +36,7 @@ export class InAbolishComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '作废', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateAbolish', click: row => this.edit(row) },
+            { text: '作废', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateAbolish', iif: row => !(row.Abolishflag || (row.InstorVerifyState == "待审核")),click: row => this.edit(row) },
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -51,7 +51,7 @@ export class InAbolishComponent extends STComponentBase implements OnInit {
       { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },

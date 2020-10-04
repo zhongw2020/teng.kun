@@ -41,13 +41,28 @@ namespace teng.kun.InStorManager.Entities
         /// 获取或设置 物品编码
         /// </summary>
         [DisplayName("物品编码"), Required]
-        public string MatId { get; set; }
+        public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
         [DisplayName("供应商编码"), Required]
-        public string SupId { get; set; }
+        public int SupId { get; set; }
+
+
+
+        /// <summary>
+        /// 获取或设置 物品名称
+        /// </summary>
+        [DisplayName("物品名称")]
+        public string MatName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 供应商名称
+        /// </summary>
+        [DisplayName("供应商名称")]
+        public string SupName { get; set; }
+
 
         /// <summary>
         /// 获取或设置 价格
@@ -56,9 +71,9 @@ namespace teng.kun.InStorManager.Entities
         public double InstorPrice { get; set; }
 
         /// <summary>
-        /// 获取或设置 数量
+        /// 获取或设置 入库数量
         /// </summary>
-        [DisplayName("数量")]
+        [DisplayName("入库数量")]
         public double InstorNum { get; set; }
 
         /// <summary>
@@ -102,6 +117,12 @@ namespace teng.kun.InStorManager.Entities
         /// </summary>
         [DisplayName("反冲状态")]
         public bool RecoilState { get; set; }
+
+        /// <summary>
+        /// 获取或设置 反冲数量
+        /// </summary>
+        [DisplayName("反冲数量")]
+        public Double RecoilNum { get; set; }
 
         /// <summary>
         /// 获取或设置 备注

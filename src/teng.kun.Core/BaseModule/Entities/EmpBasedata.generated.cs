@@ -34,8 +34,8 @@ namespace teng.kun.BaseModule.Entities
         /// <summary>
         /// 获取或设置 员工编码
         /// </summary>
-        [DisplayName("员工编码"), Required]
-        public string EmpId { get; set; }
+        [DisplayName("员工编码")]
+        public int EmpId { get; set; }
 
         /// <summary>
         /// 获取或设置 姓名

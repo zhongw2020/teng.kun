@@ -77,7 +77,7 @@ namespace teng.kun.BaseModule.Dtos
         /// 获取或设置 供应商编码
         /// </summary>
         [DisplayName("供应商编码")]
-        public string SupId { get; set; }
+        public int SupId { get; set; }
 
         /// <summary>
         /// 获取或设置 开始合作时间

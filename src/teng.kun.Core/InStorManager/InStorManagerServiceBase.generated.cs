@@ -64,6 +64,8 @@ namespace teng.kun.InStorManager
         /// </summary>
         protected IRepository<InStor, int> InStorRepository => ServiceProvider.GetService<IRepository<InStor, int>>();
         protected IRepository<MatBasedata, int> MatBasedataRepository => ServiceProvider.GetService<IRepository<MatBasedata, int>>();
+
+        protected IRepository<SupBasedata, int> SupBasedataRepository => ServiceProvider.GetService<IRepository<SupBasedata, int>>();
         /// <summary>
         /// 获取 事件总线
         /// </summary>

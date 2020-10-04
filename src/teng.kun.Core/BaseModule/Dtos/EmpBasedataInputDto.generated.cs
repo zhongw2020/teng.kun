@@ -44,7 +44,7 @@ namespace teng.kun.BaseModule.Dtos
         /// 获取或设置 员工编码
         /// </summary>
         [DisplayName("员工编码"), Required]
-        public string EmpId { get; set; }
+        public int EmpId { get; set; }
 
         /// <summary>
         /// 获取或设置 姓名

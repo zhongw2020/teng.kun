@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OSharp.Entity;
 
 namespace teng.kun.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201004030226_updatematent")]
+    partial class updatematent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,8 +318,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<DateTime>("CusComStartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CusId")
-                        .HasColumnType("int");
+                    b.Property<string>("CusId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CusName")
                         .IsRequired()
@@ -353,8 +356,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<bool>("EmpFireState")
                         .HasColumnType("bit");
 
-                    b.Property<int>("EmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("EmpId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmpName")
                         .IsRequired()
@@ -408,8 +412,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<string>("MatAlias05")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MatId")
-                        .HasColumnType("int");
+                    b.Property<string>("MatId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MatName")
                         .IsRequired()
@@ -452,8 +457,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<DateTime>("SupComStartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SupId")
-                        .HasColumnType("int");
+                    b.Property<string>("SupId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupName")
                         .IsRequired()
@@ -991,10 +997,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<int?>("LastUpdaterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MatName")
+                    b.Property<string>("MatId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RecoilDate")
@@ -1002,9 +1006,6 @@ namespace teng.kun.Web.Migrations
 
                     b.Property<string>("RecoilEmpId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("RecoilNum")
-                        .HasColumnType("float");
 
                     b.Property<string>("RecoilReason")
                         .HasColumnType("nvarchar(max)");
@@ -1027,10 +1028,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<string>("SupCloseAccuntsRemark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SupName")
+                    b.Property<string>("SupId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VerifyOpinion")
@@ -1191,8 +1190,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CusCloseAccuntsEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("CusCloseAccuntsEmpId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CusCloseAccuntsFlag")
                         .HasColumnType("nvarchar(max)");
@@ -1200,8 +1199,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<string>("CusCloseAccuntsRemark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CusId")
-                        .HasColumnType("int");
+                    b.Property<string>("CusId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastUpdatedTime")
                         .HasColumnType("datetime2");
@@ -1209,11 +1209,12 @@ namespace teng.kun.Web.Migrations
                     b.Property<int?>("LastUpdaterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MatId")
-                        .HasColumnType("int");
+                    b.Property<string>("MatId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OutEmpId")
-                        .HasColumnType("int");
+                    b.Property<string>("OutEmpId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutstorComName")
                         .IsRequired()
@@ -1250,8 +1251,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<bool>("RecoilState")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SupId")
-                        .HasColumnType("int");
+                    b.Property<string>("SupId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

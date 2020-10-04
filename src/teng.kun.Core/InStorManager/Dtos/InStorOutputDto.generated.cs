@@ -48,6 +48,10 @@ namespace teng.kun.InStorManager.Dtos
             InstorVoucher = entity.InstorVoucher;
             MatId = entity.MatId;
             SupId = entity.SupId;
+
+            MatName = entity.MatName;
+            SupName = entity.SupName;
+
             InstorPrice = entity.InstorPrice;
             InstorNum = entity.InstorNum;
             InstorDate = entity.InstorDate;
@@ -90,13 +94,28 @@ namespace teng.kun.InStorManager.Dtos
         /// 获取或设置 物品编码
         /// </summary>
         [DisplayName("物品编码")]
-        public string MatId { get; set; }
+        public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
         [DisplayName("供应商编码")]
-        public string SupId { get; set; }
+        public int SupId { get; set; }
+
+
+        /// <summary>
+        /// 获取或设置 物品名称
+        /// </summary>
+        [DisplayName("物品名称")]
+        public string MatName { get; set; }
+
+        /// <summary>
+        /// 获取或设置 供应商名称
+        /// </summary>
+        [DisplayName("供应商名称")]
+        public string SupName { get; set; }
+
+
 
         /// <summary>
         /// 获取或设置 价格
@@ -151,6 +170,11 @@ namespace teng.kun.InStorManager.Dtos
         /// </summary>
         [DisplayName("反冲状态")]
         public bool RecoilState { get; set; }
+        /// <summary>
+        /// 获取或设置 反冲数量
+        /// </summary>
+        [DisplayName("反冲数量")]
+        public Double RecoilNum { get; set; }
 
         /// <summary>
         /// 获取或设置 备注

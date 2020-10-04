@@ -36,7 +36,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '结算', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateClose', click: row => this.edit(row) },
+            { text: '结算', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateClose', iif: row => !(row.SupCloseAccuntsFlag || (row.InstorVerifyState == "待审核")),click: row => this.edit(row) },
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -51,7 +51,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -61,7 +61,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '供应商结算标记', index: 'SupCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },

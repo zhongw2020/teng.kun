@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OSharp.Entity;
 
 namespace teng.kun.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201004070419_InStorV2")]
+    partial class InStorV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -994,8 +996,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<int>("MatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MatName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MatName")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("RecoilDate")
                         .HasColumnType("datetime2");
@@ -1030,8 +1032,8 @@ namespace teng.kun.Web.Migrations
                     b.Property<int>("SupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SupName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SupName")
+                        .HasColumnType("int");
 
                     b.Property<string>("VerifyOpinion")
                         .HasColumnType("nvarchar(max)");

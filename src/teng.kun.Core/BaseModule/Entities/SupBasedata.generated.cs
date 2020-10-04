@@ -46,8 +46,8 @@ namespace teng.kun.BaseModule.Entities
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
-        [DisplayName("供应商编码"), Required]
-        public string SupId { get; set; }
+        [DisplayName("供应商编码")]
+        public int SupId { get; set; }
 
         /// <summary>
         /// 获取或设置 开始合作时间

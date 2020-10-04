@@ -44,7 +44,7 @@ namespace teng.kun.BaseModule.Dtos
         /// 获取或设置 客户编码
         /// </summary>
         [DisplayName("客户编码"), Required]
-        public string CusId { get; set; }
+        public int CusId { get; set; }
 
         /// <summary>
         /// 获取或设置 名称

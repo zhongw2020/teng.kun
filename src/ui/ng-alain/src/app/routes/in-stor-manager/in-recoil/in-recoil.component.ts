@@ -38,7 +38,7 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '反冲', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateRecoil', click: row => this.edit(row) },
+            { text: '反冲', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateRecoil', iif: row => !(row.RecoilState || (row.InstorVerifyState=="待审核")),click: row => this.edit(row) },
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -48,14 +48,16 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
       { title: '物品编码', index: 'MatId', sort: true, readOnly: true,editable: true, filterable: true, ftype: 'string' },
       { title: '供应商编码', index: 'SupId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
-      //{ title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
+     // { title: '入库数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
       //{ title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '反冲数量', index: 'RecoilNum', sort: true, editable: true, filterable: true, type: 'number'},
+      
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },

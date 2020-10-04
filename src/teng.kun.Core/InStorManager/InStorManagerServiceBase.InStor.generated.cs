@@ -57,13 +57,17 @@ namespace teng.kun.InStorManager
         /// </summary>
         /// <param name="dtos">要添加的入库信息DTO信息</param>
         /// <returns>业务操作结果</returns>
-        public virtual Task<OperationResult> CreateInStors(params InStorInputDto[] dtos)
+        public virtual async Task<OperationResult> CreateInStors(params InStorInputDto[] dtos)
         {
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
+            //通过ID新增Name
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
+            SupBasedata supdb = await SupBasedataRepository.GetAsync(dtos[0].SupId);
+            dtos[0].MatName = matdb.MatName;
+            dtos[0].SupName = supdb.SupName;
 
 
-
-            return InStorRepository.InsertAsync(dtos);
+            return await InStorRepository.InsertAsync(dtos);
         }
         
         /// <summary>
@@ -75,12 +79,18 @@ namespace teng.kun.InStorManager
         {
 
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
-            //修改库存信息
-            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].Id);
-            
-            matdb.CurrStock = matdb.CurrStock + dtos[0].InstorNum;
-            MatBasedataRepository.Update(matdb);
+            //如果通过则修改库存信息，驳回则不修改
 
+            if (dtos[0].InstorVerifyState == "已通过")
+            {
+                MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
+
+
+                //Expression<Func<MatBasedata, bool>> predicate = m => m.MatName.Contains(dtos[0].MatId);
+
+                matdb.CurrStock = matdb.CurrStock + dtos[0].InstorNum;
+                MatBasedataRepository.Update(matdb);
+            }
             return await InStorRepository.UpdateAsync(dtos).ConfigureAwait(false);
         }
         /// <summary>
@@ -94,9 +104,9 @@ namespace teng.kun.InStorManager
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
 
             //修改库存信息
-            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].Id);
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
          
-            matdb.CurrStock = matdb.CurrStock - dtos[0].InstorNum;
+            matdb.CurrStock = matdb.CurrStock + dtos[0].RecoilNum;
 
             MatBasedataRepository.Update(matdb);
 

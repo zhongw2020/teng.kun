@@ -40,17 +40,21 @@ export class InStorComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => row.InstorVerifyState === '待审核', click: row => this.edit(row) },
-            { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+            { text: '编辑', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.Update', iif: row => !(row.InstorVerifyState == '已通过'), click: row => this.edit(row) },
+            { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', iif: row => (row.InstorVerifyState == '待审核'),click: row => this.delete(row) },
             // { text: '查看', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.read(row) },
-            { text: '新增', icon: 'flag', type: 'static', acl: 'Root.Admin.InStorManager.InStor.Read', click: row => this.insert() },
+      
           ]
         }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
+     // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true,  sort: true, editable: true, filterable: true, ftype: 'string' },
+    //  { title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string', },
+    //  { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
+
+      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
+
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
       // { title: '入库时间', index: 'InstorDate', sort: true, editable: true, filterable: true, type: 'date' },
@@ -155,9 +159,9 @@ export class InStorComponent extends STComponentBase implements OnInit {
       const list = resp.Rows;
       if (list && list.length) {
         list.forEach(element => {
-          let label=''
-          key_names.forEach(s=>{label+=(label!==''?' | ':'')+element[s]}) 
-          arr.push({label,value:element.Id});
+          let label = ''
+          key_names.forEach(s => { label += (label !== '' ? ' | ' : '') + element[s] })
+          arr.push({ label, value: element.Id });
         });
       }
       return arr;
@@ -190,39 +194,29 @@ export class InStorComponent extends STComponentBase implements OnInit {
       // 懒加载数据，利用管道，插入数据项
       // 如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
       // 方法getRepositoryOfOptionData返回的是observable
-      asyncData:() => this.getRepositoryOfOptionData(url,name,key_names).pipe(map((
-      value: any) => {
+      asyncData: () => this.getRepositoryOfOptionData(url, name, key_names).pipe(map((
+        value: any) => {
         return this.addSelectOption(value)
       })),
-      onSearch: (keyword: string) =>this.getRepositoryOfOptionData(url,name,key_names,keyword).toPromise(),}
+      onSearch: (keyword: string) => this.getRepositoryOfOptionData(url, name, key_names, keyword).toPromise(),
+    }
   }
-  find(){
+  find() {
     this.schema = {
       properties: {
         InstorVoucher: {
           type: 'string',
           title: '入库凭证号',
+          readOnly: false,
         },
-        MatId: {
-          type: 'string',
-          title: '物料编码',
-          default: '请选择',
-          ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatId', ['MatId', 'MatName'])
-        },
+       
         SupId: {
           type: 'string',
           title: '供应商编码',
           default: '请选择',
-          ui: this.select_ui('api/Admin/SupBasedata/Read', 'SupId', ['SupId', 'SupName'])
+          ui: this.select_ui('api/Admin/SupBasedata/Read', 'SupName', ['SupId', 'SupName'])
         },
-        InstorPrice: {
-          type: 'number',
-          title: '价格'
-        },
-        InstorNum: {
-          type: 'number',
-          title: '数量'
-        },
+      
         InstorName: {
           type: 'string',
           title: '入库操作人员',
@@ -236,21 +230,8 @@ export class InStorComponent extends STComponentBase implements OnInit {
         InstorVerifyState: {
           type: 'string',
           title: '入库状态审核',
-          enum: [
-            { label: '待支付', value: 'WAIT_BUYER_PAY', otherData: 1 },
-            { label: '已支付', value: 'TRADE_SUCCESS' },
-            { label: '交易完成', value: 'TRADE_FINISHED' },
-          ],
-          default: 'WAIT_BUYER_PAY',
-          ui: {
-            widget: 'select',
-            placeholder: '请选择',
-            allowClear: true,
-            // 懒加载数据，利用管道，插入数据项
-            // 如果是编辑状态addSelectiOtion方法进行判断，插入已选中数据项。
-            // 方法getRepositoryOfOptionData返回的是observable
-            
-          }
+          default: '待审核',
+          readOnly: true,
         },
         InstorRemark: {
           type: 'string',
@@ -262,14 +243,20 @@ export class InStorComponent extends STComponentBase implements OnInit {
           items: {
             type: 'object',
             properties: {
-              name: {
+              MatId: {
                 type: 'string',
-                title: '名称',
+                title: '物料编码',
+                default: '请选择',
+                ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
-              price: {
+            
+              InstorPrice: {
                 type: 'number',
-                title: '单价',
-                minimum: 1,
+                title: '价格'
+              },
+              InstorNum: {
+                type: 'number',
+                title: '数量'
               },
             },
           },
@@ -286,37 +273,40 @@ export class InStorComponent extends STComponentBase implements OnInit {
 
   save(value: STData) {
     let url = value.Id ? this.updateUrl : this.createUrl;
-    let values =[]
-    let item={}
+    let values = []
+    let item = {}
     //遍历value的属性
-    for(let key_1 in value){
+    for (let key_1 in value) {
       //如果是数组
-      if(value[key_1] instanceof Array){
+      if (value[key_1] instanceof Array) {
         //遍历数组
         value[key_1].forEach(element => {
           //遍历元素的属性
-          for(let key_2 in element){
-            item[key_2]=element[key_2]
+          for (let key_2 in element) {
+            item[key_2] = element[key_2]
           }
           //再次遍历value
-          for(let key_3 in value){
+          for (let key_3 in value) {
             //判断Key_1是否和key_3相同（是不是数组元素）
-            if(key_1!==key_3){
-              item[key_3]=value[key_3]
+            if (key_1 !== key_3) {
+              item[key_3] = value[key_3]
             }
           }
           values.push(item);
-          item={}
+
+          console.log(item);
+          this.http.post<AjaxResult>(url, [item]).subscribe(result => {
+       this.osharp.ajaxResult(result, () => {
+         this.st.reload();
+         this.editModal.destroy();
+       });
+     });
+
+          item = {}
         });
       }
     }
-    console.log(values);
-    // this.http.post<AjaxResult>(url, [value]).subscribe(result => {
-    //   this.osharp.ajaxResult(result, () => {
-    //     this.st.reload();
-    //     this.editModal.destroy();
-    //   });
-    // });
+   
   }
 }
 

@@ -34,8 +34,8 @@ namespace teng.kun.BaseModule.Entities
         /// <summary>
         /// 获取或设置 客户编码
         /// </summary>
-        [DisplayName("客户编码"), Required]
-        public string CusId { get; set; }
+        [DisplayName("客户编码")]
+        public int CusId { get; set; }
 
         /// <summary>
         /// 获取或设置 名称

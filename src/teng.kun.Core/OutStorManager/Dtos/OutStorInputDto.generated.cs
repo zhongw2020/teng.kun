@@ -56,19 +56,19 @@ namespace teng.kun.OutStorManager.Dtos
         /// 获取或设置 客户编码
         /// </summary>
         [DisplayName("客户编码"), Required]
-        public string CusId { get; set; }
+        public int CusId { get; set; }
 
         /// <summary>
         /// 获取或设置 物品编码
         /// </summary>
         [DisplayName("物品编码"), Required]
-        public string MatId { get; set; }
+        public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
         [DisplayName("供应商编码"), Required]
-        public string SupId { get; set; }
+        public int SupId { get; set; }
 
         /// <summary>
         /// 获取或设置 单价
@@ -92,7 +92,7 @@ namespace teng.kun.OutStorManager.Dtos
         /// 获取或设置 派单人
         /// </summary>
         [DisplayName("派单人")]
-        public string OutEmpId { get; set; }
+        public int OutEmpId { get; set; }
 
         /// <summary>
         /// 获取或设置 客户结算标记
@@ -104,7 +104,7 @@ namespace teng.kun.OutStorManager.Dtos
         /// 获取或设置 结算标记人
         /// </summary>
         [DisplayName("结算标记人")]
-        public string CusCloseAccuntsEmpId { get; set; }
+        public int CusCloseAccuntsEmpId { get; set; }
 
         /// <summary>
         /// 获取或设置 结算说明

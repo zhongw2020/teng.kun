@@ -47,7 +47,11 @@ namespace teng.kun.BaseModule.Dtos
             Id = entity.Id;
             MatId = entity.MatId;
             MatName = entity.MatName;
-            MatParameter = entity.MatParameter;
+            MatAlias01 = entity.MatAlias01;
+            MatAlias02 = entity.MatAlias02;
+            MatAlias03 = entity.MatAlias03;
+            MatAlias04= entity.MatAlias04;
+            MatAlias05 = entity.MatAlias05;
             MatUnit = entity.MatUnit;
             SafeStock = entity.SafeStock;
             CurrStock = entity.CurrStock;
@@ -67,7 +71,7 @@ namespace teng.kun.BaseModule.Dtos
         /// 获取或设置 物品编码
         /// </summary>
         [DisplayName("物品编码")]
-        public string MatId { get; set; }
+        public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 物品名称
@@ -76,10 +80,30 @@ namespace teng.kun.BaseModule.Dtos
         public string MatName { get; set; }
 
         /// <summary>
-        /// 获取或设置 物品规格
+        /// 获取或设置 物品别名01
         /// </summary>
-        [DisplayName("物品规格")]
-        public string MatParameter { get; set; }
+        [DisplayName("物品别名01")]
+        public string MatAlias01 { get; set; }
+        /// <summary>
+        /// 获取或设置 物品别名02
+        /// </summary>
+        [DisplayName("物品别名02")]
+        public string MatAlias02 { get; set; }
+        /// <summary>
+        /// 获取或设置 物品别名03
+        /// </summary>
+        [DisplayName("别名03")]
+        public string MatAlias03 { get; set; }
+        /// <summary>
+        /// 获取或设置 物品别名04
+        /// </summary>
+        [DisplayName("物品别名04")]
+        public string MatAlias04 { get; set; }
+        /// <summary>
+        /// 获取或设置 物品别名05
+        /// </summary>
+        [DisplayName("物品别名05")]
+        public string MatAlias05 { get; set; }
 
         /// <summary>
         /// 获取或设置 物品单位
