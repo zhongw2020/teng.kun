@@ -34,6 +34,7 @@ using OSharp.AspNetCore.UI;
 using OSharp.Data;
 using teng.kun.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -141,23 +142,33 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             IFunction function = this.GetExecuteFunction();
             Expression<Func<User, bool>> userExp = GetExpression<User>(start, end);
 
-            var userData = _cacheService.ToCacheList(_userManager.Users.Where(userExp).GroupBy(m => m.CreatedTime.Date).Select(g => new
-            {
-                Date = g.Key,
-                DailyCount = g.Count()
-            }),
-                function,
-                "Dashboard_Line_User",
-                start,
-                end);
-            var users = userData.Select(m => new
-            {
-                Date = m.Date.ToString("d"),
-                m.DailyCount,
-                DailySum = userData.Where(n => n.Date <= m.Date).Sum(n => n.DailyCount)
-            }).ToList();
+            //var userData = _cacheService.ToCacheList(_userManager.Users.Where(userExp).GroupBy(m => m.CreatedTime.Date).Select(g => new
+            //{
+            //    Date = g.Key,
+            //    DailyCount = g.Count()
+            //}),
+            //    function,
+            //    "Dashboard_Line_User",
+            //    start,
+            //    end);
+            //var users = userData.Select(m => new
+            //{
+            //    Date = m.Date.ToString("d"),
+            //    m.DailyCount,
+            //    DailySum = userData.Where(n => n.Date <= m.Date).Sum(n => n.DailyCount)
+            //}).ToList();
 
-            return Json(users);
+            var DailyCount = 1;
+            var DailySum = 10;
+
+
+            var infos = new
+            {
+                DailyCount,
+                DailySum
+            };
+
+            return Json(infos);
         }
 
         private static Expression<Func<TEntity, bool>> GetExpression<TEntity>(DateTime start, DateTime end)
@@ -172,37 +183,107 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
         //添加报表
 
-       //当月销售额数据
+        //当月销售额数据
         public IActionResult ReportSeld(DateTime start, DateTime end)
         {
 
             string starttime = start.ToString("yyyy-MM-dd HH:mm:ss");
             string endtime = end.ToString("yyyy-MM-dd HH:mm:ss");
-            var plannum = 10000;
 
-            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where CreatedTime>='" + starttime + "' and CreatedTime<='"+ endtime + "'";
+            //累计销售额
+            string sqlall = @"SELECT convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0";
 
-            string sellnum = sq.Select_Str_Sqlserver(ConnectionString, sql);
-
-            //Expression<Func<InStor, bool>> predicate = m => m.InstorVoucher.Contains("1");
+            string salesoutall = sq.Select_Str_Sqlserver(ConnectionString, sqlall);
 
 
-            //var infos = InStorRepository.Query(m => m.SupName.Contains("HP"));
+            //当月入库额
+            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and InstorVerifyState='已通过' and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
 
-            /// var page = IInStorManagerContract.InStors.ToPage<InStor, InStorOutputDto>(predicate, request.PageCondition);
+            string salesin = sq.Select_Str_Sqlserver(ConnectionString, sql);
 
-            //return page.ToPageData();
+
+            //当月入库额已结算
+            string sql1 = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and SupCloseAccuntsFlag=1 and InstorVerifyState='已通过' and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+
+            string salesincomplete = sq.Select_Str_Sqlserver(ConnectionString, sql1);
+
+
+
+            //当月销售额
+            string sql2 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and Abolishflag=0 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+
+            string salesout = sq.Select_Str_Sqlserver(ConnectionString, sql2);
+
+            //当月签回额
+            string sql3 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and  Abolishflag=0 and CusCloseAccuntsFlag=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+
+            string salesoutcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql3);
+
+            //当月销售单数量
+
+            string sql4 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+
+            string salesoutnum = sq.Select_Str_Sqlserver(ConnectionString, sql4);
+            //当月签回销售单数量
+            string sql5 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where CusCloseAccuntsFlag=1 and Abolishflag=0 and PrintState=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+
+            string salesoutnumcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql5);
+
+            if (salesoutall == "")
+            {
+                salesoutall = "0";
+            }
+            if (salesin == "")
+            {
+                salesin = "0";
+            }
+            if (salesincomplete == "")
+            {
+                salesincomplete = "0";
+            }
+            if (salesout == "")
+            {
+                salesout = "0";
+            }
+            if (salesoutcomplete == "")
+            {
+                salesoutcomplete = "0";
+            }
+            if (salesoutnum == "")
+            {
+                salesoutnum = "0";
+            }
+            if (salesoutnumcomplete == "")
+            {
+                salesoutnumcomplete = "0";
+            }
 
             var infos = new
             {
-                sellnum,
-                plannum
+                salesoutall,
+                salesin,
+                salesincomplete,
+                salesout,
+                salesoutcomplete,
+                salesoutnum,
+                salesoutnumcomplete
             };
 
             return Json(infos);
         }
+        //年度销售额
+        public IActionResult ReportSeldLine(DateTime start, DateTime end)
+        {
 
+            string starttime = start.ToString("yyyy");
+        
 
+            //累计销售额
+            string sql = @"SELECT convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(CreatedTime,4) = '" + starttime + "' group by  LEFT(CreatedTime,7)";
 
+            DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+
+            return Json(salesoutline);
+        }
     }
 }

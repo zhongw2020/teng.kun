@@ -19,11 +19,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 export class DashboardComponent implements AfterViewInit {
 
-
-
-
-
-
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {
     '今天': [moment().toDate(), moment().toDate()],
@@ -37,22 +32,30 @@ export class DashboardComponent implements AfterViewInit {
 
   summaries: Summary[] = [];
   lineChartData: any[] = [];
-
+  salesData: G2BarData[] = [];
   constructor(private http: _HttpClient) { }
 
   ngAfterViewInit(): void {
     this.rangePickerChange(this.pickerRanges.本月);
+
+  
+
+
   }
 
   rangePickerChange(e) {
     if (e.length === 0) {
       return;
     }
+
+
+
     const start = e[0].toLocaleDateString()
     const end = e[1].toLocaleDateString();
     //this.summaryData(start, end);
     //this.userLine(start, end);
     this.reportseld(start, end);
+    this.salesLine(start, end);
   }
 
 
@@ -80,49 +83,79 @@ export class DashboardComponent implements AfterViewInit {
     const url = `api/admin/dashboard/ReportSeld?start=${start}&end=${end}`;
     this.http.get(url).subscribe((res: any) => {
 
-      console.log(res);
+
       if (!res) {
 
         return;
       }
       this.summaries = [];
-      //月度销售额
-      this.summaries.push({ data: `${res.sellnum} / ${res.plannum}`, text: '月销售额：总额 / 计划', bgColor: 'bg-primary' });
+      //累计销售总额
+      this.summaries.push({ data: `${res.salesoutall}(+10%)`, text: '系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
       //月度入库金额
-      this.summaries.push({ data: `${res.roles.AdminCount} / ${res.roles.TotalCount}`, text: '角色：管理 / 总计', bgColor: 'bg-success' });
-      //月度签单数
-      this.summaries.push({ data: `${res.modules.SiteCount} / ${res.modules.AdminCount} / ${res.modules.TotalCount}`, text: '模块：前台 / 管理 / 总计', bgColor: 'bg-orange' });
-      //当前签单率
-      this.summaries.push({ data: `${res.functions.ControllerCount} / ${res.functions.TotalCount}`, text: '功能：控制器 / 总计', bgColor: 'bg-magenta' });
+      this.summaries.push({ data: `${res.salesincomplete} / ${res.salesin}(+10%) `, text: '月入库额：总额 / 结算额', bgColor: 'bg-primary' });
+      //月度销售额  
+      this.summaries.push({ data: `${res.salesoutcomplete} / ${res.salesout} (+10%) `, text: '月销售额：总额 / 结算额', bgColor: 'bg-success' });
+      //月度签单数 
+      this.summaries.push({ data: `${res.salesoutnumcomplete} / ${res.salesoutnum}(+10%) `, text: '月销售单：总额量 / 结算量', bgColor: 'bg-orange' });
+
     });
   }
 
   /** 每月销售曲线 */
-  userLine(start, end) {
-    let url = `api/admin/dashboard/LineData?start=${start}&end=${end}`;
-    this.http.get(url).subscribe((res: any[]) => {
-      if (!res || !res.length) {
-        return;
-      }
-      for (const item of res) {
-        this.lineChartData.push({
-          x: new Date(item.Date),
-          y1: item.DailyCount,
-          y2: item.DailySum
-        });
-      }
-    });
-  }
-/** 每月销售柱状图 */
-    salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
-      x: `${idx + 1}月`,
-      y: Math.floor(Math.random() * 1000) + 200,
-      color: idx > 5 ? '#f50' : undefined,
-    }));
+  //salesLine(start, end) {
+  //  let url = `api/admin/dashboard/LineData?start=${start}&end=${end}`;
+  //  this.http.get(url).subscribe((res: any[]) => {
+  //    if (!res || !res.length) {
+  //      return;
+  //    }
+  //    for (const item of res) {
+  //      this.lineChartData.push({
+  //        x: new Date(item.Date),
+  //        y1: item.DailyCount,
+  //        y2: item.DailySum
+  //      });
+       
+  //    }
+  //    console.log(res);
+  //  });
 
-    handleClick(): void {
+  //}
+/** 每月销售柱状图 */
+  salesLine(start, end) {
+    for (let i = 0; i < 12; i++) {
+      this.salesData.push({
+        x: `${i + 1}月`,
+        y: 0,
+        color: '#f50',
+      });
+    };
+    const url = `api/admin/dashboard/ReportSeldLine?start=${start}&end=${end}`;
+     this.http.get(url).subscribe((res: any) => {
+        if (!res) {
+          return;
+        }
+        for (let i = 0; i < 12; i++) {
+       
+          this.salesData[i].y = parseInt(res.table[i].salesout);
+     
+         };
+         console.log(this.salesData);
+      });
+
+  
+    console.log(this.salesData);
+   }
+  
+
+  // salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
+  //    x: `${idx + 1}月`,
+  //    y: Math.floor(Math.random() * 1000) + 1200,
+  //    color: idx > 5 ? '#f50' : undefined,
+  //  }));
+
+  //  handleClick(): void {
     
-  }
+  //}
 
 /** 工作日历 */
     date = new Date();
