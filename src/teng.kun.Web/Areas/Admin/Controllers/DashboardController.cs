@@ -26,6 +26,11 @@ using OSharp.Caching;
 using OSharp.Entity;
 
 
+using teng.kun.InStorManager.Dtos;
+using teng.kun.InStorManager.Entities;
+using Microsoft.Extensions.DependencyInjection;
+using teng.kun.InStorManager;
+
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1)]
@@ -111,6 +116,9 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                 "Dashboard_Summary_EntityInfo").FirstOrDefault() ?? new { TotalCount = 0, AuditCount = 0 };
 
             var data = new { users, roles, modules, functions, entityInfos };
+
+
+
             return Json(data);
         }
 

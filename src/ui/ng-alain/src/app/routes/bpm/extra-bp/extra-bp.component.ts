@@ -44,7 +44,7 @@ export class ExtraBpComponent extends STComponentBase implements OnInit {
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '流程编码', index: 'BpId', sort: true,editable: true, filterable: true, ftype: 'string' },
       { title: '标题', index: 'BpTitle', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '状态', index: 'BpState', sort: true, readOnly: true,  editable: true, filterable: true, ftype: 'string' },
+      { title: '状态', index: 'BpState', sort: true,  editable: true, filterable: true, type: 'radio', enum: ['待审核', '已通过', '已驳回','已终止'], default:"待审核" },
       { title: '发起人', index: 'BpSponsor', sort: true, readOnly: true,  editable: true, filterable: true, ftype: 'string' },
      // { title: '上一节点', index: 'PrevNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '当前节点', index: 'CurrNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },

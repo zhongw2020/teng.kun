@@ -41,7 +41,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState,  click: row => this.edit(row) },
-            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState,  click: row => this.edit(row) },
+            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState,  click: row => this.print(row) },
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.OutStorManager.OutStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -83,6 +83,8 @@ export class OutStorComponent extends STComponentBase implements OnInit {
     };
     return schema;
   }
+
+
 
   protected GetSFUISchema(): SFUISchema {
     let ui: SFUISchema = {
@@ -267,6 +269,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
     }
 
   }
+  print(value: STData) { }
 }
 
 

@@ -28,7 +28,7 @@ export class DashboardComponent implements AfterViewInit {
   constructor(private http: _HttpClient) { }
 
   ngAfterViewInit(): void {
-    this.rangePickerChange(this.pickerRanges.最近30天);
+    this.rangePickerChange(this.pickerRanges.本月);
   }
 
   rangePickerChange(e) {
@@ -41,7 +41,7 @@ export class DashboardComponent implements AfterViewInit {
     this.userLine(start, end);
   }
 
-  /** 统计数据 */
+  /** 当月统计数据 */
   summaryData(start, end) {
     const url = `api/admin/dashboard/SummaryData?start=${start}&end=${end}`;
     this.http.get(url).subscribe((res: any) => {

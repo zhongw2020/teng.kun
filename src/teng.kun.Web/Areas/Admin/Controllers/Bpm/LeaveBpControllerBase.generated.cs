@@ -136,5 +136,21 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await BpmContract.DeleteLeaveBps(ids);
             return result.ToAjaxResult();
         }
+        /// <summary>
+        /// 审批请假流程信息
+        /// </summary>
+        /// <param name="dtos">请假流程信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("审批")]
+        public virtual async Task<AjaxResult> UpdateVerify(LeaveBpInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await BpmContract.UpdateLeaveBps(dtos);
+            return result.ToAjaxResult();
+        }
     }
 }

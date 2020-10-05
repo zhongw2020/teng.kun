@@ -209,15 +209,18 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
+           
             
               InstorPrice: {
                 type: 'number',
                 title: '价格'
+               
               },
               InstorNum: {
                 type: 'number',
                 title: '数量'
               },
+             
             },
           },
           ui: { spanLabel: 5, grid: { arraySpan: 24, span: 24 } }
@@ -255,18 +258,18 @@ export class InStorComponent extends STComponentBase implements OnInit {
           values.push(item);
 
           console.log(item);
-          this.http.post<AjaxResult>(url, [item]).subscribe(result => {
-       this.osharp.ajaxResult(result, () => {
-         this.st.reload();
-         this.editModal.destroy();
-       });
-     });
+          this.http.post<AjaxResult>(url, values).subscribe(result => {
+            this.osharp.ajaxResult(result, () => {
+              this.st.reload();
+              this.editModal.destroy();
+            });
+          });
 
           item = {}
         });
       }
     }
-   
+  
   }
 }
 

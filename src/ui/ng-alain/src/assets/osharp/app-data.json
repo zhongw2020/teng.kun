@@ -154,13 +154,13 @@
 
             {
               "text": "加班流程",
-              "link": "/bpm/leave-bp",
-              "acl": "Root.Admin.Bpm.LeaveBp"
+              "link": "/bpm/extra-bp",
+              "acl": "Root.Admin.Bpm.ExtraBp.Update"
             },
             {
               "text": "请假流程",
-              "link": "/bpm/extra-bp",
-              "acl": "Root.Admin.Bpm.ExtraBp"
+              "link": "/bpm/leave-bp",
+              "acl": "Root.Admin.Bpm.LeaveBp.Update"
             }
           ]
         },
@@ -171,14 +171,14 @@
           "acl": "Root.Admin.Bpm",
           "children": [
             {
-              "text": "发起流程",
-              "link": "/bpm/extra-bp",
-              "acl": "Root.Admin.BaseModule.ExtraBp"
+              "text": "审批加班",
+              "link": "/bpm/extra-verify",
+              "acl": "Root.Admin.Bpm.ExtraBp.UpdateVerify"
             },
             {
-              "text": "流程审批",
-              "link": "/bpm/extra-verify",
-              "acl": "Root.Admin.BaseModule.ExtraBp"
+              "text": "审批请假",
+              "link": "/bpm/leave-verify",
+              "acl": "Root.Admin.Bpm.LeaveBp.UpdateVerify"
             }
           ]
         }
