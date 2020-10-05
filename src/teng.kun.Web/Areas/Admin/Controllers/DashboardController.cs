@@ -30,6 +30,10 @@ using teng.kun.InStorManager.Dtos;
 using teng.kun.InStorManager.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using teng.kun.InStorManager;
+using OSharp.AspNetCore.UI;
+using OSharp.Data;
+using teng.kun.Common;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -43,6 +47,12 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         private readonly DataAuthManager _dataAuthorizationManager;
         private readonly ICacheService _cacheService;
 
+
+        private SqlHelper sq = new SqlHelper();
+        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=123456;MultipleActiveResultSets=true";
+
+        protected IServiceProvider ServiceProvider { get; }
+        protected IRepository<InStor, int> InStorRepository => ServiceProvider.GetService<IRepository<InStor, int>>();
         /// <summary>
         /// 初始化一个<see cref="DashboardController"/>类型的新实例
         /// </summary>
@@ -159,5 +169,40 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             }
             return m => m.CreatedTime.Date >= start.Date && m.CreatedTime.Date <= end.Date;
         }
+
+        //添加报表
+
+       //当月销售额数据
+        public IActionResult ReportSeld(DateTime start, DateTime end)
+        {
+
+            string starttime = start.ToString("yyyy-MM-dd HH:mm:ss");
+            string endtime = end.ToString("yyyy-MM-dd HH:mm:ss");
+            var plannum = 10000;
+
+            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where CreatedTime>='" + starttime + "' and CreatedTime<='"+ endtime + "'";
+
+            string sellnum = sq.Select_Str_Sqlserver(ConnectionString, sql);
+
+            //Expression<Func<InStor, bool>> predicate = m => m.InstorVoucher.Contains("1");
+
+
+            //var infos = InStorRepository.Query(m => m.SupName.Contains("HP"));
+
+            /// var page = IInStorManagerContract.InStors.ToPage<InStor, InStorOutputDto>(predicate, request.PageCondition);
+
+            //return page.ToPageData();
+
+            var infos = new
+            {
+                sellnum,
+                plannum
+            };
+
+            return Json(infos);
+        }
+
+
+
     }
 }

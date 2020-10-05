@@ -163,19 +163,19 @@ namespace teng.kun.OutStorManager.Dtos
         /// <summary>
         /// 获取或设置 客户结算标记
         /// </summary>
-        [DisplayName("客户结算标记")]
-        public string CusCloseAccuntsFlag { get; set; }
+        [DisplayName("签回标记")]
+        public bool CusCloseAccuntsFlag { get; set; }
 
         /// <summary>
         /// 获取或设置 结算标记人
         /// </summary>
-        [DisplayName("结算标记人")]
-        public int CusCloseAccuntsEmpId { get; set; }
+        [DisplayName("签回人员")]
+        public string CusCloseAccuntsEmpId { get; set; }
 
         /// <summary>
         /// 获取或设置 结算说明
         /// </summary>
-        [DisplayName("结算说明")]
+        [DisplayName("签回说明")]
         public string CusCloseAccuntsRemark { get; set; }
 
         /// <summary>

@@ -36,8 +36,8 @@ export class ExtraBpComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '编辑', icon: 'edit', acl: 'Root.Admin.Bpm.ExtraBp.Update', click: row => this.edit(row) },
-            { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.Bpm.ExtraBp.Delete', click: row => this.delete(row) },
+            { text: '编辑', icon: 'edit', acl: 'Root.Admin.Bpm.ExtraBp.Update', iif: row => !(row.BpState == '已通过'),click: row => this.edit(row) },
+           // { text: '终止', icon: 'delete', type: 'del', acl: 'Root.Admin.Bpm.ExtraBp.Update', click: row => this.delete(row) },
           ]
         }]
       },

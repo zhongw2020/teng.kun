@@ -209,21 +209,22 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
-           
-            
+
               InstorPrice: {
                 type: 'number',
-                title: '价格'
+                title: '价格',
+                ui: { grid: { span: 8 } }
                
               },
               InstorNum: {
                 type: 'number',
-                title: '数量'
+                title: '数量',
+                ui: { grid: { span: 8 } }
               },
              
             },
           },
-          ui: { spanLabel: 5, grid: { arraySpan: 24, span: 24 } }
+        //  ui: { spanLabel: 5, grid: { arraySpan: 24, span: 24 } }
         }
       },
 

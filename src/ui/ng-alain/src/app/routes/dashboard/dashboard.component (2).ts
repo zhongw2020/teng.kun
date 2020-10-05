@@ -3,26 +3,13 @@ import { Component, OnInit, AfterViewInit, } from '@angular/core';
 import * as moment from 'moment';
 import { _HttpClient } from '@delon/theme';
 
-import { NzCalendarModule } from 'ng-zorro-antd/calendar';
-import { G2BarData } from '@delon/chart/bar';
-import { NzMessageService } from 'ng-zorro-antd/message';
-
-
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less']
 })
-
-
-
 export class DashboardComponent implements AfterViewInit {
-
-
-
-
-
 
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {
@@ -50,54 +37,26 @@ export class DashboardComponent implements AfterViewInit {
     }
     const start = e[0].toLocaleDateString()
     const end = e[1].toLocaleDateString();
-    //this.summaryData(start, end);
-    //this.userLine(start, end);
-    this.reportseld(start, end);
+    this.summaryData(start, end);
+    this.userLine(start, end);
   }
 
-
-
-
-
-  ///** 当月统计数据 */
-  //summaryData(start, end) {
-  //  const url = `api/admin/dashboard/SummaryData?start=${start}&end=${end}`;
-  //  this.http.get(url).subscribe((res: any) => {
-  //    if (!res) {
-  //      return;
-  //    }
-  //    this.summaries = [];
-  //    this.summaries.push({ data: `${res.users.ValidCount} / ${res.users.TotalCount}`, text: '用户：已激活 / 总计', bgColor: 'bg-primary' });
-  //    this.summaries.push({ data: `${res.roles.AdminCount} / ${res.roles.TotalCount}`, text: '角色：管理 / 总计', bgColor: 'bg-success' });
-  //    this.summaries.push({ data: `${res.modules.SiteCount} / ${res.modules.AdminCount} / ${res.modules.TotalCount}`, text: '模块：前台 / 管理 / 总计', bgColor: 'bg-orange' });
-  //    this.summaries.push({ data: `${res.functions.ControllerCount} / ${res.functions.TotalCount}`, text: '功能：控制器 / 总计', bgColor: 'bg-magenta' });
-  //  });
-  //}
-
-
-
-  reportseld(start, end)  {
-    const url = `api/admin/dashboard/ReportSeld?start=${start}&end=${end}`;
+  /** 当月统计数据 */
+  summaryData(start, end) {
+    const url = `api/admin/dashboard/SummaryData?start=${start}&end=${end}`;
     this.http.get(url).subscribe((res: any) => {
-
-      console.log(res);
       if (!res) {
-
         return;
       }
       this.summaries = [];
-      //月度销售额
-      this.summaries.push({ data: `${res.sellnum} / ${res.plannum}`, text: '月销售额：总额 / 计划', bgColor: 'bg-primary' });
-      //月度入库金额
+      this.summaries.push({ data: `${res.users.ValidCount} / ${res.users.TotalCount}`, text: '用户：已激活 / 总计', bgColor: 'bg-primary' });
       this.summaries.push({ data: `${res.roles.AdminCount} / ${res.roles.TotalCount}`, text: '角色：管理 / 总计', bgColor: 'bg-success' });
-      //月度签单数
       this.summaries.push({ data: `${res.modules.SiteCount} / ${res.modules.AdminCount} / ${res.modules.TotalCount}`, text: '模块：前台 / 管理 / 总计', bgColor: 'bg-orange' });
-      //当前签单率
       this.summaries.push({ data: `${res.functions.ControllerCount} / ${res.functions.TotalCount}`, text: '功能：控制器 / 总计', bgColor: 'bg-magenta' });
     });
   }
 
-  /** 每月销售曲线 */
+  /** 用户曲线 */
   userLine(start, end) {
     let url = `api/admin/dashboard/LineData?start=${start}&end=${end}`;
     this.http.get(url).subscribe((res: any[]) => {
@@ -113,28 +72,10 @@ export class DashboardComponent implements AfterViewInit {
       }
     });
   }
-/** 每月销售柱状图 */
-    salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
-      x: `${idx + 1}月`,
-      y: Math.floor(Math.random() * 1000) + 200,
-      color: idx > 5 ? '#f50' : undefined,
-    }));
-
-    handleClick(): void {
-    
-  }
-
-/** 工作日历 */
-    date = new Date();
-    mode: NzCalendarModule = 'month';
-
-    panelChange(change: { date: Date; mode: string }): void {
-      console.log(change.date, change.mode);
-    }
 }
+
 export class Summary {
   data: string;
   text: string;
   bgColor = 'bg-primary';
 }
-
