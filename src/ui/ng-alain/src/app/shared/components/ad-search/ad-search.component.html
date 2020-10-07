@@ -1,5 +1,5 @@
 <label style="margin-left: 8px;">搜索：</label>
-<nz-select [(ngModel)]="rule.Field" (ngModelChange)="fieldChange($event)" style="width:100px;" nzPlaceHolder="选择属性">
+<nz-select [(ngModel)]="rule.Field" (ngModelChange)="fieldChange($event)" style="width:120px;" nzPlaceHolder="选择属性">
   <nz-option *ngFor="let column of columns" [nzLabel]="column.title" [nzValue]="column.index"></nz-option>
 </nz-select>
 <ng-container [ngSwitch]="rule.control">
