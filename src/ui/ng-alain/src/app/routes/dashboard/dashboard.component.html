@@ -1,7 +1,7 @@
 <div class="content__title">
   <h1>
-    信息汇总
-    <small>欢迎使用</small>
+    本月数据统计
+  
   </h1>
   <div class="blank-grow"></div>
   <div class="data-range">
@@ -23,6 +23,6 @@
 </nz-row>
 
   <nz-row nzGutter="32">
-    `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" ></g2-bar>`
+    `<g2-bar height="300" [title]="'近1年月销售额'" [data]="salesData" ></g2-bar>`
     ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
   </nz-row>

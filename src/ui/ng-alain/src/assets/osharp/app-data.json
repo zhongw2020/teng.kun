@@ -135,6 +135,11 @@
               "text": "出库签回",
               "link": "/out-stor-manager/out-close",
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateClose"
+            },
+            {
+              "text": "出库报表",
+              "link": "/out-stor-manager/out-stor-report",
+              "acl": "Root.Admin.OutStorManager.OutStor.ReadReport"
             }
           ]
         }

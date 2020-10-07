@@ -54,7 +54,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
+     // { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -259,18 +259,18 @@ export class InStorComponent extends STComponentBase implements OnInit {
           values.push(item);
 
           console.log(item);
-          this.http.post<AjaxResult>(url, values).subscribe(result => {
-            this.osharp.ajaxResult(result, () => {
-              this.st.reload();
-              this.editModal.destroy();
-            });
-          });
+         
 
           item = {}
         });
       }
     }
-  
+    this.http.post<AjaxResult>(url, values).subscribe(result => {
+      this.osharp.ajaxResult(result, () => {
+        this.st.reload();
+        this.editModal.destroy();
+      });
+    });
   }
 }
 

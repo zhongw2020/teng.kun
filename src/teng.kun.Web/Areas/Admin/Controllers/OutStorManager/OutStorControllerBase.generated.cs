@@ -185,5 +185,24 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await OutStorManagerContract.DeleteOutStors(ids);
             return result.ToAjaxResult();
         }
+
+
+        /// <summary>
+        /// 读取出库列表信息
+        /// </summary>
+        /// <param name="request">页请求信息</param>
+        /// <returns>出库列表分页信息</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [Description("报表")]
+        public virtual PageData<OutStorOutputDto> ReadReport(PageRequest request)
+        {
+            Check.NotNull(request, nameof(request));
+
+            Expression<Func<OutStor, bool>> predicate = FilterService.GetExpression<OutStor>(request.FilterGroup);
+            var page = OutStorManagerContract.OutStors.ToPage<OutStor, OutStorOutputDto>(predicate, request.PageCondition);
+
+            return page.ToPageData();
+        }
     }
 }

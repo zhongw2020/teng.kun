@@ -63,21 +63,21 @@ namespace teng.kun.OutStorManager
 
             //通过ID获取Name
 
-            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
-            SupBasedata supdb = await SupBasedataRepository.GetAsync(dtos[0].SupId);
-            CusBasedata cusdb = await CusBasedataRepository.GetAsync(dtos[0].CusId);
-            EmpBasedata empdb = await EmpBasedataRepository.GetAsync(dtos[0].OutEmpId);
+            foreach (OutStorInputDto dto in dtos)
+            {
+                MatBasedata matdb = await MatBasedataRepository.GetAsync(dto.MatId);
+                SupBasedata supdb = await SupBasedataRepository.GetAsync(dto.SupId);
+                CusBasedata cusdb = await CusBasedataRepository.GetAsync(dto.CusId);
+                EmpBasedata empdb = await EmpBasedataRepository.GetAsync(dto.OutEmpId);
 
-            dtos[0].MatName = matdb.MatName;
-            dtos[0].SupName = supdb.SupName;
-            dtos[0].CusName = cusdb.CusName;
-            dtos[0].OutEmpName = empdb.EmpName;
-
-            //修改人员工作状态
-
-            empdb.EmpWorkState = true;
-            EmpBasedataRepository.Update(empdb);
-
+                dto.MatName = matdb.MatName;
+                dto.SupName = supdb.SupName;
+                dto.CusName = cusdb.CusName;
+                dto.OutEmpName = empdb.EmpName;
+                //修改人员工作状态
+                empdb.EmpWorkState = true;
+                EmpBasedataRepository.Update(empdb);
+            }
             return await OutStorRepository.InsertAsync(dtos);
         }
         

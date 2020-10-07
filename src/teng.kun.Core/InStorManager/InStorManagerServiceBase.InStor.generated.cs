@@ -61,11 +61,14 @@ namespace teng.kun.InStorManager
         {
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
             //通过ID新增Name
-            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
-            SupBasedata supdb = await SupBasedataRepository.GetAsync(dtos[0].SupId);
-            dtos[0].MatName = matdb.MatName;
-            dtos[0].SupName = supdb.SupName;
 
+            foreach (InStorInputDto dto in dtos)
+            {
+                MatBasedata matdb = await MatBasedataRepository.GetAsync(dto.MatId);
+                SupBasedata supdb = await SupBasedataRepository.GetAsync(dto.SupId);
+                dto.MatName = matdb.MatName;
+                dto.SupName = supdb.SupName;
+            }
 
             return await InStorRepository.InsertAsync(dtos);
         }

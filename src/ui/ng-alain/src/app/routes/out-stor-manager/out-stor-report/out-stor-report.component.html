@@ -4,13 +4,44 @@
 <nz-card>
   <div>
     <button nz-button (click)="st.reload()"><i nz-icon nzType="reload" nzTheme="outline"></i>刷新</button>
-    <button nz-button (click)="create()" acl="Root.Admin.OutStorManager.OutStor.Create"><i nz-icon type="plus-circle" theme="outline"></i>新增</button>
+
+    <!--<button nz-button nzType="primary" (click)="TotalRow()">显示小计</button>-->
+    <button nz-button nzType="primary" (click)="SumRow()">显示总计</button>
     <osharp-ad-search [request]="request" [columns]="columns" (submited)="search($event)"></osharp-ad-search>
   </div>
   <st #st [data]="readUrl" [columns]="columns" [req]="req" [res]="res" [(pi)]="request.PageCondition.PageIndex" [(ps)]="request.PageCondition.PageSize" [page]="page" size="small"
-    [scroll]="{x:'1200px'}" multiSort (change)="change($event)" (error)="error($event)"></st>
-</nz-card>
+      [scroll]="{x:'1200px'}" multiSort (change)="change($event)" (error)="error($event)" [body]="bodyTpl">
 
+    <!--添加小计列-->
+    <ng-template st-row="OutstorSum" let-item let-index="index" let-column="column" >
+      <td class="text-right">{{(item.OutstorNum-item.RecoilNum)*item.OutstorPrice}}</td>
+    </ng-template>
+
+
+    <!--添加合计列-->
+    <ng-template #bodyTpl let-t>
+      <ng-container >
+        <tr class="bg-grey-lighter">
+
+
+          <!--<td class="text-right">数量合计：{{ t.OutstorNum.text}}</td>
+  <td class="text-right"  >单价合计：{{ t.OutstorPrice.text}}</td>-->
+          <td class="text-right" colspan="2">金额合计：{{ tengkunsum | _currency}}元</td>
+
+          <td class="text-right" colspan="2">销售单量：{{ t.OutstorVoucher.text}}单</td>
+
+          <td class="text-right" colspan="20"></td>
+        </tr>
+
+      </ng-container>
+    </ng-template>
+
+    <ng-template st-row="MatName" let-item let-index="index">
+      <span nz-tooltip [nzTooltipTitle]="'别名：' + item.MatName">{{item.MatName}}</span>
+    </ng-template>
+
+  </st>
+</nz-card>
 <nz-modal #modal [nzVisible]="false" [nzTitle]="editTitle" [nzClosable]="false" [nzFooter]="null">
   <sf #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="editRow" button="none">
     <div class="modal-footer">

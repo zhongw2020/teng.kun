@@ -272,14 +272,11 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             return Json(infos);
         }
         //年度销售额
-        public IActionResult ReportSeldLine(DateTime start, DateTime end)
+        public IActionResult ReportSeldLine()
         {
 
-            string starttime = start.ToString("yyyy");
-        
-
-            //累计销售额
-            string sql = @"SELECT convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(CreatedTime,4) = '" + starttime + "' group by  LEFT(CreatedTime,7)";
+            //按月统计近一年销售额
+            string sql = @"SELECT LEFT(CreatedTime,7) as salemonth,convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(CreatedTime,4)>DATEADD(year,-1,GETDATE()) group by  LEFT(CreatedTime,7)";
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
 

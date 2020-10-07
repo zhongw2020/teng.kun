@@ -14,7 +14,7 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { STData } from '@delon/abc';
+import { STData, STColumn } from '@delon/abc';
 import { FilterRule, FilterOperate, AjaxResult } from '../../../shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -23,6 +23,8 @@ import { Observable } from 'rxjs';
   selector: 'app-out-stor',
   templateUrl: './out-stor.component.html',
   styles: []
+  
+
 })
 export class OutStorComponent extends STComponentBase implements OnInit {
 
@@ -54,7 +56,8 @@ export class OutStorComponent extends STComponentBase implements OnInit {
       { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },  
       { title: '单价', index: 'OutstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
      // { title: '出库时间', index: 'OutstorDate', sort: true, editable: true, filterable: true, type: 'date' },
-      { title: '数量', index: 'OutstorNum', sort: true, editable: true, filterable: true, type: 'number' },
+      {
+        title: '数量', index: 'OutstorNum', sort: true, editable: true, filterable: true, type: 'number', key:'OutstorNum'},
       { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['A员工', 'B员工', 'C员工'] },
      // { title: '签回标记', index: 'CusCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn',default:false },
     //  { title: '签回人员', index: 'CusCloseAccuntsEmpId', sort: true, editable: true, filterable: true, type: 'radio', enum: ['员工A', '员工B', '员工C'] },
@@ -256,21 +259,20 @@ export class OutStorComponent extends STComponentBase implements OnInit {
           values.push(item);
 
           console.log(item);
-          this.http.post<AjaxResult>(url, [item]).subscribe(result => {
-            this.osharp.ajaxResult(result, () => {
-              this.st.reload();
-              this.editModal.destroy();
-            });
-          });
+       
 
           item = {}
         });
       }
     }
-
+    this.http.post<AjaxResult>(url, values).subscribe(result => {
+      this.osharp.ajaxResult(result, () => {
+        this.st.reload();
+        this.editModal.destroy();
+      });
+    });
   }
   print(value: STData) { }
 }
-
 
 

@@ -19,6 +19,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 export class DashboardComponent implements AfterViewInit {
 
+  ngOnInit() {
+    this.salesLine();
+  }
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {
     '今天': [moment().toDate(), moment().toDate()],
@@ -32,14 +35,16 @@ export class DashboardComponent implements AfterViewInit {
 
   summaries: Summary[] = [];
   lineChartData: any[] = [];
-  salesData: G2BarData[] = [];
-  constructor(private http: _HttpClient) { }
+  constructor(private http: _HttpClient) {  }
+
+  salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
+    x: `0月`,
+    y: 0,
+    color: idx > 5 ? '#f50' : undefined,
+  }));
 
   ngAfterViewInit(): void {
     this.rangePickerChange(this.pickerRanges.本月);
-
-  
-
 
   }
 
@@ -47,15 +52,12 @@ export class DashboardComponent implements AfterViewInit {
     if (e.length === 0) {
       return;
     }
-
-
-
     const start = e[0].toLocaleDateString()
     const end = e[1].toLocaleDateString();
     //this.summaryData(start, end);
     //this.userLine(start, end);
     this.reportseld(start, end);
-    this.salesLine(start, end);
+
   }
 
 
@@ -90,13 +92,13 @@ export class DashboardComponent implements AfterViewInit {
       }
       this.summaries = [];
       //累计销售总额
-      this.summaries.push({ data: `${res.salesoutall}(+10%)`, text: '系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
+      this.summaries.push({ data: `${res.salesoutall}`, text: '（单位：元）系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
       //月度入库金额
-      this.summaries.push({ data: `${res.salesincomplete} / ${res.salesin}(+10%) `, text: '月入库额：总额 / 结算额', bgColor: 'bg-primary' });
+      this.summaries.push({ data: `${res.salesincomplete} / ${res.salesin}`, text: '（单位：元）月入库额：总额 / 结算额', bgColor: 'bg-primary' });
       //月度销售额  
-      this.summaries.push({ data: `${res.salesoutcomplete} / ${res.salesout} (+10%) `, text: '月销售额：总额 / 结算额', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesoutcomplete} / ${res.salesout}`, text: '（单位：元）月销售额：总额 / 结算额', bgColor: 'bg-success' });
       //月度签单数 
-      this.summaries.push({ data: `${res.salesoutnumcomplete} / ${res.salesoutnum}(+10%) `, text: '月销售单：总额量 / 结算量', bgColor: 'bg-orange' });
+      this.summaries.push({ data: `${res.salesoutnumcomplete} / ${res.salesoutnum}`, text: '（单位：单）月销售单：总额量 / 结算量', bgColor: 'bg-orange' });
 
     });
   }
@@ -120,30 +122,40 @@ export class DashboardComponent implements AfterViewInit {
   //  });
 
   //}
-/** 每月销售柱状图 */
-  salesLine(start, end) {
-    for (let i = 0; i < 12; i++) {
-      this.salesData.push({
-        x: `${i + 1}月`,
-        y: 0,
-        color: '#f50',
-      });
-    };
-    const url = `api/admin/dashboard/ReportSeldLine?start=${start}&end=${end}`;
-     this.http.get(url).subscribe((res: any) => {
-        if (!res) {
-          return;
-        }
-        for (let i = 0; i < 12; i++) {
-       
-          this.salesData[i].y = parseInt(res.table[i].salesout);
-     
-         };
-         console.log(this.salesData);
-      });
 
-  
-    console.log(this.salesData);
+ 
+
+/** 本年度每月销售柱状图 */
+  salesLine() {
+
+    const url = `api/admin/dashboard/ReportSeldLine`;
+     this.http.get(url).subscribe((res: any) => {
+       if (!res) {
+          console.log('res is null');
+          return;
+
+        }
+        console.log(res);
+       for (let i = 0; i < 12; i++) {
+
+         console.log('222');
+          if (this.salesData[i].x) {
+          // this.salesData[i].x = parseInt(res.table[i].salemonth);
+          //  this.salesData[i].y = parseInt(res.table[i].salesout);
+
+            this.salesData.push({
+              x: '2020-10',
+              y: '246',
+               color: '#f50',
+            });
+
+            console.log('3333');
+          }
+          else { return;}
+         };
+        
+         
+      });
    }
   
 
