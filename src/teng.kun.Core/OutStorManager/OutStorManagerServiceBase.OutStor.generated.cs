@@ -74,13 +74,53 @@ namespace teng.kun.OutStorManager
                 dto.SupName = supdb.SupName;
                 dto.CusName = cusdb.CusName;
                 dto.OutEmpName = empdb.EmpName;
+                //修改出库后库存
+                matdb.CurrStock = matdb.CurrStock- dto.OutstorNum;
+                MatBasedataRepository.Update(matdb);
+
                 //修改人员工作状态
                 empdb.EmpWorkState = true;
                 EmpBasedataRepository.Update(empdb);
             }
             return await OutStorRepository.InsertAsync(dtos);
         }
-        
+
+
+        /// <summary>
+        /// 更新反冲信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的反冲信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult> UpdateRecoilOutStors(params OutStorInputDto[] dtos)
+        {
+            Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
+
+            MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
+
+            matdb.CurrStock = matdb.CurrStock +dtos[0].RecoilNum;
+
+            MatBasedataRepository.Update(matdb);
+
+
+            return await OutStorRepository.UpdateAsync(dtos);
+        }
+
+        /// <summary>
+        /// 更新打印信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的打印信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual Task<OperationResult> UpdateOutPrint(params OutStorInputDto[] dtos)
+        {
+            Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
+
+            //更改打印状态
+
+
+            return OutStorRepository.UpdateAsync(dtos);
+         
+        }
+
         /// <summary>
         /// 更新出库信息
         /// </summary>

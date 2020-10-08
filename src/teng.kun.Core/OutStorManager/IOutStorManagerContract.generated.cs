@@ -61,7 +61,26 @@ namespace teng.kun.OutStorManager
         /// <param name="dtos">包含更新信息的出库信息DTO信息</param>
         /// <returns>业务操作结果</returns>
         Task<OperationResult> UpdateOutStors(params OutStorInputDto[] dtos);
-            
+
+        /// <summary>
+        /// 更新反冲信息信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的反冲信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> UpdateRecoilOutStors(params OutStorInputDto[] dtos);
+
+        
+
+
+        /// <summary>
+        /// 更新打印信息信息
+        /// </summary>
+        /// <param name="dtos">包含更新信息的出库信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        Task<OperationResult> UpdateOutPrint(params OutStorInputDto[] dtos);
+
+
+        
         /// <summary>
         /// 删除出库信息信息
         /// </summary>

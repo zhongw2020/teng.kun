@@ -109,7 +109,7 @@ namespace teng.kun.InStorManager
             //修改库存信息
             MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
          
-            matdb.CurrStock = matdb.CurrStock + dtos[0].RecoilNum;
+            matdb.CurrStock = matdb.CurrStock - dtos[0].RecoilNum;
 
             MatBasedataRepository.Update(matdb);
 

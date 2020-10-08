@@ -134,7 +134,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual async Task<AjaxResult> UpdateRecoil(OutStorInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
-            OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
+            OperationResult result = await OutStorManagerContract.UpdateRecoilOutStors(dtos);
             return result.ToAjaxResult();
         }
 
@@ -184,6 +184,24 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         {
             Check.NotNull(ids, nameof(ids));
             OperationResult result = await OutStorManagerContract.DeleteOutStors(ids);
+            return result.ToAjaxResult();
+        }
+
+
+        /// <summary>
+        /// 更新出库信息
+        /// </summary>
+        /// <param name="dtos">出库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("出库打印")]
+        public virtual async Task<AjaxResult> UpdatePrint(OutStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await OutStorManagerContract.UpdateOutPrint(dtos);
             return result.ToAjaxResult();
         }
 
