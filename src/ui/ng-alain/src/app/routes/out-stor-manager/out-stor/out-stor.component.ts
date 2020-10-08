@@ -275,7 +275,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
 
   printPage(OutstorVoucher: any) {
 
-    window.open('http://localhost:4201/#/out-stor-manager/out-stor-print?id=' + OutstorVoucher);
+    window.open('http://localhost:4201/#/print/out-stor-print?id=' + OutstorVoucher);
   }
 }
 
