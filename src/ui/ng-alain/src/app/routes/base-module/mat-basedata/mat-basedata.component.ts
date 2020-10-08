@@ -10,16 +10,20 @@
 //  <last-editor>teng.kun</last-editor>
 // -----------------------------------------------------------------------
 
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, Host } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
+import { STColumnBadge, STData } from '@delon/abc';
 
 @Component({
   selector: 'app-mat-basedata',
   templateUrl: './mat-basedata.component.html',
-  styles: []
+  styleUrls: ['./mat-basedata.component.less']
 })
+
+
+
 export class MatBasedataComponent extends STComponentBase implements OnInit {
 
   constructor(injector: Injector) {
@@ -29,8 +33,19 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
 
   ngOnInit() {
     super.InitBase();
+
   }
 
+  ngAfterViewInit() {
+
+
+  }
+
+  setRowColor(record: STData, index: number) {
+    if (record.CurrStock < record.SafeStock) {
+      return 'sign-tr';
+    }
+  }
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
       {
@@ -43,7 +58,7 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
       },
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string',  },
       { title: '物品别名01', index: 'MatAlias01', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品别名02', index: 'MatAlias02', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品别名03', index: 'MatAlias03', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -51,7 +66,7 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
       { title: '物品别名05', index: 'MatAlias05', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品单位', index: 'MatUnit', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '安全库存', index: 'SafeStock', sort: true, editable: true, filterable: true, type: 'number' },
-      { title: '当前库存', index: 'CurrStock', sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '当前库存', index: 'CurrStock', sort: true, editable: true, filterable: true, type: 'number', },
       { title: '最大库存', index: 'MaxStock', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '备注', index: 'MatRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '使用状态', index: 'MatState', sort: true, editable: true, filterable: true, type: 'yn' },

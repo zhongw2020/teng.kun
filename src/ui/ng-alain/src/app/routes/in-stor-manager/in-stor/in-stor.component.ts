@@ -54,7 +54,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-     // { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
+      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
       // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -71,10 +71,10 @@ export class InStorComponent extends STComponentBase implements OnInit {
       // { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '创建者', index: 'CreatorId', type: 'number' },
-      { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
-      { title: '更新者', index: 'LastUpdaterId', type: 'number' },
-      { title: '更新时间', index: 'LastUpdatedTime', type: 'date' },
+        { title: '创建者', index: 'CreatorId', type: 'number' },
+      //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
+      //{ title: '更新者', index: 'LastUpdaterId', type: 'number' },
+      //{ title: '更新时间', index: 'LastUpdatedTime', type: 'date' },
     ];
     return columns;
   }
@@ -193,6 +193,13 @@ export class InStorComponent extends STComponentBase implements OnInit {
           default: '待审核',
           readOnly: true,
         },
+        InstorDate: {
+          type: 'string',
+          format: 'date-time',
+          title: '入库时间',
+          ui: { grid: { span: 24} }
+        },
+        
         InstorRemark: {
           type: 'string',
           title: '备注',

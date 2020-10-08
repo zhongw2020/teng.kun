@@ -43,7 +43,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState,  click: row => this.edit(row) },
-            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState, click: row => this.printPage(row.OutstorVoucher)},
+            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState, click: row => this.printPage(row.OutstorVoucher, row.OutstorComName)},
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.OutStorManager.OutStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -195,11 +195,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
           default: '请选择',
           ui: this.select_ui('api/Admin/EmpBasedata/Read', 'EmpName', ['EmpId', 'EmpName'])
         },
-        InstorRemark: {
-          type: 'string',
-          title: '备注',
-
-        },
+        
         产品列表: {
           type: 'array',
           items: {
@@ -221,6 +217,11 @@ export class OutStorComponent extends STComponentBase implements OnInit {
                 type: 'number',
                 title: '数量',
                  readOnly: false,
+              },
+              OutstorRemark: {
+                type: 'string',
+                title: '备注',
+
               },
             },
           },
@@ -273,9 +274,21 @@ export class OutStorComponent extends STComponentBase implements OnInit {
     });
   }
 
-  printPage(OutstorVoucher: any) {
+  printPage(OutstorVoucher: any, OutstorComName: any) {
 
-    window.open('http://localhost:4201/#/print/out-stor-print?id=' + OutstorVoucher,'打印',' width=800, height=600, top=300, left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    if (OutstorComName == "腾坤") {
+    window.open('http://localhost:4201/#/print/out-stor-print?id=' + OutstorVoucher + '&&ComName=' + OutstorComName,'打印','top=300, left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    }
+    if (OutstorComName == "B公司") {
+      window.open('http://localhost:4201/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName, '打印', 'top=300, left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    }
+    if (OutstorComName == "C公司") {
+      window.open('http://localhost:4201/#/print/out-stor-print3?id=' + OutstorVoucher + '&&ComName=' + OutstorComName, '打印', 'top=300, left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+
+    }
+    if (OutstorComName == "D公司") {
+      window.open('http://localhost:4201/#/print/out-stor-print4?id=' + OutstorVoucher + '&&ComName=' + OutstorComName, '打印', 'top=300, left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    }
   }
 }
 

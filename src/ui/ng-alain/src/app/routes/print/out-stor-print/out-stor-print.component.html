@@ -1,14 +1,12 @@
-<table width="600" >
-
-  <tr>
-    <td width="400" height="100">123</td>
-    <td width="400" height="100">123</td>
-    <td width="400" height="100">123</td>
-    <td width="400" height="100">123</td>
-    <<td width="400" height="100">{{num}}</td>
+模板1：
+地址：xxxxxxxxxxx         电话：xxxxxxxxxxxxxxxx
+联系方式；xxxxxxxxxxxxxxxxxxxxxx
+<table border='1'>
+  <tr *ngFor="let x of res">
+    <td width="200">{{ x.MatName }}</td>
+    <td width="200">{{ x.OutstorNum }}</td>
+    <td width="200">{{ x.OutstorPrice }}</td>
+    <td width="200">{{ x.OutstorRemark }}</td>
   </tr>
-
 </table>
 
-
-这是一个传过来的变量num={{num}}

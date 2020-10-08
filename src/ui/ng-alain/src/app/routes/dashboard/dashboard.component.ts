@@ -16,13 +16,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 
 
-
 export class DashboardComponent implements AfterViewInit {
 
   ngOnInit() {
-    this.salesLine();
-    console.log('初始化');
+ 
   }
+
+
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {
     '今天': [moment().toDate(), moment().toDate()],
@@ -46,7 +46,9 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.rangePickerChange(this.pickerRanges.本月);
-
+    setTimeout(() => {
+      this.salesLine();
+    }, 1000);
   }
 
   rangePickerChange(e) {
@@ -58,7 +60,7 @@ export class DashboardComponent implements AfterViewInit {
     //this.summaryData(start, end);
     //this.userLine(start, end);
     this.reportseld(start, end);
-
+    this.salesLine();
   }
 
 

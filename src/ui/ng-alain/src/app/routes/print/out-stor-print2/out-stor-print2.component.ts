@@ -9,14 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
 
 
-templateUrl:  './out-stor-print.component.html' 
- 
+  templateUrl: './out-stor-print2.component.html'
+
 
 })
-export class OutStorPrintComponent implements OnInit {
+export class OutStorPrint2Component implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: _HttpClient) { }
 
+  num: any = 1;
   queryParams: any;
   res: any;
 
@@ -25,7 +26,7 @@ export class OutStorPrintComponent implements OnInit {
 
 
     this.getdata();
-
+    // window.print();
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -41,9 +42,8 @@ export class OutStorPrintComponent implements OnInit {
     const url = 'api/admin/OutStor/PrintData?id=' + this.queryParams.id + '&&ComName=' + this.queryParams.ComName;
 
     this.http.get(url).subscribe((res: any) => {
-      this.res = res.table;
-    });
-    console.log(this.res);
+    this.res = res.table;
+     });
   }
 
 }

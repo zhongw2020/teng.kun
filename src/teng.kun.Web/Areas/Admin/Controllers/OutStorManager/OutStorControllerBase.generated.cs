@@ -227,15 +227,34 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         private SqlHelper sq = new SqlHelper();
         private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=123456;MultipleActiveResultSets=true";
 
+        //打印数据
         public IActionResult PrintData()
         {
             string id = Request.Query["id"];
-          
-            string sql = @"SELECT *  FROM [TENGKUN].[dbo].[OutStorManager_OutStor] where OutstorVoucher='"+id+"'";
+            string ComName = Request.Query["ComName"];
+            string sql = "";
+            if (ComName == "腾坤")
+            {
+                 sql = @"SELECT ot.*,mat.MatAlias01  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+            }
+
+            if (ComName == "B公司")
+            {
+                 sql = @"SELECT ot.*,mat.MatAlias02  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+            }
+            if (ComName == "C公司")
+            {
+                 sql = @"SELECT ot.*,mat.MatAlias03  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+            }
+            if (ComName == "D公司")
+            {
+                 sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+            }
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
 
-            return Json(salesoutline);
+                return Json(salesoutline);
+            
         }
     }
 }
