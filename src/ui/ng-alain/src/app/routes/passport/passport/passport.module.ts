@@ -13,7 +13,6 @@ import { PassportRoutingModule } from './passport.routing';
 import { ForgotPasswordComponent } from './password/forgot-password.component';
 import { ResetPasswordComponent } from './password/reset-password.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +30,6 @@ import { ResetPasswordComponent } from './password/reset-password.component';
     SendConfirmMailComponent,
     ConfirmEmailComponent,
     SendMailComponent,
- 
   ],
 })
 export class PassportModule { }

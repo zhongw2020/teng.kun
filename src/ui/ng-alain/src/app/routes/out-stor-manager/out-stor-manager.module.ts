@@ -20,7 +20,7 @@ import { OutRecoilComponent } from './out-recoil/out-recoil.component';
 import { OutCloseComponent } from './out-close/out-close.component';
 import { OutAboishComponent } from './out-aboish/out-aboish.component';
 import { OutStorReportComponent } from './out-stor-report/out-stor-report.component';
-import { OutStorPrintComponent } from './out-stor-print/out-stor-print.component';
+
 
 @NgModule({
   imports: [
@@ -34,7 +34,7 @@ import { OutStorPrintComponent } from './out-stor-print/out-stor-print.component
     OutCloseComponent,
     OutAboishComponent,
     OutStorReportComponent,
-    OutStorPrintComponent,
+
 
   ]
 })

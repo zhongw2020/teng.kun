@@ -10,7 +10,6 @@ import { LockComponent } from './lock/lock.component';
 import { ForgotPasswordComponent } from './password/forgot-password.component';
 import { ResetPasswordComponent } from './password/reset-password.component';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent, data: { title: '用户登录', titleI18n: 'app.passport.login' } },
   { path: 'register', component: RegisterComponent, data: { title: '新用户注册', titleI18n: 'app.passport.register' } },
@@ -20,8 +19,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent, data: { title: '忘记密码', titleI18n: "app.passport.forgot-password" } },
   { path: 'reset-password', component: ResetPasswordComponent, data: { title: '重置密码', titleI18n: "app.passport.reset-password" } },
   { path: 'oauth-callback', component: OauthCallbackComponent, data: { title: '第三方登录', titleI18n: "app.passport.oauth" } },
-  { path: 'lock', component: LockComponent, data: { title: '锁屏', titleI18n: "app.passport.lock" } },
- 
+  { path: 'lock', component: LockComponent, data: { title: '锁屏', titleI18n: "app.passport.lock" } }
 ];
 
 @NgModule({

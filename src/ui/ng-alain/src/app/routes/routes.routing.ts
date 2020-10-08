@@ -12,6 +12,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { CallbackComponent } from "./callback/callback.component";
 import { ACLGuard } from "@delon/acl";
 
+
 const routes: Routes = [
 	{
 		path: "",
@@ -68,14 +69,22 @@ const routes: Routes = [
 	//     ]
 	// },
 	// passport
+
 	{
 		path: "passport",
 		component: LayoutPassportComponent,
 		loadChildren: () => import("./passport/passport.module").then((m) => m.PassportModule)
-	},
+  },
+  {
+    path: "print",
+
+    loadChildren: () => import("./print/print.module").then((m) => m.PrintModule)
+  },
+
 	// 单页不包裹Layout
 	{ path: "callback/:type", component: CallbackComponent },
-	{ path: "**", redirectTo: "exception/404" }
+  { path: "**", redirectTo: "exception/404" }
+
 ];
 
 @NgModule({

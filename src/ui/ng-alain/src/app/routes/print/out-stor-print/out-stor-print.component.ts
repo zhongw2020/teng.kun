@@ -3,7 +3,7 @@ import { request } from 'https';
 import { _HttpClient } from '@delon/theme';
 
 @Component({
-  selector: 'app-out-stor-print',
+
   templateUrl: './out-stor-print.component.html',
 
 })
