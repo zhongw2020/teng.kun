@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { request } from 'https';
 import { _HttpClient } from '@delon/theme';
+import { delay } from 'rxjs/operators';
 
 @Component({
 
@@ -11,11 +12,16 @@ export class OutStorPrintComponent implements OnInit {
 
   constructor(private http: _HttpClient) { }
 
-  
+  num: any = 20;
   ngOnInit() {
     
     this.getdata();
    // window.print();
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      window.print();
+    }, 1000);
   }
   getdata() {
     console.log(request);
@@ -23,7 +29,7 @@ export class OutStorPrintComponent implements OnInit {
     const url = `api/admin/OutStor/PrintData?id=001`;
 
     console.log(url);
-  
+    
 
     this.http.get(url).subscribe((res: any) => {
 
