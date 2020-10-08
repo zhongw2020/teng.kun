@@ -21,6 +21,7 @@ export class DashboardComponent implements AfterViewInit {
 
   ngOnInit() {
     this.salesLine();
+    console.log('初始化');
   }
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {

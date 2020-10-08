@@ -37,7 +37,8 @@ using OSharp.Security;
 using teng.kun.OutStorManager;
 using teng.kun.OutStorManager.Dtos;
 using teng.kun.OutStorManager.Entities;
-
+using System.Data;
+using teng.kun.Common;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -203,6 +204,20 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             var page = OutStorManagerContract.OutStors.ToPage<OutStor, OutStorOutputDto>(predicate, request.PageCondition);
 
             return page.ToPageData();
+        }
+
+        private SqlHelper sq = new SqlHelper();
+        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=123456;MultipleActiveResultSets=true";
+
+        public IActionResult PrintData()
+        {
+            string id = Request.Query["id"];
+          
+            string sql = @"SELECT *  FROM [TENGKUN].[dbo].[OutStorManager_OutStor] where OutstorVoucher='"+id+"'";
+
+            DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+
+            return Json(salesoutline);
         }
     }
 }
