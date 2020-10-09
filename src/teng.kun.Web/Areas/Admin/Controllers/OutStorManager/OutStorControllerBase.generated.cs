@@ -235,25 +235,32 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             string sql = "";
             if (ComName == "腾坤")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias01  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias01  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
 
             if (ComName == "B公司")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias02  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias02  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
             if (ComName == "C公司")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias03  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias03  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
             if (ComName == "D公司")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
+
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
 
-                return Json(salesoutline);
+            string sqlsum = @"select convert(varchar,sum((OutstorNum-RecoilNum)*OutstorPrice)) FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+            string salesout = sq.Select_Str_Sqlserver(ConnectionString, sqlsum);
+
+            sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
+            var alldata = new { salesoutline, salesout };
+           
+            return Json(alldata);
             
         }
     }
