@@ -6,15 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 
 
-import { SFUISchema, SFSchema } from '@delon/form';
-import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
-import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { STData, STColumn } from '@delon/abc';
-import { FilterRule, FilterOperate, AjaxResult } from '../../../shared/osharp/osharp.model';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-
-
 
 @Component({
 
@@ -53,7 +44,6 @@ export class OutStorPrintComponent implements OnInit {
     this.http.get(url).subscribe((res: any) => {
       this.res = res.salesoutline.table;
       this.salesout2 = res.salesout;
-      console.log(this.salesout2);
     });
   
   

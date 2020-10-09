@@ -3,13 +3,13 @@ import { request } from 'https';
 import { _HttpClient } from '@delon/theme';
 import { delay } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
-
+import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 
 @Component({
 
-
-  templateUrl: './out-stor-print2.component.html'
+  selector: 'app-out-stor-print2',
+  templateUrl: './out-stor-print2.component.html',
+  styleUrls: ['./out-stor-print2.component.less']
 
 
 })
@@ -17,16 +17,15 @@ export class OutStorPrint2Component implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: _HttpClient) { }
 
-  num: any = 1;
   queryParams: any;
   res: any;
-
+  salesout2: any;
 
   ngOnInit() {
 
 
     this.getdata();
-    // window.print();
+
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -42,8 +41,12 @@ export class OutStorPrint2Component implements OnInit {
     const url = 'api/admin/OutStor/PrintData?id=' + this.queryParams.id + '&&ComName=' + this.queryParams.ComName;
 
     this.http.get(url).subscribe((res: any) => {
-    this.res = res.table;
-     });
+      this.res = res.salesoutline.table;
+      this.salesout2 = res.salesout;
+      console.log(this.res);
+    });
+
+
   }
 
 }

@@ -2,26 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { request } from 'https';
 import { _HttpClient } from '@delon/theme';
 import { delay } from 'rxjs/operators';
-
-
+import { ActivatedRoute } from '@angular/router';
+import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 
 @Component({
 
+  selector: 'app-out-stor-print4',
+  templateUrl: './out-stor-print4.component.html',
+  styleUrls: ['./out-stor-print4.component.less']
 
-templateUrl:  './out-stor-print4.component.html' 
- 
 
 })
 export class OutStorPrint4Component implements OnInit {
 
-  constructor(private http: _HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: _HttpClient) { }
 
-  num: any =1;
+  queryParams: any;
+  res: any;
+  salesout2: any;
+
   ngOnInit() {
 
 
     this.getdata();
-   // window.print();
+
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -29,22 +33,20 @@ export class OutStorPrint4Component implements OnInit {
     }, 1000);
   }
   getdata() {
-    console.log(request);
-    
-    const url = `api/admin/OutStor/PrintData?id=001&&ComName=腾坤`;
 
-    console.log(url);
-    
+    this.route.queryParams.subscribe(params => {
+      this.queryParams = params;
+    })
+
+    const url = 'api/admin/OutStor/PrintData?id=' + this.queryParams.id + '&&ComName=' + this.queryParams.ComName;
 
     this.http.get(url).subscribe((res: any) => {
+      this.res = res.salesoutline.table;
+      this.salesout2 = res.salesout;
+      console.log(this.res);
+    });
 
-    console.log(res);
-    if (!res) {
 
-      return;
-    }
-  
-  });
-}
+  }
 
 }

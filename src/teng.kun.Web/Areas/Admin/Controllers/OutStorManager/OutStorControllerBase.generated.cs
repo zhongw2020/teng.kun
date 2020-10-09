@@ -238,15 +238,15 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                  sql = @"SELECT ot.*,mat.MatAlias01  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
 
-            if (ComName == "B公司")
+            if (ComName == "华业")
             {
                  sql = @"SELECT ot.*,mat.MatAlias02  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
-            if (ComName == "C公司")
+            if (ComName == "效信通")
             {
                  sql = @"SELECT ot.*,mat.MatAlias03  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
-            if (ComName == "D公司")
+            if (ComName == "帅坤")
             {
                  sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
