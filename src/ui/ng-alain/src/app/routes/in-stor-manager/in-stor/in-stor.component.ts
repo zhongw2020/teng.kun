@@ -18,6 +18,7 @@ import { STData } from '@delon/abc';
 import { AjaxResult, FilterOperate, FilterRule } from '@shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-in-stor',
@@ -163,13 +164,22 @@ export class InStorComponent extends STComponentBase implements OnInit {
       onSearch: (keyword: string) => this.getRepositoryOfOptionData(url, name, key_names, keyword).toPromise(),
     }
   }
+ 
+  private createdate: any;
+  private indate: any;
+  protected datePipe: DatePipe = new DatePipe('en-US');
   create() {
+    this.createdate = this.datePipe.transform(new Date(), 'yyyyMMddHHmmssS');
+    this.indate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
     this.schema = {
       properties: {
         InstorVoucher: {
           type: 'string',
+          format:'data-time',
           title: '入库凭证号',
-          readOnly: false,
+          readOnly: true,
+          default: this.createdate,
+    
         },
        
         SupId: {
@@ -199,10 +209,10 @@ export class InStorComponent extends STComponentBase implements OnInit {
           type: 'string',
           format: 'date-time',
           title: '入库时间',
+          default: this.indate,
           ui: { grid: { span: 24} }
         },
-        
-      
+    
         产品列表: {
           type: 'array',
           items: {

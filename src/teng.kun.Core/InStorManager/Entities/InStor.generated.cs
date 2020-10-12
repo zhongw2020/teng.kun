@@ -201,12 +201,6 @@ namespace teng.kun.InStorManager.Entities
         public bool ReconciliationRemark { get; set; }
 
 
-
-
-
-
-
-
         /// <summary>
         /// 获取或设置 创建者
         /// </summary>

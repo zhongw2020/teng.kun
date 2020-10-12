@@ -41,7 +41,7 @@ export class LeaveBpComponent extends STComponentBase implements OnInit {
           ]
         }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+     // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '流程编码', index: 'BpId', sort: true, editable: true, filterable: true, ftype: 'string', description:"这是一个描述"},
       { title: '标题', index: 'BpTitle', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '状态', index: 'BpState', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', enum: ['待审核', '已通过', '已驳回','已终止'], default: "待审核" },
@@ -50,7 +50,7 @@ export class LeaveBpComponent extends STComponentBase implements OnInit {
       { title: '当前节点', index: 'CurrNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '下一节点', index: 'NextNode', sort: true, readOnly: true,  editable: true, filterable: true, type: 'number' },
       { title: '请假开始时间', index: 'LeaveStartTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } }},
-      { title: '请假结束时间', index: 'LeaveEndTime', sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '请假结束时间', index: 'LeaveEndTime', sort: true, editable: true, filterable: true, type: 'date',ui: { grid: { span: 24 } } },
       { title: '请假原因', index: 'LeaveReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '备注', index: 'Remark', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },

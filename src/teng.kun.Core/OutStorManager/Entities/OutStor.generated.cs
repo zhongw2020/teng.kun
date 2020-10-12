@@ -190,6 +190,21 @@ namespace teng.kun.OutStorManager.Entities
         public string OutstorRemark { get; set; }
 
         /// <summary>
+        /// 获取或设置 自定义打印名称
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorPrintName { get; set; }
+
+
+        /// <summary>
+        /// 获取或设置 别用字段
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorOther { get; set; }
+
+      
+
+        /// <summary>
         /// 获取或设置 创建者
         /// </summary>
         [DisplayName("创建者")]

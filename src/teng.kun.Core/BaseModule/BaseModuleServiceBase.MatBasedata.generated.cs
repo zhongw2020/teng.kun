@@ -61,8 +61,7 @@ namespace teng.kun.BaseModule
         {
             Check.Validate<MatBasedataInputDto, int>(dtos, nameof(dtos));
             return MatBasedataRepository.InsertAsync(dtos);
-        }
-        
+        }        
         /// <summary>
         /// 更新物品基础数据信息
         /// </summary>

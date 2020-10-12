@@ -284,6 +284,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
                     for (int i = 0; i < currstormat.Tables[0].Rows.Count; i++)
                     {
+                        //修改库存
                         string MatId = currstormat.Tables[0].Rows[i]["MatId"].ToString();
                         string OutstorNum = currstormat.Tables[0].Rows[i]["OutstorNum"].ToString();
 

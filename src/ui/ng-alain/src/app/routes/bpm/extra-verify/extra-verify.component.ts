@@ -46,7 +46,7 @@ export class ExtraVerifyComponent extends STComponentBase implements OnInit {
         title: '审批', fixed: 'left', width: 65, buttons: [{ text: '审批', icon: 'edit', acl: 'Root.Admin.Bpm.ExtraBp.UpdateVerify', iif: row => row.BpState == '待审核', click: row => this.edit(row) }]
       },
 
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '流程编码', index: 'BpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '标题', index: 'BpTitle', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '发起人', index: 'BpSponsor', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -54,11 +54,11 @@ export class ExtraVerifyComponent extends STComponentBase implements OnInit {
       //{ title: '当前节点', index: 'CurrNode', sort: true, editable: true, filterable: true, type: 'number' },
       //{ title: '下一节点', index: 'NextNode', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '备注', index: 'Remark', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '加班开始时间', index: 'ExtraStartTime', readOnly: true, sort: true, editable: true, filterable: true, type: 'date' },
-      { title: '加班结束时间', index: 'ExtraEndTime', readOnly: true,sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '加班开始时间', index: 'ExtraStartTime', readOnly: true, sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } }},
+      { title: '加班结束时间', index: 'ExtraEndTime', readOnly: true, sort: true, editable: true, filterable: true, type: 'date' ,ui: { grid: { span: 24 } }},
       { title: '加班原因', index: 'ExtraReason', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '创建时间', index: 'CreatedTime', readOnly: true, sort: true, filterable: true, type: 'date' },
-      { title: '状态', index: 'BpState', sort: true, readOnly: true, editable: true, filterable: true, type: 'radio', enum: ['待审核', '已通过', '已驳回', '已终止'], default: "待审核" },
+      { title: '状态', index: 'BpState', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['待审核', '已通过', '已驳回', '已终止'], default: "待审核" },
 
     ];
     return columns;

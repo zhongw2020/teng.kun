@@ -18,6 +18,7 @@ import { STData, STColumn } from '@delon/abc';
 import { FilterRule, FilterOperate, AjaxResult } from '../../../shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-out-stor',
@@ -43,7 +44,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
             { text: '编辑', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.PrintState,  click: row => this.edit(row) },
-            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.Abolishflag, click: row => this.printPage(row.OutstorVoucher, row.OutstorComName,row.Id)},
+            { text: '打印', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.Update', iif: row => !row.Abolishflag, click: row => this.printPage(row.OutstorVoucher, row.OutstorComName, row.Id)},
             //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.OutStorManager.OutStor.Delete', click: row => this.delete(row) },
           ]
         }]
@@ -79,6 +80,8 @@ export class OutStorComponent extends STComponentBase implements OnInit {
       //{ title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
     
       //{ title: '打印模板名称', index: 'PrintMoName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },
+      //{ title: '打印名称', index: 'OutstorPrintName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string'},
+
       { title: '备注', index: 'OutstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
@@ -169,14 +172,21 @@ export class OutStorComponent extends STComponentBase implements OnInit {
       onSearch: (keyword: string) => this.getRepositoryOfOptionData(url, name, key_names, keyword).toPromise(),
     }
   }
-
+  private createdate: any;
+  private outdate: any;
+  protected datePipe: DatePipe = new DatePipe('en-US');
   create() {
+
+    this.createdate = this.datePipe.transform(new Date(), 'yyyyMMddHHmmssS');
+    this.outdate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
     this.schema = {
       properties: {
         OutstorVoucher: {
           type: 'string',
           title: '出库凭证号',
-          readOnly: false,
+          readOnly: true,
+          default: this.createdate,
         },
         OutstorComName:
         {
@@ -201,12 +211,14 @@ export class OutStorComponent extends STComponentBase implements OnInit {
         OutEmpId: {
           type: 'string',
           title: '业务员',
-          enum: ['A员工', 'B员工', 'C员工']
+          default: '请选择',
+          ui: this.select_ui('api/Admin/EmpBasedata/Read', 'EmpName', ['EmpId', 'EmpName'])
         },
         OutstorDate: {
           type: 'string',
           format: 'date-time',
           title: '出库时间',
+          default: this.outdate,
           ui: { grid: { span: 24 } }
         },
         产品列表: {
@@ -220,7 +232,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
-
+            
               OutstorPrice: {
                 type: 'number',
                 title: '价格',
@@ -271,10 +283,6 @@ export class OutStorComponent extends STComponentBase implements OnInit {
             }
           }
           values.push(item);
-
-          console.log(item);
-       
-
           item = {}
         });
       }
@@ -289,17 +297,17 @@ export class OutStorComponent extends STComponentBase implements OnInit {
   printPage(OutstorVoucher: any, OutstorComName: any, Id: any) {
 
     if (OutstorComName == "腾坤") {
-      window.open('http://localhost:4201/#/print/out-stor-print?id=' +OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://localhost:4201/#/print/out-stor-print?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
     if (OutstorComName == "华业") {
-      window.open('http://localhost:4201/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://localhost:4201/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
     if (OutstorComName == "效信通") {
-      window.open('http://localhost:4201/#/print/out-stor-print3?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://localhost:4201/#/print/out-stor-print3?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
 
     }
     if (OutstorComName == "帅坤") {
-      window.open('http://localhost:4201/#/print/out-stor-print4?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://localhost:4201/#/print/out-stor-print4?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
   }
  

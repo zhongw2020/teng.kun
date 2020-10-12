@@ -77,6 +77,9 @@ namespace teng.kun.OutStorManager.Dtos
             CreatedTime = entity.CreatedTime;
             LastUpdaterId = entity.LastUpdaterId;
             LastUpdatedTime = entity.LastUpdatedTime;
+            OutstorPrintName = entity.OutstorPrintName;
+            OutstorOther = entity.OutstorOther;
+
         }
 
         /// <summary>
@@ -238,6 +241,19 @@ namespace teng.kun.OutStorManager.Dtos
         [DisplayName("备注")]
         public string OutstorRemark { get; set; }
 
+
+        /// <summary>
+        /// 获取或设置 自定义打印名称
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorPrintName { get; set; }
+
+
+        /// <summary>
+        /// 获取或设置 别用字段
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorOther { get; set; }
         /// <summary>
         /// 获取或设置 创建者
         /// </summary>

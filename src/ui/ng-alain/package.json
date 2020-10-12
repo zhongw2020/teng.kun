@@ -3,7 +3,7 @@
   "version": "3.1.2",
   "private": true,
   "resolutions": {
-    "@babel/preset-env": "^8.3.25"
+    "@babel/preset-env": "^7.8.7"
   },
   "scripts": {
     "analyze": "npm run color-less && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",

@@ -192,6 +192,17 @@ namespace teng.kun.OutStorManager.Dtos
         /// </summary>
         [DisplayName("备注")]
         public string OutstorRemark { get; set; }
+        /// <summary>
+        /// 获取或设置 自定义打印名称
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorPrintName { get; set; }
 
+
+        /// <summary>
+        /// 获取或设置 别用字段
+        /// </summary>
+        [DisplayName("打印名称")]
+        public string OutstorOther { get; set; }
     }
 }

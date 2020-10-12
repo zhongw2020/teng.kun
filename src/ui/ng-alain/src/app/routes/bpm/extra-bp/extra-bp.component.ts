@@ -36,22 +36,22 @@ export class ExtraBpComponent extends STComponentBase implements OnInit {
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
           text: '操作', children: [
-            { text: '编辑', icon: 'edit', acl: 'Root.Admin.Bpm.ExtraBp.Update', iif: row => !(row.BpState == '已通过'),click: row => this.edit(row) },
-           // { text: '终止', icon: 'delete', type: 'del', acl: 'Root.Admin.Bpm.ExtraBp.Update', click: row => this.delete(row) },
+            { text: '编辑', icon: 'edit', acl: 'Root.Admin.Bpm.ExtraBp.Update', iif: row => !(row.BpState == '已通过'), click: row => this.edit(row) },
+            // { text: '终止', icon: 'delete', type: 'del', acl: 'Root.Admin.Bpm.ExtraBp.Update', click: row => this.delete(row) },
           ]
         }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '流程编码', index: 'BpId', sort: true,editable: true, filterable: true, ftype: 'string' },
+      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      { title: '流程编码', index: 'BpId', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '标题', index: 'BpTitle', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '状态', index: 'BpState', sort: true,  editable: true, filterable: true, type: 'radio', enum: ['待审核', '已通过', '已驳回','已终止'], default:"待审核" },
-      { title: '发起人', index: 'BpSponsor', sort: true, readOnly: true,  editable: true, filterable: true, ftype: 'string' },
-     // { title: '上一节点', index: 'PrevNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
-      { title: '当前节点', index: 'CurrNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
-      { title: '下一节点', index: 'NextNode', sort: true, readOnly: true,  editable: true, filterable: true, type: 'number' },
+      { title: '状态', index: 'BpState', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['待审核', '已通过', '已驳回', '已终止'], default: "待审核" },
+      { title: '发起人', index: 'BpSponsor', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      // { title: '上一节点', index: 'PrevNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      //{ title: '当前节点', index: 'CurrNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      //{ title: '下一节点', index: 'NextNode', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '备注', index: 'Remark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '加班开始时间', index: 'ExtraStartTime', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '加班结束时间', index: 'ExtraEndTime', sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '加班开始时间', index: 'ExtraStartTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
+      { title: '加班结束时间', index: 'ExtraEndTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '加班原因', index: 'ExtraReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
     ];
