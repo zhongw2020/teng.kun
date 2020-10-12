@@ -41,15 +41,15 @@ export class CusBasedataComponent extends STComponentBase implements OnInit {
           ]
         }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '客户编码', index: 'CusId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      //{ title: '客户编码', index: 'CusId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '名称', index: 'CusName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '联系方式', index: 'CusPhone', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '合作开始时间', index: 'CusComStartTime', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '合作结束时间', index: 'CusComEndTime', sort: true, editable: true, filterable: true, type: 'date' },
+      { title: '合作开始时间', index: 'CusComStartTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } }  },
+      { title: '合作结束时间', index: 'CusComEndTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '合作状态', index: 'CusState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'CusRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
+      //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
     ];
     return columns;
   }

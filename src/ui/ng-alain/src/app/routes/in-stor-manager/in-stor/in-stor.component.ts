@@ -48,30 +48,32 @@ export class InStorComponent extends STComponentBase implements OnInit {
         }]
       },
 
-     // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品编码', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '价格', index: 'InstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
+      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      { title:  '入库凭证号', index: 'InstorVoucher', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商名称', index: 'SupName', sort: true,  editable: true, filterable: true, ftype: 'string' },
+      { title: '价格', index: 'InstorPrice', sort: true,  editable: true, filterable: true, type: 'number' },
       { title: '数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
-      // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
-      { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '入库时间', index: 'InstorDate', sort: true,  editable: true, filterable: true, type: 'date' },
+      { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核', },
       // { title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
-      // { title: '反冲状态', index: 'RecoilState', sort: true, editable: true, readOnly: true, filterable: true, type: 'yn' },
-      { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '反冲状态', index: 'RecoilState', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+    
       // { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       // { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       // { title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       // { title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-        { title: '创建者', index: 'CreatorId', type: 'number' },
+      { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
       //{ title: '更新者', index: 'LastUpdaterId', type: 'number' },
       //{ title: '更新时间', index: 'LastUpdatedTime', type: 'date' },
@@ -200,11 +202,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
           ui: { grid: { span: 24} }
         },
         
-        InstorRemark: {
-          type: 'string',
-          title: '备注',
-
-        },
+      
         产品列表: {
           type: 'array',
           items: {
@@ -220,15 +218,18 @@ export class InStorComponent extends STComponentBase implements OnInit {
               InstorPrice: {
                 type: 'number',
                 title: '价格',
-                ui: { grid: { span: 8 } }
-               
+                readOnly: false,           
               },
               InstorNum: {
                 type: 'number',
                 title: '数量',
-                ui: { grid: { span: 8 } }
+                readOnly: false,      
               },
-             
+              InstorRemark: {
+                type: 'string',
+                title: '备注',
+              
+              },
             },
           },
           ui: { spanLabel: 5, grid: { arraySpan: 24, span: 24 } }

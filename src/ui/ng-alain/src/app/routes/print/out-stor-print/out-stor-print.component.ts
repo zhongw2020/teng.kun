@@ -39,7 +39,7 @@ export class OutStorPrintComponent implements OnInit {
       this.queryParams = params;
     })
 
-    const url = 'api/admin/OutStor/PrintData?id=' + this.queryParams.id + '&&ComName=' + this.queryParams.ComName;
+    const url = 'api/admin/OutStor/PrintData?id=' + this.queryParams.id + '&&ComName=' + this.queryParams.ComName + '&&Item=' + this.queryParams.Item;
 
     this.http.get(url).subscribe((res: any) => {
       this.res = res.salesoutline.table;

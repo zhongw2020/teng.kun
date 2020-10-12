@@ -34,18 +34,20 @@ export class InSupticketComponent extends STComponentBase implements OnInit {
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
       {
-        title: '收票', fixed: 'left', width: 65, buttons: [{ text: '收票', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateSupticket', iif: row => !(row.ReconciliationRemark || (!(row.InstorVerifyState == "已通过")) || row.Abolishflag), click: row => this.edit(row) }]
+        title: '收票', fixed: 'left', width: 65, buttons: [{ text: '收票', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateSupticket', iif: row => !(row.SupTicketRemark || (!(row.InstorVerifyState == "已通过")) || row.Abolishflag ||  row.SupTicketRemark), click: row => this.edit(row) }]
       },
      // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '物品编码', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品名称', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
+      { title: '供应商名称', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }},
       { title: '价格', index: 'InstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
-      { title: '入库数量', index: 'InstorNum', sort: true, readOnly: true,editable: true, filterable: true, type: 'number' },
-      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date' },
-     // { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '入库数量', index: 'InstorNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      { title: '反冲数量', index: 'RecoilNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
+      { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true,editable: true, filterable: true, type: 'yn' },
       { title: '对账标记', index: 'ReconciliationRemark', readOnly: true,sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '收票标记', index: 'SupTicketRemark', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, type: 'yn' },
@@ -61,10 +63,10 @@ export class InSupticketComponent extends STComponentBase implements OnInit {
       //{ title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '创建者', index: 'CreatorId', type: 'number' },
-      { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
-      { title: '更新者', index: 'LastUpdaterId', type: 'number' },
-      { title: '更新时间', index: 'LastUpdatedTime', type: 'date' },
+     // { title: '创建者', index: 'CreatorId', type: 'number' },
+     // { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
+     // { title: '更新者', index: 'LastUpdaterId', type: 'number' },
+     // { title: '更新时间', index: 'LastUpdatedTime', type: 'date' },
     ];
     return columns;
   }

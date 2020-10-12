@@ -122,6 +122,11 @@
               "acl": "Root.Admin.OutStorManager.OutStor"
             },
             {
+              "text": "出库打印",
+              "link": "/out-stor-manager/out-print",
+              "acl": "Root.Admin.OutStorManager.OutStor"
+            },
+            {
               "text": "出库反冲",
               "link": "/out-stor-manager/out-recoil",
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateRecoil"

@@ -15,23 +15,17 @@
 
         <!--添加小计列-->
         <ng-template st-row="OutstorSum" let-item let-index="index" let-column="column">
-          <td class="text-right">{{(item.OutstorNum-item.RecoilNum)*item.OutstorPrice}}</td>
+          <td class="text-right">
+            {{(item.OutstorNum-item.RecoilNum)*item.OutstorPrice|_currency}}
+          </td>
         </ng-template>
-
-
         <!--添加合计列-->
         <ng-template #bodyTpl let-t>
           <ng-container>
             <tr class="bg-grey-lighter">
-
-
-              <!--<td class="text-right">数量合计：{{ t.OutstorNum.text}}</td>
-              <td class="text-right"  >单价合计：{{ t.OutstorPrice.text}}</td>-->
-              <td class="text-right" colspan="2">金额合计：{{ tengkunsum | _currency}}元</td>
-
-              td
-              la
-
+              <td class="text-right" colspan="3">金额合计：{{ tengkunsum | _currency
+            }}元
+          </td>
               <td class="text-right" colspan="2">销售单量：{{ t.OutstorVoucher.text}}单</td>
 
               <td class="text-right" colspan="20"></td>

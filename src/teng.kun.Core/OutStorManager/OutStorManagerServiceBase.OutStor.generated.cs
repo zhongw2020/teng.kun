@@ -74,9 +74,7 @@ namespace teng.kun.OutStorManager
                 dto.SupName = supdb.SupName;
                 dto.CusName = cusdb.CusName;
                 dto.OutEmpName = empdb.EmpName;
-                //修改出库后库存
-                matdb.CurrStock = matdb.CurrStock- dto.OutstorNum;
-                MatBasedataRepository.Update(matdb);
+              
 
                 //修改人员工作状态
                 empdb.EmpWorkState = true;
@@ -105,21 +103,10 @@ namespace teng.kun.OutStorManager
             return await OutStorRepository.UpdateAsync(dtos);
         }
 
-        /// <summary>
-        /// 更新打印信息
-        /// </summary>
-        /// <param name="dtos">包含更新信息的打印信息DTO信息</param>
-        /// <returns>业务操作结果</returns>
-        public virtual Task<OperationResult> UpdateOutPrint(params OutStorInputDto[] dtos)
-        {
-            Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
 
-            //更改打印状态
+   
 
 
-            return OutStorRepository.UpdateAsync(dtos);
-         
-        }
 
         /// <summary>
         /// 更新出库信息

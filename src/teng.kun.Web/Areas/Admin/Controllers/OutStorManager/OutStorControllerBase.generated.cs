@@ -39,6 +39,7 @@ using teng.kun.OutStorManager.Dtos;
 using teng.kun.OutStorManager.Entities;
 using System.Data;
 using teng.kun.Common;
+using teng.kun.BaseModule.Entities;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -170,6 +171,25 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
             return result.ToAjaxResult();
         }
+
+        /// <summary>
+        /// 更新出库打印信息
+        /// </summary>
+        /// <param name="dtos">出库打印信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("出库打印")]
+        public virtual async Task<AjaxResult> UpdatePrint(OutStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+
         /// <summary>
         /// 删除出库信息
         /// </summary>
@@ -184,24 +204,6 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         {
             Check.NotNull(ids, nameof(ids));
             OperationResult result = await OutStorManagerContract.DeleteOutStors(ids);
-            return result.ToAjaxResult();
-        }
-
-
-        /// <summary>
-        /// 更新出库信息
-        /// </summary>
-        /// <param name="dtos">出库信息输入DTO</param>
-        /// <returns>JSON操作结果</returns>
-        [HttpPost]
-        [ModuleInfo]
-        [DependOnFunction("Read")]
-        [ServiceFilter(typeof(UnitOfWorkAttribute))]
-        [Description("出库打印")]
-        public virtual async Task<AjaxResult> UpdatePrint(OutStorInputDto[] dtos)
-        {
-            Check.NotNull(dtos, nameof(dtos));
-            OperationResult result = await OutStorManagerContract.UpdateOutPrint(dtos);
             return result.ToAjaxResult();
         }
 
@@ -232,6 +234,8 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         {
             string id = Request.Query["id"];
             string ComName = Request.Query["ComName"];
+            string Item = Request.Query["Item"];
+
             string sql = "";
             if (ComName == "腾坤")
             {
@@ -253,13 +257,43 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
-
+            
             string sqlsum = @"select convert(varchar,sum((OutstorNum-RecoilNum)*OutstorPrice)) FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             string salesout = sq.Select_Str_Sqlserver(ConnectionString, sqlsum);
 
             sql = @"SELECT ot.*,mat.MatAlias04  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where OutstorVoucher='" + id + "'";
             var alldata = new { salesoutline, salesout };
-           
+
+
+
+            //查看打印状态
+            string sqlselectmatid = @"select  convert(varchar,MatId) from OutStorManager_OutStor where PrintState=0 and Id='" + Item + "'";
+            string currstormatid = sq.Select_Str_Sqlserver(ConnectionString, sqlselectmatid);
+            //如果未打印
+            if (currstormatid != "")
+            {
+                string sqlselectmat = @"select MatId,OutstorNum from OutStorManager_OutStor where PrintState=0 and OutstorVoucher='" + id + "'"; ;
+                DataSet currstormat = sq.Select_DateSet_Sqlserver(ConnectionString, sqlselectmat);
+
+
+                if (currstormat.Tables[0] != null)
+                {
+                    //修改打印状态
+                    string sqlprintstate = @"update  OutStorManager_OutStor set PrintState=1  where   OutstorVoucher='" + id + "'";
+                    int updatenum = sq.Update_Sqlserver(ConnectionString, sqlprintstate);
+
+                    for (int i = 0; i < currstormat.Tables[0].Rows.Count; i++)
+                    {
+                        string MatId = currstormat.Tables[0].Rows[i]["MatId"].ToString();
+                        string OutstorNum = currstormat.Tables[0].Rows[i]["OutstorNum"].ToString();
+
+                        string sqloutstornum = @"update  BaseModule_MatBasedata set CurrStock=CurrStock-"+OutstorNum + " where   Id='" + MatId + "'";
+                        int updateoutstor = sq.Update_Sqlserver(ConnectionString, sqloutstornum);
+
+                    }
+
+                }
+            }
             return Json(alldata);
             
         }

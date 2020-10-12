@@ -1,33 +1,33 @@
 <div class="contain1">
   <div class="contain2-1">
     <p class="topcls">店铺地址：成都市经济技术开发区 </p>
-    <p class="topcls">联系方式：电话 028-84857362/17394973002    邮箱 tk@tengkun.com   网址 www.cdtengkun.com</p>
+    <p class="topcls">联系方式：电话 028-84857362/17394973002     邮箱 tk@tengkun.com     网址 www.cdtengkun.com</p>
   </div>
 
-  <div style="width:100%;text-align:center;font-size:30px;color:#000000">产品及服务签收单</div>
+  <div style="width:100%;text-align:center;font-size:24px;color:#000000;font-weight:bolder; font-family:宋体">产品及服务签收单</div>
   <div class="contain2-2">
-    <span class="topclsleft" >{{res[0].CusName}}  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;时间：{{res[0].OutstorDate|date:"yyyy-MM-dd"}}</span> <span class="topclsright"> No.1231312313   &nbsp;&nbsp;&nbsp;&nbsp; 币别：人民币</span>
+    <span class="topclsleft" >客户：{{res[0].CusName}}  &nbsp;&nbsp;&nbsp; 时间：{{res[0].OutstorDate|date:"yyyy-MM-dd"}}</span> <span class="topclsright"> No.{{res[0].OutstorVoucher}}   &nbsp;&nbsp;&nbsp;&nbsp; <font style="font-size:12px">币别：人民币</font></span>
   </div>
   <div class="contain2-3">
-    <table border='1' width="95%">
+    <table border="1" style=" border-color:#000000; border-width:1px; width:95%">
       <thead>
-        <tr class="thcls">
-          <th>行号</th>
-          <th>品名规格</th>
-          <th>单位</th>
-          <th>数量</th>
-          <th>单价</th>
-          <th>金额</th>
-          <th>备注</th>
+        <tr>
+          <th class="thcls">行号</th>
+          <th class="thcls">品名规格</th>
+          <th class="thcls">单位</th>
+          <th class="thcls">数量</th>
+          <th class="thcls">单价</th>
+          <th class="thcls">金额</th>
+          <th class="thcls">备注</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let x of res;index as i;">
+        <tr *ngFor="let x of res;index as i;" >
           <td class="tdcls" style="width:5%">{{ i+1 }}</td>
           <td class="tdcls" style="width:40%">{{ x.MatName }}</td>
           <td class="tdcls" style="width:5%">{{ x.MatUnit }}</td>
-          <td class="tdcls" style="width:10%">{{ x.OutstorPrice |_currency}}</td>
           <td class="tdcls" style="width:10%">{{ x.OutstorNum -x.RecoilNum}}</td>
+          <td class="tdcls" style="width:10%">{{ x.OutstorPrice |_currency}}</td>
           <td class="tdcls" style="width:10%">{{ (x.OutstorNum -x.RecoilNum)*x.OutstorPrice |_currency}}</td>
           <td class="tdcls" style="width:20%">{{ x.OutstorRemark }}</td>
         </tr>

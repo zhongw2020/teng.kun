@@ -41,15 +41,16 @@ export class SupBasedataComponent extends STComponentBase implements OnInit {
           ]
         }]
       },
-      { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '联系方式', index: 'SupPhone', sort: true, editable: true, filterable: true, ftype: 'string' },
+    //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      
       { title: '名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      //{ title: '开始合作时间', index: 'SupComStartTime', sort: true, editable: true, filterable: true, type: 'date' },
-      //{ title: '结束合作时间', index: 'SupComEndTime', sort: true, editable: true, filterable: true, type: 'date' },
+     // { title: '供应商编码', index: 'SupId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '联系方式', index: 'SupPhone', sort: true, editable: true, filterable: true, ftype: 'string'},
+      { title: '开始合作时间', index: 'SupComStartTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
+      { title: '结束合作时间', index: 'SupComEndTime', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } }  },
       { title: '合作状态', index: 'SupState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'SupRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
+    //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
     ];
     return columns;
   }
