@@ -71,7 +71,7 @@ export class InAbolishComponent extends STComponentBase implements OnInit {
       { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },

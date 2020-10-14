@@ -71,8 +71,8 @@ export class InStorComponent extends STComponentBase implements OnInit {
       // { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
@@ -184,21 +184,17 @@ export class InStorComponent extends STComponentBase implements OnInit {
        
         SupId: {
           type: 'string',
-          title: '供应商编码',
+          title: '供应商名称',
           default: '请选择',
           ui: this.select_ui('api/Admin/SupBasedata/Read', 'SupName', ['SupId', 'SupName'])
         },
       
-        InstorName: {
-          type: 'string',
-          title: '入库操作人员',
-          default: '请选择',
-          ui: this.select_ui('api/Admin/EmpBasedata/Read', 'EmpName', ['EmpId', 'EmpName'])
-        },
-        StorName: {
-          type: 'string',
-          title: '仓库名称'
-        },
+        //InstorName: {
+        //  type: 'string',
+        //  title: '入库操作人员',
+        //  default: '请选择',
+        //  ui: this.select_ui('api/Admin/EmpBasedata/Read', 'EmpName', ['EmpId', 'EmpName'])
+        //},
         InstorVerifyState: {
           type: 'string',
           title: '入库状态审核',
@@ -213,21 +209,21 @@ export class InStorComponent extends STComponentBase implements OnInit {
           ui: { grid: { span: 24} }
         },
     
-        产品列表: {
+        物品列表: {
           type: 'array',
           items: {
             type: 'object',
             properties: {
               MatId: {
                 type: 'string',
-                title: '物料编码',
+                title: '物品名称',
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
 
               InstorPrice: {
                 type: 'number',
-                title: '价格',
+                title: '单价',
                 readOnly: false,           
               },
               InstorNum: {

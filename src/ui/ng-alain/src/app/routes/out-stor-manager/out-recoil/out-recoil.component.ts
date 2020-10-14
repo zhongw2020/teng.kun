@@ -53,7 +53,7 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
       },
 
      
-     // { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['A员工', 'B员工', 'C员工'] },
+     // { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: [ '陈伟', '陈琦'] },
 
      // { title: '打印状态', index: 'PrintState', sort: true, editable: true, filterable: true, type: 'yn' },
      // { title: '签回标记', index: 'CusCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
@@ -64,7 +64,7 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '反冲数量', index: 'RecoilNum', sort: true, editable: true, filterable: true, type: 'number',},
       { title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
-      { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
+      //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       
       //{ title: '打印模板名称', index: 'PrintMoName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },

@@ -35,6 +35,8 @@ export class DashboardComponent implements AfterViewInit {
   };
 
   summaries: Summary[] = [];
+  summaritotlees: Summary[] = [];
+  summarinumes: Summary[] = [];
   lineChartData: any[] = [];
   constructor(private http: _HttpClient) {  }
 
@@ -94,14 +96,19 @@ export class DashboardComponent implements AfterViewInit {
         return;
       }
       this.summaries = [];
+      this.summaritotlees = [];
+      this.summarinumes = [];
       //累计销售总额
-      this.summaries.push({ data: `${res.salesoutall}`, text: '（单位：元）系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
+      this.summaritotlees.push({ data: `${res.salesoutall}`, text: '（单位：元）系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
       //月度入库金额
-      this.summaries.push({ data: `${res.salesincomplete} / ${res.salesin}`, text: '（单位：元）月入库额：总额 / 结算额', bgColor: 'bg-primary' });
+      this.summaries.push({ data: `${res.salesincomplete}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesin}`, text: '（单位：元）月入库额：结算额', bgColor: 'bg-success' });
       //月度销售额  
-      this.summaries.push({ data: `${res.salesoutcomplete} / ${res.salesout}`, text: '（单位：元）月销售额：总额 / 结算额', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesoutcomplete}`, text: '（单位：元）月销售额：签回额', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesout}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-success' });
       //月度签单数 
-      this.summaries.push({ data: `${res.salesoutnumcomplete} / ${res.salesoutnum}`, text: '（单位：单）月销售单：总额量 / 结算量', bgColor: 'bg-orange' });
+      this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '（单位：单）月销售单：签回量', bgColor: 'bg-orange' });
+      this.summarinumes.push({ data: `${res.salesoutnum}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-orange' });
 
     });
   }

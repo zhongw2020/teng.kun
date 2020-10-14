@@ -97,7 +97,7 @@ export class OutPrintComponent extends STComponentBase implements OnInit {
   printPage(OutstorVoucher: any, OutstorComName: any, Id: any) {
 
     if (OutstorComName == "腾坤") {
-      window.open('http://localhost:4201/#/print/out-stor-print?id=' + +OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://localhost:4201/#/print/out-stor-print?id='  +OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
     if (OutstorComName == "华业") {
       window.open('http://localhost:4201/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id, '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');

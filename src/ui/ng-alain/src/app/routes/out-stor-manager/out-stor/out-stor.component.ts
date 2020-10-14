@@ -204,7 +204,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
 
         SupId: {
           type: 'string',
-          title: '供应商编码',
+          title: '供应商名称',
           default: '请选择',
           ui: this.select_ui('api/Admin/SupBasedata/Read', 'SupName', ['SupId', 'SupName'])
         },
@@ -228,14 +228,14 @@ export class OutStorComponent extends STComponentBase implements OnInit {
             properties: {
               MatId: {
                 type: 'string',
-                title: '物料编码',
+                title: '物品名称',
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
             
               OutstorPrice: {
                 type: 'number',
-                title: '价格',
+                title: '单价',
                    readOnly: false,
               },
               OutstorNum: {
@@ -297,17 +297,17 @@ export class OutStorComponent extends STComponentBase implements OnInit {
   printPage(OutstorVoucher: any, OutstorComName: any, Id: any) {
 
     if (OutstorComName == "腾坤") {
-      window.open('http://localhost:4201/#/print/out-stor-print?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://192.168.7.177:7777/#/print/out-stor-print?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
     if (OutstorComName == "华业") {
-      window.open('http://localhost:4201/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://192.168.7.177:7777/#/print/out-stor-print2?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
     if (OutstorComName == "效信通") {
-      window.open('http://localhost:4201/#/print/out-stor-print3?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://192.168.7.177:7777/#/print/out-stor-print3?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
 
     }
     if (OutstorComName == "帅坤") {
-      window.open('http://localhost:4201/#/print/out-stor-print4?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+      window.open('http://192.168.7.177:7777/#/print/out-stor-print4?id=' + OutstorVoucher + '&&ComName=' + OutstorComName + '&&Item=' + Id , '打印', 'top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     }
   }
  

@@ -40,6 +40,7 @@ using teng.kun.OutStorManager.Entities;
 using System.Data;
 using teng.kun.Common;
 using teng.kun.BaseModule.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -227,12 +228,15 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         }
 
         private SqlHelper sq = new SqlHelper();
-        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=123456;MultipleActiveResultSets=true";
+        
+        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=TengKun777;MultipleActiveResultSets=true";
+      
 
         //打印数据
         public IActionResult PrintData()
         {
-            string id = Request.Query["id"];
+    
+        string id = Request.Query["id"];
             string ComName = Request.Query["ComName"];
             string Item = Request.Query["Item"];
 

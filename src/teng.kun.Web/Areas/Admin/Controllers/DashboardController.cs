@@ -50,7 +50,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
 
         private SqlHelper sq = new SqlHelper();
-        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=123456;MultipleActiveResultSets=true";
+        private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=TengKun777;MultipleActiveResultSets=true";
 
         protected IServiceProvider ServiceProvider { get; }
         protected IRepository<InStor, int> InStorRepository => ServiceProvider.GetService<IRepository<InStor, int>>();

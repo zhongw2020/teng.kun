@@ -1,7 +1,7 @@
 <div class="content__title">
   <h1>
     本月数据统计
-  
+
   </h1>
   <div class="blank-grow"></div>
   <div class="data-range">
@@ -11,18 +11,39 @@
   </div>
 </div>
 
+
+<nz-row nzGutter="32" *ngIf="summaritotlees">
+  <div *ngFor="let summary of summaritotlees" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{summary.data|_currency}}元</div>
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+      </div>
+    </div>
+  </div>
+</nz-row>
 <nz-row nzGutter="32" *ngIf="summaries">
   <div *ngFor="let summary of summaries" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{summary.data}}</div>
+        <div class="h2 mt0">{{summary.data|_currency}}元</div>
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+      </div>
+    </div>
+  </div>
+</nz-row>
+<nz-row nzGutter="32" *ngIf="summarinumes">
+  <div *ngFor="let summary of summarinumes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{summary.data}}单</div>
         <p class="text-nowrap mb0">{{summary.text}}</p>
       </div>
     </div>
   </div>
 </nz-row>
 
-  <nz-row nzGutter="32">
-    `<g2-bar height="300" [title]="'近1年月销售额'" [data]="salesData" ></g2-bar>`
-    ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
-  </nz-row>
+<nz-row nzGutter="32">
+  `<g2-bar height="300" [title]="'近1年月销售额'" [data]="salesData"></g2-bar>`
+  ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
+</nz-row>
