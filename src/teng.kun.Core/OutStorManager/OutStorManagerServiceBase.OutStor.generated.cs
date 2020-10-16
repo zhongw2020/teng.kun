@@ -66,12 +66,10 @@ namespace teng.kun.OutStorManager
             foreach (OutStorInputDto dto in dtos)
             {
                 MatBasedata matdb = await MatBasedataRepository.GetAsync(dto.MatId);
-                SupBasedata supdb = await SupBasedataRepository.GetAsync(dto.SupId);
                 CusBasedata cusdb = await CusBasedataRepository.GetAsync(dto.CusId);
                 EmpBasedata empdb = await EmpBasedataRepository.GetAsync(dto.OutEmpId);
 
                 dto.MatName = matdb.MatName;
-                dto.SupName = supdb.SupName;
                 dto.CusName = cusdb.CusName;
                 dto.OutEmpName = empdb.EmpName;
               
@@ -93,12 +91,19 @@ namespace teng.kun.OutStorManager
         {
             Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
 
+            //强制修改反冲状态
+            if (dtos[0].RecoilNum != 0)
+            {
+                dtos[0].RecoilState = true;
+            }
+            //修改库存
             MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
-
             matdb.CurrStock = matdb.CurrStock +dtos[0].RecoilNum;
-
             MatBasedataRepository.Update(matdb);
 
+            //累计反冲数量
+            OutStor Instordb = await OutStorRepository.GetAsync(dtos[0].Id);
+            dtos[0].RecoilNum = dtos[0].RecoilNum + Instordb.RecoilNum;
 
             return await OutStorRepository.UpdateAsync(dtos);
         }

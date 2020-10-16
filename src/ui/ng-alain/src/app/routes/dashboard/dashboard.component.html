@@ -16,8 +16,9 @@
   <div *ngFor="let summary of summaritotlees" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{summary.data|_currency}}元</div>
         <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data|_currency}}元</div>
+
       </div>
     </div>
   </div>
@@ -26,8 +27,9 @@
   <div *ngFor="let summary of summaries" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{summary.data|_currency}}元</div>
+
         <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data|_currency}}元</div>
       </div>
     </div>
   </div>
@@ -36,8 +38,20 @@
   <div *ngFor="let summary of summarinumes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{summary.data}}单</div>
+
         <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data}}单</div>
+      </div>
+    </div>
+  </div>
+</nz-row>
+<nz-row nzGutter="32" *ngIf="summariempes">
+  <div *ngFor="let summary of summariempes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" [ngClass]="summary.bgColor" class="rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data|_currency}}元</div>
       </div>
     </div>
   </div>

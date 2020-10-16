@@ -40,25 +40,25 @@ namespace teng.kun.OutStorManager.Entities
         /// <summary>
         /// 获取或设置 出账公司
         /// </summary>
-        [DisplayName("出账公司"), Required]
+        [DisplayName("出账公司")]
         public string OutstorComName { get; set; }
 
         /// <summary>
         /// 获取或设置 客户编码
         /// </summary>
-        [DisplayName("客户编码"), Required]
+        [DisplayName("客户编码")]
         public int CusId { get; set; }
 
         /// <summary>
         /// 获取或设置 物品编码
         /// </summary>
-        [DisplayName("物品编码"), Required]
+        [DisplayName("物品编码")]
         public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
-        [DisplayName("供应商编码"), Required]
+        [DisplayName("供应商编码")]
         public int SupId { get; set; }
 
 

@@ -9,6 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,7 +23,7 @@ export class DashboardComponent implements AfterViewInit {
  
   }
 
-
+ 
   dateFormat = 'yyyy/MM/dd';
   pickerRanges = {
     '今天': [moment().toDate(), moment().toDate()],
@@ -37,6 +38,7 @@ export class DashboardComponent implements AfterViewInit {
   summaries: Summary[] = [];
   summaritotlees: Summary[] = [];
   summarinumes: Summary[] = [];
+  summariempes: Summary[] = [];
   lineChartData: any[] = [];
   constructor(private http: _HttpClient) {  }
 
@@ -50,7 +52,7 @@ export class DashboardComponent implements AfterViewInit {
     this.rangePickerChange(this.pickerRanges.本月);
     setTimeout(() => {
       this.salesLine();
-    }, 1000);
+    }, 100);
   }
 
   rangePickerChange(e) {
@@ -64,10 +66,6 @@ export class DashboardComponent implements AfterViewInit {
     this.reportseld(start, end);
     this.salesLine();
   }
-
-
-
-
 
   ///** 当月统计数据 */
   //summaryData(start, end) {
@@ -88,6 +86,8 @@ export class DashboardComponent implements AfterViewInit {
 
   reportseld(start, end)  {
     const url = `api/admin/dashboard/ReportSeld?start=${start}&end=${end}`;
+
+
     this.http.get(url).subscribe((res: any) => {
 
 
@@ -95,21 +95,26 @@ export class DashboardComponent implements AfterViewInit {
 
         return;
       }
+
       this.summaries = [];
       this.summaritotlees = [];
       this.summarinumes = [];
+      this.summariempes = [];
       //累计销售总额
-      this.summaritotlees.push({ data: `${res.salesoutall}`, text: '（单位：元）系统上线后累计销售总额(2020-10-01)', bgColor: 'bg-magenta' });
+      this.summaritotlees.push({ data: `${res.salesoutall}`, text: '累计销售总额', bgColor: 'bg-red' });
+      this.summaritotlees.push({ data: `${res.salesout}`, text: '月销售总额', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesoutchenqwei}`, text: '陈伟月销售额', bgColor: 'bg-orange' });
+      this.summaritotlees.push({ data: `${res.salesoutchenqqi}`, text: '陈琪月销售额', bgColor: 'bg-orange' });
+      this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesin}`, text: '月采购总和', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额', bgColor: 'bg-success' });
       //月度入库金额
-      this.summaries.push({ data: `${res.salesincomplete}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-success' });
-      this.summaries.push({ data: `${res.salesin}`, text: '（单位：元）月入库额：结算额', bgColor: 'bg-success' });
-      //月度销售额  
-      this.summaries.push({ data: `${res.salesoutcomplete}`, text: '（单位：元）月销售额：签回额', bgColor: 'bg-success' });
-      this.summaries.push({ data: `${res.salesout}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-success' });
-      //月度签单数 
-      this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '（单位：单）月销售单：签回量', bgColor: 'bg-orange' });
-      this.summarinumes.push({ data: `${res.salesoutnum}`, text: '（单位：元）月入库额：总额', bgColor: 'bg-orange' });
+      //月度签单数
+      this.summarinumes.push({ data: `${res.salesoutnum}`, text: '月销售单总量', bgColor: 'bg-orange' });
+      this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '月销售单签回量', bgColor: 'bg-orange' });
 
+
+ 
     });
   }
 
@@ -148,7 +153,7 @@ export class DashboardComponent implements AfterViewInit {
         console.log(res);
        for (let i = 0; i < 12; i++) {
 
-         console.log('222');
+   
           if (this.salesData[i].x) {
           // this.salesData[i].x = parseInt(res.table[i].salemonth);
           //  this.salesData[i].y = parseInt(res.table[i].salesout);
@@ -159,7 +164,7 @@ export class DashboardComponent implements AfterViewInit {
                color: '#f50',
             });
 
-            console.log('3333');
+     
           }
           else { return;}
          };

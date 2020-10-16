@@ -197,37 +197,44 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
 
             //当月入库额
-            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and InstorVerifyState='已通过' and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and InstorVerifyState='已通过' and InstorDate>='" + starttime + "' and InstorDate<='" + endtime + "'";
 
             string salesin = sq.Select_Str_Sqlserver(ConnectionString, sql);
 
 
             //当月入库额已结算
-            string sql1 = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and SupCloseAccuntsFlag=1 and InstorVerifyState='已通过' and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql1 = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and SupCloseAccuntsFlag=1 and InstorVerifyState='已通过' and InstorDate>='" + starttime + "' and InstorDate<='" + endtime + "'";
 
             string salesincomplete = sq.Select_Str_Sqlserver(ConnectionString, sql1);
 
 
 
             //当月销售额
-            string sql2 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and Abolishflag=0 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql2 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and Abolishflag=0 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesout = sq.Select_Str_Sqlserver(ConnectionString, sql2);
 
             //当月签回额
-            string sql3 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and  Abolishflag=0 and CusCloseAccuntsFlag=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql3 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and  Abolishflag=0 and CusCloseAccuntsFlag=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesoutcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql3);
 
             //当月销售单数量
 
-            string sql4 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql4 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesoutnum = sq.Select_Str_Sqlserver(ConnectionString, sql4);
             //当月签回销售单数量
-            string sql5 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where CusCloseAccuntsFlag=1 and Abolishflag=0 and PrintState=1 and CreatedTime>='" + starttime + "' and CreatedTime<='" + endtime + "'";
+            string sql5 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where CusCloseAccuntsFlag=1 and Abolishflag=0 and PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesoutnumcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql5);
+            //当月陈伟销售额
+            string sql6 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈伟' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string salesoutchenqwei = sq.Select_Str_Sqlserver(ConnectionString, sql6);
+            //当月陈琦销售额
+            string sql7 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈琪' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string salesoutchenqqi = sq.Select_Str_Sqlserver(ConnectionString, sql7);
+
 
             if (salesoutall == "")
             {
@@ -257,6 +264,15 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             {
                 salesoutnumcomplete = "0";
             }
+            if (salesoutchenqwei == "")
+            {
+                salesoutchenqwei = "0";
+            }
+            if (salesoutchenqqi == "")
+            {
+                salesoutchenqqi = "0";
+            }
+
 
             var infos = new
             {
@@ -266,7 +282,9 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                 salesout,
                 salesoutcomplete,
                 salesoutnum,
-                salesoutnumcomplete
+                salesoutnumcomplete,
+                salesoutchenqwei,
+                salesoutchenqqi
             };
 
             return Json(infos);
@@ -274,7 +292,6 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         //年度销售额
         public IActionResult ReportSeldLine()
         {
-
             //按月统计近一年销售额
             string sql = @"SELECT LEFT(CreatedTime,7) as salemonth,convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(CreatedTime,4)>DATEADD(year,-1,GETDATE()) group by  LEFT(CreatedTime,7)";
 
@@ -282,5 +299,14 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             return Json(salesoutline);
         }
+        //获取通知消息
+        public IActionResult ReportNotify()
+        {
+            string sql = @"SELECT  top 5  EmpName  from  BaseModule_EmpBasedata";
+            DataSet infos = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+            return Json(infos);
+        }
+
+
     }
 }

@@ -55,8 +55,9 @@ export class InVerifyComponent extends STComponentBase implements OnInit {
       { title: '物品名称', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '供应商名称', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }},
       { title: '价格', index: 'InstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
-      { title: '数量', index: 'InstorNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
-      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date'  , ui: { grid: { span: 24 } }},
+      { title: '入库数量', index: 'InstorNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      { title: '反冲数量', index: 'RecoilNum', readOnly: true, sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
    
       { title: '反冲状态', index: 'RecoilState', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },

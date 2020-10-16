@@ -53,7 +53,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       { title: '入库数量', index: 'InstorNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '反冲数量', index: 'RecoilNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
-      { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
+     
       { title: '对账标记', index: 'ReconciliationRemark', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '收票标记', index: 'SupTicketRemark', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn' },
@@ -68,14 +68,15 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       //{ title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-  
+     
       //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } }  },
       { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-     // { title: '创建者', index: 'CreatorId', type: 'number' },
+      { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
+      // { title: '创建者', index: 'CreatorId', type: 'number' },
      // { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
      // { title: '更新者', index: 'LastUpdaterId', type: 'number' },
      // { title: '更新时间', index: 'LastUpdatedTime', type: 'date' },

@@ -34,7 +34,7 @@ export class OutAboishComponent extends STComponentBase implements OnInit {
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
       {
-        title: '作废', fixed: 'left', width: 65, buttons: [{ text: '作废', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateAbolish', iif: row => !(row.Abolishflag), click: row => this.edit(row) }]
+        title: '作废', fixed: 'left', width: 65, buttons: [{ text: '作废', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateAbolish', iif: row => !(row.Abolishflag) && row.PrintState, click: row => this.edit(row) }]
       },
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -43,7 +43,7 @@ export class OutAboishComponent extends STComponentBase implements OnInit {
         title: '客户名称', index: 'CusName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }
       },
       { title: '物品名称', index: 'MatName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
-      { title: '供应商名称', index: 'SupName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
+      //{ title: '供应商名称', index: 'SupName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '出库时间', index: 'OutstorDate', readOnly: true, sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '单价', index: 'OutstorPrice', readOnly: true, sort: true, editable: true, filterable: true, type: 'number' },
 
@@ -52,7 +52,7 @@ export class OutAboishComponent extends STComponentBase implements OnInit {
       },
       { title: '反冲数量', index: 'RecoilNum', readOnly: true, sort: true, editable: true, filterable: true, type: 'number', },
       { title: '签回标记', index: 'CusCloseAccuntsFlag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
-      { title: '作废标记', index: 'Abolishflag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
+      { title: '作废标记', index: 'Abolishflag',  sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
       // { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['A员工', 'B员工', 'C员工'] },
 
       // { title: '打印状态', index: 'PrintState', sort: true, editable: true, filterable: true, type: 'yn' },

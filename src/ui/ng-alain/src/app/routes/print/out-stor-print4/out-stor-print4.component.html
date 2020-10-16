@@ -5,26 +5,26 @@
     <span class="topclsleft"> 配送电话：15281036879</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="topclsright"> 日期：{{res[0].OutstorDate|date:"yyyy-MM-dd"}}</span>
   </div>
   <div class="contain2-2">
-    <span class="topclsleft"> 收货单位：15281036879</span> <span class="topclsright"> 收货人：</span>
+    <span class="topclsleft"> 收货单位：15281036879</span> <span class="topclsright"> 收货人：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   </div>
   <p>&nbsp;</p>
   <div class="contain2-3">
     <table border="1" style=" border-color:#000000; border-width:1px; width:95%">
       <thead>
         <tr class="thcls">
-          <th>项目分行</th>
-          <th>项目名称</th>
+          <th>序号</th>
+          <th>产品名称、服务项目</th>
           <th>数量</th>
           <th>单位</th>
           <th>单价</th>
-          <th>总计</th>
-          <th>备注</th>
+          <th>金额</th>
+          <th>其他</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let x of res;index as i;">
-          <td class="tdcls" style="width:7%">{{ i+1 }}</td>
-          <td class="tdcls" style="width:38%">{{ x.MatName }}</td>
+          <td class="tdcls" style="width:5%">{{ i+1 }}</td>
+          <td class="tdcls" style="width:40%">{{ x.printname }}{{x.PrintMoName}}</td>
           <td class="tdcls" style="width:10%">{{ x.OutstorNum -x.RecoilNum}}</td>
           <td class="tdcls" style="width:5%">{{ x.MatUnit }}</td>
           <td class="tdcls" style="width:10%">{{ x.OutstorPrice |_currency}}</td>
@@ -36,9 +36,13 @@
           <td class="tdcls">{{ salesout2|_currency }}</td>
           <td class="tdcls"></td>
         </tr>
+
+      
       </tbody>
     </table>
   </div>
-
+  <div class="contain2-4">
+    <span style="font-family: 宋体;font-weight: bolder;font-size: 12px;color: #000000;padding-left:1%; line-height:40px">SHD：  S{{res[0].OutstorVoucher}}K</span>
+  </div>
 </div>
 

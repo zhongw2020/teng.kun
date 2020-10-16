@@ -44,7 +44,7 @@ export class OutCloseComponent extends STComponentBase implements OnInit {
         title: '客户名称', index: 'CusName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }
       },
       { title: '物品名称', index: 'MatName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
-      { title: '供应商名称', index: 'SupName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
+     // { title: '供应商名称', index: 'SupName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '出库时间', index: 'OutstorDate', readOnly: true, sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       { title: '单价', index: 'OutstorPrice', readOnly: true, sort: true, editable: true, filterable: true, type: 'number' },
 

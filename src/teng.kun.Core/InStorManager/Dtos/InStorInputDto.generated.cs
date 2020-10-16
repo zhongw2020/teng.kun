@@ -49,13 +49,13 @@ namespace teng.kun.InStorManager.Dtos
         /// <summary>
         /// 获取或设置 物品编码
         /// </summary>
-        [DisplayName("物品编码"), Required]
+        [DisplayName("物品编码")]
         public int MatId { get; set; }
 
         /// <summary>
         /// 获取或设置 供应商编码
         /// </summary>
-        [DisplayName("供应商编码"), Required]
+        [DisplayName("供应商编码")]
         public int SupId { get; set; }
 
 
@@ -99,7 +99,7 @@ namespace teng.kun.InStorManager.Dtos
         /// <summary>
         /// 获取或设置 入库操作员
         /// </summary>
-        [DisplayName("入库操作员"), Required]
+        [DisplayName("入库操作员")]
         public string InstorName { get; set; }
 
         /// <summary>

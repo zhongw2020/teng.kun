@@ -105,13 +105,20 @@ namespace teng.kun.InStorManager
         {
 
             Check.Validate<InStorInputDto, int>(dtos, nameof(dtos));
-
+            //强制修改反冲状态
+            if (dtos[0].RecoilNum != 0)
+            {
+                dtos[0].RecoilState = true;
+            }
             //修改库存信息
             MatBasedata matdb = await MatBasedataRepository.GetAsync(dtos[0].MatId);
-         
             matdb.CurrStock = matdb.CurrStock - dtos[0].RecoilNum;
-
             MatBasedataRepository.Update(matdb);
+            //累计反冲数量
+            InStor Instordb = await InStorRepository.GetAsync(dtos[0].Id);
+            dtos[0].RecoilNum = dtos[0].RecoilNum + Instordb.RecoilNum; 
+
+         
 
             return await InStorRepository.UpdateAsync(dtos).ConfigureAwait(false);
         }
