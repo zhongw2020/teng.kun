@@ -152,9 +152,10 @@ export class PageCondition {
   /**  页序 */
   PageIndex = 1;
   /**  分页大小 */
-  PageSize = 20;
+  PageSize = 100;
   /**  排序条件集合 */
   SortConditions: SortCondition[] = [];
+
 }
 export class SortCondition {
   SortField: string;

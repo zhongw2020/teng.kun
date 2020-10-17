@@ -15,7 +15,7 @@ import { SFUISchema, SFSchema, SFSelectWidgetSchema, SFArrayWidgetSchema } from 
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
 import { STData } from '@delon/abc';
-import { AjaxResult, FilterOperate, FilterRule } from '@shared/osharp/osharp.model';
+import { AjaxResult, FilterOperate, FilterRule, SortCondition } from '@shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -49,31 +49,31 @@ export class InStorComponent extends STComponentBase implements OnInit {
         }]
       },
 
-      //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title:  '入库凭证号', index: 'InstorVoucher', sort: true, editable: true, filterable: true, ftype: 'string' },
+      //{ title: '编号', index: 'Id', sort: true,  readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      { title: '入库凭证号', index: 'InstorVoucher', sort: { key: 'InstorVoucher', default:"descend"},readOnly:true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '供应商名称', index: 'SupName', sort: true,  editable: true, filterable: true, ftype: 'string' },
+      { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '单价', index: 'InstorPrice', sort: true,  editable: true, filterable: true, type: 'number' },
-      { title: '入库数量', index: 'InstorNum', sort: true, editable: true, filterable: true, type: 'number' },
-      { title: '反冲数量', index: 'RecoilNum', readOnly: true,sort: true, editable: true, filterable: true, type: 'number' },
-      { title: '入库时间', index: 'InstorDate', sort: true,  editable: true, filterable: true, type: 'date' },
+      { title: '入库数量', index: 'InstorNum', sort: true,  editable: true, filterable: true, type: 'number' },
+      { title: '反冲数量', index: 'RecoilNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
+      { title: '入库时间', index: 'InstorDate', sort: true,   editable: true, filterable: true, type: 'date' },
      
-      { title: '入库审核状态', index: 'InstorVerifyState', sort: true, editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核', },
+      { title: '入库审核状态', index: 'InstorVerifyState', sort: true,  editable: true, filterable: true, ftype: "string", enum: ['待审核'], default: '待审核', },
       // { title: '审核意见', index: 'VerifyOpinion', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '反冲状态', index: 'RecoilState', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+      { title: '反冲状态', index: 'RecoilState', sort: true,readOnly: true, editable: true, filterable: true, type: 'yn' },
       // { title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       // { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       // { title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+      { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true,  readOnly: true, editable: true, filterable: true, type: 'yn' },
       // { title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记时间', index: 'SupCloseAccuntsDate', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算标记操作员', index: 'SupCloseAccuntsEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
       // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+      { title: '作废标记', index: 'Abolishflag', sort: true,  readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
@@ -117,6 +117,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
     let rule = new FilterRule(name, keyword);
     rule.Operate = FilterOperate.Contains;
     this.request.FilterGroup.Rules = [];
+    this.request.PageCondition.SortConditions = [];
     this.request.FilterGroup.Rules.push(rule);
     return this.http.post(url, this.request).pipe(map((resp: any) => {
       const arr = [];
@@ -287,5 +288,6 @@ export class InStorComponent extends STComponentBase implements OnInit {
       });
     });
   }
+
 }
 

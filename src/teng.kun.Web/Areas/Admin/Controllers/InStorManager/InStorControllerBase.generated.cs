@@ -82,6 +82,8 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             Expression<Func<InStor, bool>> predicate = FilterService.GetExpression<InStor>(request.FilterGroup);
 
+           
+
             var page = InStorManagerContract.InStors.ToPage<InStor, InStorOutputDto>(predicate, request.PageCondition);
 
             return page.ToPageData();

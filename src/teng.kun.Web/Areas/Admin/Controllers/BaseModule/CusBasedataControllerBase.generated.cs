@@ -79,7 +79,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual PageData<CusBasedataOutputDto> Read(PageRequest request)
         {
             Check.NotNull(request, nameof(request));
-
+            
             Expression<Func<CusBasedata, bool>> predicate = FilterService.GetExpression<CusBasedata>(request.FilterGroup);
             var page = BaseModuleContract.CusBasedatas.ToPage<CusBasedata, CusBasedataOutputDto>(predicate, request.PageCondition);
 

@@ -37,7 +37,7 @@ using OSharp.Security;
 using teng.kun.BaseModule;
 using teng.kun.BaseModule.Dtos;
 using teng.kun.BaseModule.Entities;
-
+using Castle.Core.Logging;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -80,10 +80,18 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         {
             Check.NotNull(request, nameof(request));
 
-            Expression<Func<EmpBasedata, bool>> predicate = FilterService.GetExpression<EmpBasedata>(request.FilterGroup);
-            var page = BaseModuleContract.EmpBasedatas.ToPage<EmpBasedata, EmpBasedataOutputDto>(predicate, request.PageCondition);
-
-            return page.ToPageData();
+           
+            try
+            {
+                Expression<Func<EmpBasedata, bool>> predicate = FilterService.GetExpression<EmpBasedata>(request.FilterGroup);
+                var page = BaseModuleContract.EmpBasedatas.ToPage<EmpBasedata, EmpBasedataOutputDto>(predicate, request.PageCondition);
+                return page.ToPageData();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+       
         }
         
         /// <summary>

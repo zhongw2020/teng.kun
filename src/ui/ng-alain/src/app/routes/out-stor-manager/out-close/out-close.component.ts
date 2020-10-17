@@ -35,10 +35,10 @@ export class OutCloseComponent extends STComponentBase implements OnInit {
     let columns: OsharpSTColumn[] = [
     
       {
-        title: '签回', fixed: 'left', width: 65, buttons: [{ text: '签回', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateClose', iif: row => !(row.CusCloseAccuntsFlag || row.Abolishflag) && row.PrintState, click: row => this.edit(row) }]
+        title: '签回', fixed: 'left', width: 65, buttons: [{ text: '签回', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateClose', iif: row => !(row.CusCloseAccuntsFlag || row.Abolishflag) && row.PrintState && (row.RecoilNum < row.OutstorNum), click: row => this.edit(row) }]
       },
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'OutstorVoucher', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
       { title: '出账公司', index: 'OutstorComName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },
       {
         title: '客户名称', index: 'CusName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }

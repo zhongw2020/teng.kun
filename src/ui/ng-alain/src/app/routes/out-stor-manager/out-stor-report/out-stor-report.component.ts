@@ -73,7 +73,7 @@ export class OutStorReportComponent extends STComponentBase implements OnInit {
      
 
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number', },
-      { title: { text: '出库凭证号', optionalHelp:'日期+0001' }, index: 'OutstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', statistical: 'distinctCount', key: 'OutstorVoucher' },
+      { title: { text: '出库凭证号', optionalHelp: '日期+0001' }, index: 'OutstorVoucher', readOnly: true, sort: { key: 'OutstorVoucher', default: "descend" },  editable: true, filterable: true, ftype: 'string', statistical: 'distinctCount', key: 'OutstorVoucher' },
       { title: '出账公司', index: 'OutstorComName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', 'B公司', 'C公司', 'D公司'] },
       { title: '客户名称', index: 'CusName', sort: true, editable: true, filterable: true, ftype: 'string', filter: { type: 'keyword', fn: (filter, record) => !filter.value || record.CusName.indexOf(filter.value) !== -1, }, },
       { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string', render: 'MatName' },

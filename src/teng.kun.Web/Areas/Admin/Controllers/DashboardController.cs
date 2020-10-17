@@ -234,6 +234,16 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             //当月陈琦销售额
             string sql7 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈琪' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
             string salesoutchenqqi = sq.Select_Str_Sqlserver(ConnectionString, sql7);
+            //累计利润
+            string sql8 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1";
+            string salesoutleijilirun = sq.Select_Str_Sqlserver(ConnectionString, sql8);
+            //月利润
+
+            string sql9 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string salesoutyuelirun = sq.Select_Str_Sqlserver(ConnectionString, sql9);
+            //库存估价
+            string sql10 = @"select convert(varchar,sum(CurrStock*InstorPrice)) from BaseModule_MatBasedata as mattable left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on mattable.MatName= b.MatName";
+            string kucungujia = sq.Select_Str_Sqlserver(ConnectionString, sql10);
 
 
             if (salesoutall == "")
@@ -272,6 +282,21 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             {
                 salesoutchenqqi = "0";
             }
+            if (salesoutleijilirun == "")
+            {
+                salesoutleijilirun = "0";
+            }
+
+            if (salesoutyuelirun == "")
+            {
+                salesoutyuelirun = "0";
+            }
+
+            if (kucungujia == "")
+            {
+                kucungujia = "0";
+            }
+
 
 
             var infos = new
@@ -284,7 +309,10 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                 salesoutnum,
                 salesoutnumcomplete,
                 salesoutchenqwei,
-                salesoutchenqqi
+                salesoutchenqqi,
+                salesoutleijilirun,
+                salesoutyuelirun,
+                kucungujia,
             };
 
             return Json(infos);

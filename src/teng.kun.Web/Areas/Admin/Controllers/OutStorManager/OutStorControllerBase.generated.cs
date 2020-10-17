@@ -174,7 +174,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// 更新出库打印信息
+        /// 更新出库打印信息（暂时未使用）
         /// </summary>
         /// <param name="dtos">出库打印信息输入DTO</param>
         /// <returns>JSON操作结果</returns>
@@ -247,20 +247,19 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             string sql = "";
             if (ComName == "腾坤")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias01 as printname  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias01 as printname,MatUnit  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
-
             if (ComName == "华业")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias02 as printname  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias02 as printname,MatUnit  FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
             if (ComName == "效信通")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias03 as printname FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias03 as printname,MatUnit FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
             if (ComName == "帅坤")
             {
-                 sql = @"SELECT ot.*,mat.MatAlias04 as printname FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+                 sql = @"SELECT ot.*,mat.MatAlias04 as printname,MatUnit FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
 
 

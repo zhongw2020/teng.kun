@@ -109,7 +109,17 @@ namespace teng.kun.OutStorManager
         }
 
 
-   
+        /// <summary>
+        /// 更新签回信息（暂时未使用）
+        /// </summary>
+        /// <param name="dtos">包含更新信息的签回信息DTO信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult> UpdateCloseOutStors(params OutStorInputDto[] dtos)
+        {
+            Check.Validate<OutStorInputDto, int>(dtos, nameof(dtos));
+
+            return await OutStorRepository.UpdateAsync(dtos);
+        }
 
 
 

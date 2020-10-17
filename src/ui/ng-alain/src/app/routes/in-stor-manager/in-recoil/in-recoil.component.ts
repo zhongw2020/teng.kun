@@ -48,7 +48,7 @@ export class InRecoilComponent extends STComponentBase implements OnInit {
       },
 
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: { key: 'InstorVoucher', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
       { title: '物品名称', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '供应商名称', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '价格', index: 'InstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },

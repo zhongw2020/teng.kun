@@ -51,38 +51,38 @@ export class OutStorComponent extends STComponentBase implements OnInit {
       },
  
 
-     // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '出库凭证号', index: 'OutstorVoucher', eadOnly: true,  sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '出账公司', index: 'OutstorComName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通','帅坤'] },
+      // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
+      { title: '出库凭证号', index: 'OutstorVoucher', sort: { key: 'OutstorVoucher', default: "descend" }, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '出账公司', index: 'OutstorComName',  editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通','帅坤'] },
       {
-        title: '客户名称', index: 'CusName', sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }},
-      { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
+        title: '客户名称', index: 'CusName',  editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }},
+      { title: '物品名称', index: 'MatName',  editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
      // { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
-      { title: '出库时间', index: 'OutstorDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
-      { title: '单价', index: 'OutstorPrice', sort: true, editable: true, filterable: true, type: 'number' },
+      { title: '出库时间', index: 'OutstorDate',  editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
+      { title: '单价', index: 'OutstorPrice',  editable: true, filterable: true, type: 'number' },
      
       {
-        title: '数量', index: 'OutstorNum', sort: true, editable: true, filterable: true, type: 'number', key: 'OutstorNum'
+        title: '数量', index: 'OutstorNum', editable: true, filterable: true, type: 'number', key: 'OutstorNum'
       },
       {
-        title: '反冲数量', index: 'RecoilNum', sort: true, editable: true, filterable: true, type: 'number',
+        title: '反冲数量', index: 'RecoilNum', readOnly: true,editable: true, filterable: true, type: 'number',
       },
-      { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['陈琪','陈伟'] },
-      { title: '打印状态', index: 'PrintState', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '业务员', index: 'OutEmpName',  editable: true, filterable: true, ftype: 'string', enum: ['陈琪','陈伟'] },
+      { title: '打印状态', index: 'PrintState', readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '签回标记', index: 'CusCloseAccuntsFlag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
     //  { title: '签回人员', index: 'CusCloseAccuntsEmpId', sort: true, editable: true, filterable: true, type: 'radio', enum: ['员工A', '员工B', '员工C'] },
      // { title: '签回说明', index: 'CusCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废标记', index: 'Abolishflag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0'},
+      { title: '作废标记', index: 'Abolishflag', readOnly: true,  editable: true, filterable: true, type: 'yn', default: '0'},
       //{ title: '作废日期', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
     
-       { title: '别名补充', index: 'PrintMoName', sort: true, editable: true, filterable: true, ftype: 'string' },
+       { title: '别名补充', index: 'PrintMoName',editable: true, filterable: true, ftype: 'string' },
       //{ title: '打印名称', index: 'OutstorPrintName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string'},
 
-      { title: '备注', index: 'OutstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '备注', index: 'OutstorRemark', editable: true, filterable: true, ftype: 'string' },
       //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
       //{ title: '更新者', index: 'LastUpdaterId', type: 'number' },
@@ -125,6 +125,7 @@ export class OutStorComponent extends STComponentBase implements OnInit {
     rule.Operate = FilterOperate.Contains;
     this.request.FilterGroup.Rules = [];
     this.request.FilterGroup.Rules.push(rule);
+    this.request.PageCondition.SortConditions = [];
     return this.http.post(url, this.request).pipe(map((resp: any) => {
       const arr = [];
       const list = resp.Rows;

@@ -100,16 +100,22 @@ export class DashboardComponent implements AfterViewInit {
       this.summaritotlees = [];
       this.summarinumes = [];
       this.summariempes = [];
-      //累计销售总额
-      this.summaritotlees.push({ data: `${res.salesoutall}`, text: '累计销售总额', bgColor: 'bg-red' });
-      this.summaritotlees.push({ data: `${res.salesout}`, text: '月销售总额', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesoutchenqwei}`, text: '陈伟月销售额', bgColor: 'bg-orange' });
-      this.summaritotlees.push({ data: `${res.salesoutchenqqi}`, text: '陈琪月销售额', bgColor: 'bg-orange' });
-      this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesin}`, text: '月采购总和', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额', bgColor: 'bg-success' });
-      //月度入库金额
-      //月度签单数
+
+      //第一排
+      this.summaries.push({ data: `${res.salesoutall}`, text: '累计销售总额', bgColor: 'bg-red' });
+      this.summaries.push({ data: `${res.salesout}`, text: '月销售总额', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesoutleijilirun}`, text: '累计利润估（最新进价）', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesoutyuelirun}`, text: '月利润估（最新进价）', bgColor: 'bg-success' });
+
+      //第二排
+     
+      this.summaritotlees.push({ data: `${res.salesoutchenqwei}`, text: '陈伟月销售额', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesoutchenqqi}`, text: '陈琪月销售额', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesin}`, text: '月采购总和', bgColor: 'bg-orange' });
+      this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额', bgColor: 'bg-orange' });
+      //第三排
+      this.summariempes.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额', bgColor: 'bg-success' });
+      this.summariempes.push({ data: `${res.kucungujia}`, text: '库存价值估（最新进价）', bgColor: 'bg-success' });
       this.summarinumes.push({ data: `${res.salesoutnum}`, text: '月销售单总量', bgColor: 'bg-orange' });
       this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '月销售单签回量', bgColor: 'bg-orange' });
 
