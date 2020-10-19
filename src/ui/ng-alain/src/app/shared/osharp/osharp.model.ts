@@ -152,7 +152,7 @@ export class PageCondition {
   /**  页序 */
   PageIndex = 1;
   /**  分页大小 */
-  PageSize = 100;
+  PageSize = 20;
   /**  排序条件集合 */
   SortConditions: SortCondition[] = [];
 

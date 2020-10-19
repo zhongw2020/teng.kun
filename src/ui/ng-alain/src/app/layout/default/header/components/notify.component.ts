@@ -90,7 +90,7 @@ export class HeaderNotifyComponent {
     this.infos.push({
       id: '0',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-      title: this.res.Array[0].EmpName ,
+      title: this.res ,
       datetime: '2020-10-09',
       type: '通知',
     });
@@ -98,7 +98,7 @@ export class HeaderNotifyComponent {
     const url = 'api/admin/dashboard/ReportNotify';
 
     this.http.get(url).subscribe((res: any) => {
-      this.res = res.table;
+      this.res = res.table[0].EmpName;
    
     });
 

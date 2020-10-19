@@ -6,8 +6,8 @@
   <div class="blank-grow"></div>
   <div class="data-range">
     <span>时间范围：</span>
-    <!-- <nz-range-picker [(ngModel)]="pickerRanges['最近30天']" [nzFormat]="dateFormat" [nzRanges]="pickerRanges" (ngModelChange)="rangePickerChange($event)"></!-->
-    <nz-range-picker [(ngModel)]="pickerRanges['最近30天']" [nzRanges]="pickerRanges" (ngModelChange)="rangePickerChange($event)"></nz-range-picker>
+    <!-- <nz-range-picker [(ngModel)]="pickerRanges['本月']" [nzFormat]="dateFormat" [nzRanges]="pickerRanges" (ngModelChange)="rangePickerChange($event)"></!-->
+    <nz-range-picker [(ngModel)]="pickerRanges['本月']" [nzRanges]="pickerRanges" (ngModelChange)="rangePickerChange($event)"></nz-range-picker>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
     <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#f97c7c">
       <div nz-col nzSpan="12" class="p-md text-white">
         <p class="text-nowrap mb0">{{summary.text}}</p>
-        <div class="h2 mt0">{{summary.data|_currency}}元</div>
+        <div class="h2 mt0">{{summary.data|_currency}}</div>
 
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#33bcef">
         <div nz-col nzSpan="12" class="p-md text-white">
           <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data|_currency}}元</div>
+          <div class="h2 mt0">{{summary.data|_currency}}</div>
 
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#fb901e">
         <div nz-col nzSpan="12" class="p-md text-white">
           <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data|_currency}}元</div>
+          <div class="h2 mt0">{{summary.data|_currency}}</div>
 
         </div>
       </div>
@@ -49,7 +49,7 @@
         <div nz-col nzSpan="12" class="p-md text-white">
 
           <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data}}单</div>
+          <div class="h2 mt0">{{summary.data}}</div>
         </div>
       </div>
     </div>
