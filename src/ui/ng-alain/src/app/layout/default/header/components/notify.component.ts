@@ -87,6 +87,8 @@ export class HeaderNotifyComponent {
     this.route.queryParams.subscribe(params => {
       this.queryParams = params;
     })
+
+    for ( var i = 0; i < 3; i++) {
     this.infos.push({
       id: '0',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
@@ -94,7 +96,7 @@ export class HeaderNotifyComponent {
       datetime: '2020-10-09',
       type: '通知',
     });
-   
+   }
     const url = 'api/admin/dashboard/ReportNotify';
 
     this.http.get(url).subscribe((res: any) => {
@@ -227,5 +229,8 @@ export class Summary {
   title: string;
   datetime: string;
   type:string;
+}
+export class mynum {
+  id: number;
 }
 

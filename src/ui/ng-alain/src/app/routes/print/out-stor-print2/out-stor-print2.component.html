@@ -20,11 +20,11 @@
       <tbody>
         <tr *ngFor="let x of res;index as i;">
           <td class="tdcls" style="width:5%">{{ i+1 }}</td>
-          <td class="tdcls" style="width:40%">{{ x.printname }}{{x.PrintMoName}}</td>
-          <td class="tdcls" style="width:10%">{{ x.OutstorPrice |_currency}}</td>
+          <td class="tdcls" style="width:36%">{{ x.printname }}{{x.PrintMoName}}</td>
+          <td class="tdcls" style="width:12%">{{ x.OutstorPrice |_currency}}</td>
           <td class="tdcls" style="width:8%">{{ x.OutstorNum -x.RecoilNum}}</td>
           <td class="tdcls" style="width:8%">{{ x.MatUnit }}</td>
-          <td class="tdcls" style="width:10%">{{ (x.OutstorNum -x.RecoilNum)*x.OutstorPrice |_currency}}</td>
+          <td class="tdcls" style="width:12%">{{ (x.OutstorNum -x.RecoilNum)*x.OutstorPrice |_currency}}</td>
           <td class="tdcls" style="width:19%">{{ x.OutstorRemark }}</td>
         </tr>
         <tr>

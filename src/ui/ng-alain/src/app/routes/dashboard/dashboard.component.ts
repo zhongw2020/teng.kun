@@ -6,6 +6,9 @@ import { _HttpClient } from '@delon/theme';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { G2BarData } from '@delon/chart/bar';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { G2PieData } from '@delon/chart/pie';
+import { numberToChinese } from '@delon/abc';
+import { NumberFormatStyle } from '@angular/common';
 
 
 
@@ -18,9 +21,15 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 
 export class DashboardComponent implements AfterViewInit {
-
+  total: string;
+  totalqh: string;
+  salesPieData: G2PieData[] = [];
+  salesPieDataqh: G2PieData[] = [];
+  salesData: G2BarData[] = [];
   ngOnInit() {
- 
+
+   
+
   }
 
  
@@ -39,20 +48,12 @@ export class DashboardComponent implements AfterViewInit {
   summaritotlees: Summary[] = [];
   summarinumes: Summary[] = [];
   summariempes: Summary[] = [];
-  lineChartData: any[] = [];
-  constructor(private http: _HttpClient) {  }
 
-  salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
-    x: `0月`,
-    y: 0,
-    color: idx > 5 ? '#f50' : undefined,
-  }));
+  constructor(private http: _HttpClient) {  }
 
   ngAfterViewInit(): void {
     this.rangePickerChange(this.pickerRanges.本月);
-    setTimeout(() => {
-      this.salesLine();
-    }, 100);
+  
   }
 
   rangePickerChange(e) {
@@ -81,13 +82,8 @@ export class DashboardComponent implements AfterViewInit {
   //    this.summaries.push({ data: `${res.functions.ControllerCount} / ${res.functions.TotalCount}`, text: '功能：控制器 / 总计', bgColor: 'bg-magenta' });
   //  });
   //}
-
-
-
   reportseld(start, end)  {
     const url = `api/admin/dashboard/ReportSeld?start=${start}&end=${end}`;
-
-
     this.http.get(url).subscribe((res: any) => {
 
 
@@ -100,95 +96,74 @@ export class DashboardComponent implements AfterViewInit {
       this.summaritotlees = [];
       this.summarinumes = [];
       this.summariempes = [];
-
+      this.salesPieDataqh = [];
+      this.salesPieData = [];
       //第一排
       this.summaries.push({ data: `${res.salesoutall}`, text: '累计销售总额（元）', bgColor: 'bg-red' });
       this.summaries.push({ data: `${res.salesout}`, text: '月销售总额（元）', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesoutrilirun}`, text: '日利润估（元）（最新进价）', bgColor: 'bg-success' });
       this.summaries.push({ data: `${res.salesoutleijilirun}`, text: '累计利润估（元）（最新进价）', bgColor: 'bg-success' });
-      this.summaries.push({ data: `${res.salesoutyuelirun}`, text: '月利润估（元）（最新进价）', bgColor: 'bg-success' });
+    
 
       //第二排
-     
+      this.summaritotlees.push({ data: `${res.salesoutyuelirun}`, text: '月利润估（元）（最新进价）', bgColor: 'bg-success' });
       this.summaritotlees.push({ data: `${res.salesoutchenqwei}`, text: '陈伟月销售额（元）', bgColor: 'bg-success' });
       this.summaritotlees.push({ data: `${res.salesoutchenqqi}`, text: '陈琪月销售额（元）', bgColor: 'bg-success' });
       this.summaritotlees.push({ data: `${res.salesin}`, text: '月采购总和（元）', bgColor: 'bg-orange' });
-      this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额（元）', bgColor: 'bg-orange' });
+      //this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额（元）', bgColor: 'bg-orange' });
       //第三排
       this.summariempes.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额（元）', bgColor: 'bg-success' });
       this.summariempes.push({ data: `${res.kucungujia}`, text: '库存价值估（元）（最新进价）', bgColor: 'bg-success' });
       this.summarinumes.push({ data: `${res.salesoutnum}`, text: '月销售单总量（单）', bgColor: 'bg-orange' });
       this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '月销售单签回量（单）', bgColor: 'bg-orange' });
+      //饼状图月销售情况
+      this.salesPieData.push({ x: '陈伟（元）', y: Number.parseFloat(`${res.salesoutchenqwei}`) });
+      this.salesPieData.push({ x: '陈琪（元）', y: Number.parseFloat(`${res.salesoutchenqqi}`) });
+      this.salesPieData.push({ x: '其他（元）', y: Number.parseFloat(`${res.salesout}`) - Number.parseFloat(`${res.salesoutchenqwei}`)-Number.parseFloat(`${res.salesoutchenqqi}`) });
+      this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
 
 
- 
+
+      //饼状图月签回销售情况
+
+      this.salesPieDataqh.push({ x: '已签回（元）', y: Number.parseFloat(`${res.salesoutcomplete}`)});
+      this.salesPieDataqh.push({ x: '未签回（元）', y: Number.parseFloat(`${res.salesout}`) - Number.parseFloat(`${res.salesoutcomplete}`) });
+      this.totalqh = `&yen ${this.salesPieDataqh.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
     });
   }
 
   /** 每月销售曲线 */
-  //salesLine(start, end) {
-  //  let url = `api/admin/dashboard/LineData?start=${start}&end=${end}`;
-  //  this.http.get(url).subscribe((res: any[]) => {
-  //    if (!res || !res.length) {
-  //      return;
-  //    }
-  //    for (const item of res) {
-  //      this.lineChartData.push({
-  //        x: new Date(item.Date),
-  //        y1: item.DailyCount,
-  //        y2: item.DailySum
-  //      });
-       
-  //    }
-  //    console.log(res);
-  //  });
 
-  //}
 
- 
+//销售情况饼状图
+  format(val: number): string {
+    return `&yen ${val.toFixed(2)}`;
+  }
 
 /** 本年度每月销售柱状图 */
+
   salesLine() {
 
     const url = `api/admin/dashboard/ReportSeldLine`;
-     this.http.get(url).subscribe((res: any) => {
-       if (!res) {
-          console.log('res is null');
-          return;
-
-        }
-        console.log(res);
-       for (let i = 0; i < 12; i++) {
-
-   
-          if (this.salesData[i].x) {
-          // this.salesData[i].x = parseInt(res.table[i].salemonth);
-          //  this.salesData[i].y = parseInt(res.table[i].salesout);
-
-            this.salesData.push({
-              x: '2020-10',
-              y: '246',
-               color: '#f50',
-            });
-
+    this.http.get(url).subscribe((res: any) => {
+      if (!res) {
+        return;
+      }
+      //res.forEach(element => {
+      ////  //this.salesData.push({ x: element.salemonth, y: element.salesout, color: '#f50' });
+      //  this.salesData.push({ x: '1', y: 2222, color: '#f50' });
+      //});
+      for (var i = 0; i < 12; i++)
+      {
+        this.salesData.push({ x: `${res.table[i].salemonth}`, y: Number.parseFloat(`${res.table[i].salesout}`), color: '#f50' });
+      }
      
-          }
-          else { return;}
-         };
-        
-         
-      });
+
+    });
    }
   
 
-  // salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
-  //    x: `${idx + 1}月`,
-  //    y: Math.floor(Math.random() * 1000) + 1200,
-  //    color: idx > 5 ? '#f50' : undefined,
-  //  }));
 
-  //  handleClick(): void {
-    
-  //}
 
 /** 工作日历 */
     date = new Date();
@@ -196,7 +171,8 @@ export class DashboardComponent implements AfterViewInit {
 
     panelChange(change: { date: Date; mode: string }): void {
       console.log(change.date, change.mode);
-    }
+  }
+
 }
 export class Summary {
   data: string;

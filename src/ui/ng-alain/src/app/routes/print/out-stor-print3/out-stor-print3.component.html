@@ -22,9 +22,9 @@
           <td class="tdcls" style="width:36%">{{ x.printname }}{{x.PrintMoName}}</td>
           <td class="tdcls" style="width:8%">{{ x.OutstorNum -x.RecoilNum}}</td>
           <td class="tdcls" style="width:8%">{{ x.MatUnit }}</td>
-          <td class="tdcls" style="width:10%">{{ x.OutstorPrice |_currency}}</td>
-          <td class="tdcls" style="width:10%">{{ (x.OutstorNum -x.RecoilNum)*x.OutstorPrice |_currency}}</td>
-          <td class="tdcls" style="width:20%">{{ x.OutstorRemark }}</td>
+          <td class="tdcls" style="width:12%">{{ x.OutstorPrice |_currency}}</td>
+          <td class="tdcls" style="width:12%">{{ (x.OutstorNum -x.RecoilNum)*x.OutstorPrice |_currency}}</td>
+          <td class="tdcls" style="width:16%">{{ x.OutstorRemark }}</td>
         </tr>
         <tr>
           <td class="tdcls" colspan="5">人民币大写：{{ salesout2|n2c }}</td>

@@ -241,11 +241,25 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             string sql9 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
             string salesoutyuelirun = sq.Select_Str_Sqlserver(ConnectionString, sql9);
+
             //库存估价
-            string sql10 = @"select convert(varchar,sum(CurrStock*InstorPrice)) from BaseModule_MatBasedata as mattable left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on mattable.MatName= b.MatName";
+            string sql10 = @"select convert(varchar,sum(CurrStock*InstorPrice)) from (select * from BaseModule_MatBasedata where MatState='1') as mattable left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on mattable.MatName= b.MatName ";
             string kucungujia = sq.Select_Str_Sqlserver(ConnectionString, sql10);
 
+            //日利润
 
+            string sql11 = "";
+       
+            if (start.ToString("yyyy-MM-dd") != DateTime.Now.ToString("yyyy-MM-dd"))
+            {
+                sql11 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1  and LEFT(OutstorDate,10) = '" + start.ToString("yyyy-MM-dd") + "'";
+            }
+            else
+            {
+                sql11 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1  and LEFT(OutstorDate,10) = CONVERT(varchar(10),GETDATE(),120)";
+
+            }
+            string salesoutrilirun = sq.Select_Str_Sqlserver(ConnectionString, sql11);
             if (salesoutall == "")
             {
                 salesoutall = "0";
@@ -296,7 +310,10 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             {
                 kucungujia = "0";
             }
-
+            if (salesoutrilirun == "")
+            {
+                salesoutrilirun = "0";
+            }
 
 
             var infos = new
@@ -313,6 +330,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                 salesoutleijilirun,
                 salesoutyuelirun,
                 kucungujia,
+                salesoutrilirun,
             };
 
             return Json(infos);
@@ -321,7 +339,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public IActionResult ReportSeldLine()
         {
             //按月统计近一年销售额
-            string sql = @"SELECT LEFT(CreatedTime,7) as salemonth,convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(CreatedTime,4)>DATEADD(year,-1,GETDATE()) group by  LEFT(CreatedTime,7)";
+            string sql = @"SELECT LEFT(OutstorDate,7) as salemonth,convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum)))) as salesout  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and LEFT(OutstorDate,4)>DATEADD(year,-1,GETDATE()) group by  LEFT(OutstorDate,7)";
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
 

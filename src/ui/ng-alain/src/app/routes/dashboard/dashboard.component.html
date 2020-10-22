@@ -22,45 +22,67 @@
       </div>
     </div>
   </div>
-  </nz-row>
-  <nz-row nzGutter="32" *ngIf="summaritotlees">
-    <div *ngFor="let summary of summaritotlees" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-      <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#33bcef">
-        <div nz-col nzSpan="12" class="p-md text-white">
-          <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data|_currency}}</div>
+</nz-row>
+<nz-row nzGutter="32" *ngIf="summaritotlees">
+  <div *ngFor="let summary of summaritotlees" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#33bcef">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data|_currency}}</div>
 
-        </div>
       </div>
     </div>
-  </nz-row>
-  <nz-row nzGutter="32" *ngIf="summariempes">
-    <div *ngFor="let summary of summariempes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-      <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#fb901e">
-        <div nz-col nzSpan="12" class="p-md text-white">
-          <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data|_currency}}</div>
+  </div>
+</nz-row>
+<nz-row nzGutter="32" *ngIf="summariempes">
+  <div *ngFor="let summary of summariempes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color: #07bb13">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data|_currency}}</div>
 
-        </div>
       </div>
     </div>
-    <div *ngFor="let summary of summarinumes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-      <div nz-row nzType="flex" nzAlign="middle"  class="rounded-md"  style="background-color:#fb901e">
-        <div nz-col nzSpan="12" class="p-md text-white">
+  </div>
+  <div *ngFor="let summary of summarinumes" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color: #07bb13">
+      <div nz-col nzSpan="12" class="p-md text-white">
 
-          <p class="text-nowrap mb0">{{summary.text}}</p>
-          <div class="h2 mt0">{{summary.data}}</div>
-        </div>
+        <p class="text-nowrap mb0">{{summary.text}}</p>
+        <div class="h2 mt0">{{summary.data}}</div>
       </div>
     </div>
-  </nz-row>
+  </div>
+</nz-row>
 
-    <nz-row nzGutter="32" *ngIf="summarinumes">
+<nz-row nzGutter="32">
+  <div style="float:left; width:50%">
+    <g2-bar height="294" [title]="'销售额趋势'" [data]="salesData"></g2-bar>
+  </div>
+    <div style="float:left; width:25%">
+      <g2-pie [hasLegend]="true" title="月销售情况"
+              subTitle="月销售情况"
+              [total]="total"
+              [valueFormat]="format"
+              [data]="salesPieData"
+              height="294"></g2-pie>
+    </div>
+    <div style="float:left; width:25%">
+      <g2-pie [hasLegend]="true" title="月签回情况"
+              subTitle="月签回情况"
+              [total]="total"
+              [valueFormat]="format"
+              [data]="salesPieDataqh"
+              height="294"></g2-pie>
+    </div>
 
-    </nz-row>
+</nz-row>
+
+<nz-row nzGutter="32">
 
 
-    <nz-row nzGutter="32">
-      `<g2-bar height="300" [title]="'近1年月销售额'" [data]="salesData"></g2-bar>`
-      ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
-    </nz-row>
+
+</nz-row>
+<nz-row nzGutter="32">
+  ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
+</nz-row>

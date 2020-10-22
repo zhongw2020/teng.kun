@@ -69,7 +69,7 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
       { title: '当前库存', index: 'CurrStock', sort: true, editable: true, filterable: true, type: 'number', },
       { title: '最大库存', index: 'MaxStock', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '备注', index: 'MatRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '使用状态', index: 'MatState', sort: true, editable: true, filterable: true, type: 'yn' },
+      { title: '库存统计', index: 'MatState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
     ];
     return columns;

@@ -53,7 +53,7 @@ export class OutCloseComponent extends STComponentBase implements OnInit {
       },
       { title: '反冲数量', index: 'RecoilNum', readOnly: true, sort: true, editable: true, filterable: true, type: 'number', },
       { title: '作废标记', index: 'Abolishflag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
-      // { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['A员工', 'B员工', 'C员工'] },
+      { title: '业务员', index: 'OutEmpName', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string'},
 
       // { title: '打印状态', index: 'PrintState', sort: true, editable: true, filterable: true, type: 'yn' },
        { title: '签回标记', index: 'CusCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
