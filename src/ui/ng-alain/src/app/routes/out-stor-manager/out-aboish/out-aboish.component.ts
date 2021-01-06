@@ -37,7 +37,7 @@ export class OutAboishComponent extends STComponentBase implements OnInit {
         title: '作废', fixed: 'left', width: 65, buttons: [{ text: '作废', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateAbolish', iif: row => !(row.Abolishflag) && row.PrintState, click: row => this.edit(row) }]
       },
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'OutstorVoucher', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
+      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'Id', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
       { title: '出账公司', index: 'OutstorComName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },
       {
         title: '客户名称', index: 'CusName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }

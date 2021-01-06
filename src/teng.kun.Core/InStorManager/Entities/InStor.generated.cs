@@ -224,7 +224,13 @@ namespace teng.kun.InStorManager.Entities
         /// </summary>
         [DisplayName("更新时间")]
         public DateTime? LastUpdatedTime { get; set; }
+        //新增字段
 
+        /// <summary>
+        /// 获取或设置 入库批次号
+        /// </summary>
+        [DisplayName("入库批次号")]
+        public string InStorPatch { get; set; }
     }
 }
 

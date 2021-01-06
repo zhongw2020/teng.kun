@@ -71,10 +71,4 @@
     </button>
   </nz-form-item>
 </form>
-<div class="other">
-  {{ 'app.login.sign-in-with' | translate }}
-  <i nz-icon nzType="qq" nz-tooltip="使用QQ登录" nzTheme="outline" class="icon" (click)="open('QQ')"></i>
-  <i nz-icon nzType="windows" nz-tooltip="使用Microsoft Account登录" nzTheme="outline" class="icon" (click)="open('Microsoft')"></i>
-  <i nz-icon nzType="github" nz-tooltip="使用GitHub登录" nzTheme="outline" class="icon" (click)="open('GitHub')"></i>
-  <a class="register" routerLink="/passport/register" acl="Root.Site.Identity.Register">{{ 'app.login.signup' | translate }}</a>
-</div>
+

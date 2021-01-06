@@ -1,3 +1,4 @@
+
 <div class="content__title">
   <h1>
     本月数据统计
@@ -14,7 +15,7 @@
 
 <nz-row nzGutter="32" *ngIf="summaries">
   <div *ngFor="let summary of summaries" nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-    <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="background-color:#f97c7c">
+    <div nz-row nzType="flex" nzAlign="middle" class="rounded-md" style="    background-color: #d56868">
       <div nz-col nzSpan="12" class="p-md text-white">
         <p class="text-nowrap mb0">{{summary.text}}</p>
         <div class="h2 mt0">{{summary.data|_currency}}</div>
@@ -56,33 +57,51 @@
 </nz-row>
 
 <nz-row nzGutter="32">
-  <div style="float:left; width:50%">
-    <g2-bar height="294" [title]="'销售额趋势'" [data]="salesData"></g2-bar>
+
+  <div style="float:left; width:25%">
+    <g2-pie [hasLegend]="true" title="时段销售情况"
+            subTitle="时段销售情况"
+            [total]="total"
+            [valueFormat]="format"
+            [data]="salesPieData"
+            height="294"></g2-pie>
   </div>
-    <div style="float:left; width:25%">
-      <g2-pie [hasLegend]="true" title="月销售情况"
-              subTitle="月销售情况"
-              [total]="total"
-              [valueFormat]="format"
-              [data]="salesPieData"
-              height="294"></g2-pie>
-    </div>
-    <div style="float:left; width:25%">
-      <g2-pie [hasLegend]="true" title="月签回情况"
-              subTitle="月签回情况"
-              [total]="total"
-              [valueFormat]="format"
-              [data]="salesPieDataqh"
-              height="294"></g2-pie>
-    </div>
+  <div style="float:left; width:25%">
+    <g2-pie [hasLegend]="true" title="时段派单情况"
+            subTitle="时段派单情况"
+            [total]="totalpd"
+            [data]="salesPieDatapd"
+            height="294"></g2-pie>
+  </div>
+
+
+  <div style="float:left; width:25%">
+    <g2-pie [hasLegend]="true" title="累计签单情况"
+            subTitle="累计签单情况"
+            [total]="totalqh"
+            [data]="salesPieDataqh"
+            height="294"></g2-pie>
+  </div>
+  <div style="float:left; width:25%">
+    <g2-pie [hasLegend]="true" title="时段加班情况(H)"
+            subTitle="时段加班情况"
+            [total]="totaljiaban"
+            [data]="salesPieDatajiaban"
+            height="294"></g2-pie>
+  </div>
+
 
 </nz-row>
 
 <nz-row nzGutter="32">
 
 
+  <g2-bar height="294" [title]="'销售额趋势'" [data]="salesData"></g2-bar>
+
 
 </nz-row>
+
 <nz-row nzGutter="32">
-  ` <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar> `
+  <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"></nz-calendar>
 </nz-row>
+

@@ -962,6 +962,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("InStorPatch")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("InstorDate")
                         .HasColumnType("datetime2");
 
@@ -1190,6 +1193,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<bool>("Abolishflag")
                         .HasColumnType("bit");
 
+                    b.Property<string>("CDOutstorVoucher")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -1211,6 +1217,9 @@ namespace teng.kun.Web.Migrations
                     b.Property<string>("CusName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("CusjiesuanAccuntsFlag")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("LastUpdatedTime")
                         .HasColumnType("datetime2");
 
@@ -1227,6 +1236,9 @@ namespace teng.kun.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OutEmpName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OutstorCategory")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutstorComName")
@@ -1248,6 +1260,9 @@ namespace teng.kun.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutstorRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OutstorToIn")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutstorVoucher")
@@ -1296,6 +1311,72 @@ namespace teng.kun.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OutStorManager_Test09");
+                });
+
+            modelBuilder.Entity("teng.kun.ReportOutIn.Entities.ReportIn", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportOutIn_ReportIn");
+                });
+
+            modelBuilder.Entity("teng.kun.ReportOutIn.Entities.ReportOut", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("InstorPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("InstorVoucher")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MatName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OutstorDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OutstorNum")
+                        .HasColumnType("float");
+
+                    b.Property<double>("OutstorPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("OutstorVoucher")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("RecoilNum")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportOutIn_ReportOut");
+                });
+
+            modelBuilder.Entity("teng.kun.ReportOutIn.Entities.ReportStore", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportOutIn_ReportStore");
                 });
 
             modelBuilder.Entity("teng.kun.Systems.Entities.AuditEntity", b =>

@@ -18,6 +18,7 @@ import { CusBasedataComponent } from './cus-basedata/cus-basedata.component';
 import { MatBasedataComponent } from './mat-basedata/mat-basedata.component';
 import { SupBasedataComponent } from './sup-basedata/sup-basedata.component';
 import { EmpBasedataComponent } from './emp-basedata/emp-basedata.component';
+import { MatReportComponent } from './mat-report/mat-report.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { EmpBasedataComponent } from './emp-basedata/emp-basedata.component';
     MatBasedataComponent,
     SupBasedataComponent,
     EmpBasedataComponent,
+    MatReportComponent,
   ]
 })
 export class BaseModuleModule { }

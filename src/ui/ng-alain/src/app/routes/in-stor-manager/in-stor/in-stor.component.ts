@@ -50,7 +50,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       },
 
       //{ title: '编号', index: 'Id', sort: true,  readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', sort: { key: 'InstorVoucher', default:"descend"},readOnly:true, editable: true, filterable: true, ftype: 'string' },
+      { title: '入库凭证号', index: 'InstorVoucher', sort: { key: 'Id', default:"descend"},readOnly:true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '单价', index: 'InstorPrice', sort: true,  editable: true, filterable: true, type: 'number' },
@@ -73,7 +73,7 @@ export class InStorComponent extends STComponentBase implements OnInit {
       // { title: '结算备注', index: 'SupCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '入库操作员', index: 'InstorName', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '仓库名称', index: 'StorName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废标记', index: 'Abolishflag', sort: true,  readOnly: true, editable: true, filterable: true, type: 'yn' },
+      //{ title: '作废标记', index: 'Abolishflag', sort: true,  readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '备注', index: 'InstorRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '创建者', index: 'CreatorId', type: 'number' },
       //{ title: '创建时间', index: 'CreatedTime', sort: true, filterable: true, type: 'date' },
@@ -222,17 +222,18 @@ export class InStorComponent extends STComponentBase implements OnInit {
                 default: '请选择',
                 ui: this.select_ui('api/Admin/MatBasedata/Read', 'MatName', ['MatId', 'MatName'])
               },
-
+             
+              InstorNum: {
+                type: 'number',
+                title: '数量',
+                readOnly: false,
+              },
               InstorPrice: {
                 type: 'number',
                 title: '单价',
                 readOnly: false,           
               },
-              InstorNum: {
-                type: 'number',
-                title: '数量',
-                readOnly: false,      
-              },
+             
               InstorRemark: {
                 type: 'string',
                 title: '备注',

@@ -13,8 +13,8 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
-import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { STData, STColumn } from '@delon/abc';
+import { STComponentBase2 } from '@shared/osharp/components/st-component-base2';
+import { STData, STColumn, XlsxService } from '@delon/abc';
 import { FilterRule, FilterOperate, AjaxResult } from '../../../shared/osharp/osharp.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -26,10 +26,10 @@ import { Observable } from 'rxjs';
 
 
 })
-export class OutStorReportComponent extends STComponentBase implements OnInit {
+export class OutStorReportComponent extends STComponentBase2 implements OnInit {
 
-  constructor(injector: Injector) {
-    super(injector);
+  constructor(injector: Injector, xlsx: XlsxService) {
+    super(injector,xlsx);
     this.moduleName = 'outStor';
    
   }
@@ -73,25 +73,32 @@ export class OutStorReportComponent extends STComponentBase implements OnInit {
      
 
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number', },
-      { title: { text: '出库凭证号', optionalHelp: '日期+0001' }, index: 'OutstorVoucher', readOnly: true, sort: { key: 'OutstorVoucher', default: "descend" },  editable: true, filterable: true, ftype: 'string', statistical: 'distinctCount', key: 'OutstorVoucher' },
+
+      { title: '单据类型', index: 'OutstorCategory', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string' },
+
+      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'Id', default: "descend" }, editable: true, filterable: true, ftype: 'string', statistical: 'distinctCount', key: 'OutstorVoucher' },
       { title: '出账公司', index: 'OutstorComName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', 'B公司', 'C公司', 'D公司'] },
-      { title: '客户名称', index: 'CusName', sort: true, editable: true, filterable: true, ftype: 'string', filter: { type: 'keyword', fn: (filter, record) => !filter.value || record.CusName.indexOf(filter.value) !== -1, }, },
+      { title: '客户名称', index: 'CusName', sort: true, editable: true, filterable: true, ftype: 'string', },
       { title: '物品名称', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string', render: 'MatName' },
-      { title: '供应商名称', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '出库时间', index: 'OutstorDate', sort: true, editable: true, filterable: true, type: 'date' },
+      // { title: '单据类型', index: 'SupName', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '出库时间', index: 'OutstorDate', sort: true, editable: true, filterable: true, type: 'date', },
       {
             title: { text: '小计', optional: '（单位：元）', optionalHelp: '扣除了反冲数量后的小计额' }, index: 'OutstorSum', type: 'number', statistical: 'sum', key: 'OutstorSum', render: 'OutstorSum'
       },
-      { title: '单价', index: 'OutstorPrice', sort: true, editable: true, filterable: true, type: 'number', statistical: 'sum', key: 'OutstorPrice'},
+      { title: '出库单价', index: 'OutstorPrice', sort: true, editable: true, filterable: true, type: 'number', statistical: 'sum', key: 'OutstorPrice'},
      
       { title: '数量', index: 'OutstorNum', sort: true, editable: true, filterable: true, type: 'number', statistical: 'sum', key: 'OutstorNum'} ,
+      {
+        title: '反冲数量', index: 'RecoilNum', readOnly: true, sort: true, editable: true, filterable: true, type: 'number',
+      },
+      //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '业务员', index: 'OutEmpName', sort: true, editable: true, filterable: true, ftype: 'string', enum: ['A员工', 'B员工', 'C员工'] },
       { title: '打印状态', index: 'PrintState', sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '签回标记', index: 'CusCloseAccuntsFlag', sort: true, editable: true, filterable: true, type: 'yn', },
     //  { title: '签回人员', index: 'CusCloseAccuntsEmpId', sort: true, editable: true, filterable: true, type: 'radio', enum: ['员工A', '员工B', '员工C'] },
      // { title: '签回说明', index: 'CusCloseAccuntsRemark', sort: true, editable: true, filterable: true, ftype: 'string' },
 
-      { title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
+      //{ title: '作废标记', index: 'Abolishflag', sort: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '作废日期', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date' },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲状态', index: 'RecoilState', sort: true, editable: true, filterable: true, type: 'yn' },

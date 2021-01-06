@@ -5,10 +5,11 @@
     <nz-card>
       <div>
         <button nz-button (click)="st.reload()"><i nz-icon nzType="reload" nzTheme="outline"></i>刷新</button>
+        <button nz-button (click)="download()"><i nz-icon nzTheme="outline"></i>导出</button>
+        <!--<button nz-button nzType="primary" (click)="TotalRow()">显示小计</button>--> 
 
-        <!--<button nz-button nzType="primary" (click)="TotalRow()">显示小计</button>-->
-        <button nz-button nzType="primary" (click)="SumRow()">显示总计</button>
-        <osharp-ad-search [request]="request" [columns]="columns" (submited)="search($event)"></osharp-ad-search>
+        <nz-range-picker></nz-range-picker>
+        <osharp-ad-search [request]="request" [columns]="columns" (submited)="search($event)"> </osharp-ad-search>
       </div>
       <st #st [data]="readUrl" [columns]="columns" [req]="req" [res]="res" [(pi)]="request.PageCondition.PageIndex" [(ps)]="request.PageCondition.PageSize" [page]="page" size="small"
           [scroll]="{x:'1200px'}" multiSort (change)="change($event)" (error)="error($event)" [body]="bodyTpl">

@@ -5,10 +5,21 @@
   <div>
     <button nz-button (click)="st.reload()"><i nz-icon nzType="reload" nzTheme="outline"></i>刷新</button>
     <!--<button nz-button (click)="create()" acl="Root.Admin.InStorManager.InStor.Create"><i nz-icon type="plus-circle" theme="outline"></i>新增</button>-->
+    <button nz-button (click)="doall()"><i nz-icon type="plus-circle" theme="outline"></i>批量收票</button>
     <osharp-ad-search [request]="request" [columns]="columns" (submited)="search($event)"></osharp-ad-search>
   </div>
+  <div class="my-md">
+    <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+      <ng-template #message>
+        已选择
+        <strong class="text-primary">{{ selectedRows.length }}</strong>
+        项
+        <a *ngIf="totalCallNo > 0" (click)="st.clearCheck()" class="ml-lg">清空</a>
+      </ng-template>
+    </nz-alert>
+  </div>
   <st #st [data]="readUrl" [columns]="columns" [req]="req" [res]="res" [(pi)]="request.PageCondition.PageIndex" [(ps)]="request.PageCondition.PageSize" [page]="page" size="small"
-    [scroll]="{x:'1200px'}" multiSort (change)="change($event)" (error)="error($event)"></st>
+      [scroll]="{x:'1200px'}" multiSort (change)="change($event)" (error)="error($event)"></st>
 </nz-card>
 
 <nz-modal #modal [nzVisible]="false" [nzTitle]="editTitle" [nzClosable]="false" [nzFooter]="null">

@@ -1,30 +1,35 @@
 
 /*
 各模块路由：
-{ path: 'bpm', loadChildren: () => import('./bpm/bpm.module').then(m => m.BpmModule), canActivateChild: [ACLGuard], data: { guard: 'Root.Admin.Bpm' } },
+{ path: 'report-out-in', loadChildren: () => import('./report-out-in/report-out-in.module').then(m => m.ReportOutInModule), canActivateChild: [ACLGuard], data: { guard: 'Root.Admin.ReportOutIn' } },
 
 各模块组件路由：
-流程管理 模块组件路由数据
-{ path: 'leave-bp', component: LeaveBpComponent, canActivate: [ACLGuard], data: { title: '请假流程管理', reuse: true, guard: 'Root.Admin.Bpm.LeaveBp.Read' } },
-{ path: 'extra-bp', component: ExtraBpComponent, canActivate: [ACLGuard], data: { title: '加班流程管理', reuse: true, guard: 'Root.Admin.Bpm.ExtraBp.Read' } },
+报表信息 模块组件路由数据
+{ path: 'report-store', component: ReportStoreComponent, canActivate: [ACLGuard], data: { title: '库存报表管理', reuse: true, guard: 'Root.Admin.ReportOutIn.ReportStore.Read' } },
+{ path: 'report-out', component: ReportOutComponent, canActivate: [ACLGuard], data: { title: '出库报表管理', reuse: true, guard: 'Root.Admin.ReportOutIn.ReportOut.Read' } },
+{ path: 'report-in', component: ReportInComponent, canActivate: [ACLGuard], data: { title: '入库报表管理', reuse: true, guard: 'Root.Admin.ReportOutIn.ReportIn.Read' } },
 
 
 
 各模块菜单数据：
-流程管理 模块菜单数据
+报表信息 模块菜单数据
 {
-  "text": "流程管理模块",
+  "text": "报表信息模块",
   "group": "true",
   "icon": "anticon-border",
-  "acl": "Root.Admin.Bpm",
+  "acl": "Root.Admin.ReportOutIn",
   "children": [{
-    "text": "请假流程管理",
-    "link": "/bpm/leave-bp",
-    "acl": "Root.Admin.Bpm.LeaveBp"
+    "text": "库存报表管理",
+    "link": "/report-out-in/report-store",
+    "acl": "Root.Admin.ReportOutIn.ReportStore"
   }, {
-    "text": "加班流程管理",
-    "link": "/bpm/extra-bp",
-    "acl": "Root.Admin.Bpm.ExtraBp"
+    "text": "出库报表管理",
+    "link": "/report-out-in/report-out",
+    "acl": "Root.Admin.ReportOutIn.ReportOut"
+  }, {
+    "text": "入库报表管理",
+    "link": "/report-out-in/report-in",
+    "acl": "Root.Admin.ReportOutIn.ReportIn"
   }]
 }
 

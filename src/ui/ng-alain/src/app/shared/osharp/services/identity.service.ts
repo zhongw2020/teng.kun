@@ -150,7 +150,8 @@ export class IdentityService {
 			if (seconds > 0) {
 				this.cache.set("refresh_token", token.RefreshToken, { expire: seconds });
 			}
-		} else {
+    }
+    else {
 			this.tokenSrv.clear();
 			this.cache.remove("refresh_token");
 			this.settingSrv.setUser({});

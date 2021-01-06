@@ -18,8 +18,9 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Threading.Tasks;
-
+using Microsoft.Extensions.DependencyInjection;
 using OSharp.Data;
 using OSharp.Dependency;
 using OSharp.Extensions;
@@ -33,12 +34,34 @@ namespace teng.kun.Bpm
 {
     public abstract partial class BpmServiceBase
     {
+        
+        public virtual string getuser()
+        {
+            ClaimsPrincipal principal = ServiceProvider.GetCurrentUser();
+       
+            return principal.Identity.Name;
+        }
+
         /// <summary>
         /// 获取 加班流程信息查询数据集
         /// </summary>
         public IQueryable<ExtraBp> ExtraBps
         {
-            get { return ExtraBpRepository.QueryAsNoTracking(); }
+
+
+            get {
+                string v = getuser();
+                string name = v;
+                if (name == "longshuai" || name == "tk@cdtengkun.com")
+                {
+                    return ExtraBpRepository.QueryAsNoTracking();
+                }
+                else
+                {
+                  return ExtraBpRepository.QueryAsNoTracking(m => m.BpSponsor == name);
+                }
+            }
+            
         }
 
         /// <summary>

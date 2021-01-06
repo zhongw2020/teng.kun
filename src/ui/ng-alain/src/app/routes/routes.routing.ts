@@ -19,8 +19,8 @@ const routes: Routes = [
 		component: LayoutDefaultComponent,
 		canActivate: [ SimpleGuard ],
 		children: [
-			{ path: "", redirectTo: "dashboard", pathMatch: "full" },
-			{ path: "dashboard", component: DashboardComponent, data: { title: "仪表盘" } },
+			{ path: "", redirectTo: "", pathMatch: "full" },
+      { path: "dashboard", component: DashboardComponent, data: { title: "仪表盘", guard: "Root.Admin.SystemsModule"} },
 			{ path: "exception", loadChildren: () => import("./exception/exception.module").then((m) => m.ExceptionModule) },
 			// 业务子模块
 			{ path: "identity", loadChildren: () => import("./identity/identity.module").then((m) => m.IdentityModule) },
@@ -58,6 +58,13 @@ const routes: Routes = [
         loadChildren: () => import("./bpm/bpm.module").then((m) => m.BpmModule),
         canActivateChild: [ACLGuard],
         data: { guard: "Root.Admin.Bpm" }
+      }
+      ,
+      {
+        path: "report-out-in",
+        loadChildren: () => import("./report-out-in/report-out-in.module").then((m) => m.ReportOutInModule),
+        canActivateChild: [ACLGuard],
+        data: { guard: "Root.Admin.ReportOutIn" }
       }
 		]
 	},

@@ -13,8 +13,8 @@
 import { Component, OnInit, Injector, Host } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
-import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { STColumnBadge, STData } from '@delon/abc';
+import { STComponentBase2 } from '@shared/osharp/components/st-component-base2';
+import { STColumnBadge, STData, XlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-mat-basedata',
@@ -24,10 +24,10 @@ import { STColumnBadge, STData } from '@delon/abc';
 
 
 
-export class MatBasedataComponent extends STComponentBase implements OnInit {
+export class MatBasedataComponent extends STComponentBase2 implements OnInit {
 
-  constructor(injector: Injector) {
-    super(injector);
+  constructor(injector: Injector, xlsx: XlsxService) {
+    super(injector, xlsx);
     this.moduleName = 'matBasedata';
   }
 
@@ -58,12 +58,12 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
       },
       //{ title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
       //{ title: '物品编码', index: 'MatId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '入库物品', index: 'MatName', sort: true, editable: true, filterable: true, ftype: 'string',  },
+      { title: '入库物品', index: 'MatName', readOnly: true, sort: true, editable: true, filterable: true, ftype: 'string', },
       { title: '腾坤别名', index: 'MatAlias01', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '华业别名', index: 'MatAlias02', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '效信通别名', index: 'MatAlias03', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '帅坤别名', index: 'MatAlias04', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '备用别名', index: 'MatAlias05', sort: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '物品类别', index: 'MatAlias05', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品单位', index: 'MatUnit', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '安全库存', index: 'SafeStock', sort: true, editable: true, filterable: true, type: 'number' },
       { title: '当前库存', index: 'CurrStock', sort: true, editable: true, filterable: true, type: 'number', },
@@ -94,5 +94,65 @@ export class MatBasedataComponent extends STComponentBase implements OnInit {
     };
     return ui;
   }
-}
+  create() {
+    this.schema = {
+      properties: {
+        MatName: {
+          type: 'string',
+          title: '入库物品',
+        },
+        MatAlias01: {
+          type: 'string',
+          title: '腾坤别名',
+        },
+        MatAlias02: {
+          type: 'string',
+          title: '华业别名',
+        },
+        MatAlias03: {
+          type: 'string',
+          title: '效信通别名',
+        },
+        MatAlias04: {
+          type: 'string',
+          title: '帅坤别名',
+        },
+        MatAlias05: {
+          type: 'string',
+          title: '物品类别',
+        },
+        MatUnit: {
+          type: 'string',
+          title: '物品单位',
+        },
+        SafeStock: {
+          type: 'number',
+          title: '安全库存',
+        },
+        CurrStock: {
+          type: 'number',
+          title: '当前库存',
+          default: 0,
+        },
+        MaxStock: {
+          type: 'number',
+          title: '最大库存',
+          default: 99999,
+        },
+        MatRemark: {
+          type: 'string',
+          title: '备注',
+        },
+        MatState: {
+          type:'boolean',
+          title: '库存统计',
+          default: true,
+        }
+      }
 
+    }
+    this.editRow = {};
+    this.editTitle = '新增';
+    this.editModal.open();
+  }
+}

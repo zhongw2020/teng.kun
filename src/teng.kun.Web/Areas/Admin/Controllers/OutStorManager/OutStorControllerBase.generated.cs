@@ -85,6 +85,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             Expression<Func<OutStor, bool>> predicate = FilterService.GetExpression<OutStor>(request.FilterGroup);
             var page = OutStorManagerContract.OutStors.ToPage<OutStor, OutStorOutputDto>(predicate, request.PageCondition);
+           // var page = V_OutInReportManagerContract.V_OutInReports.ToPage<V_OutInReport, V_OutInReportOutputDto>(predicate, request.PageCondition);
 
             return page.ToPageData();
         }
@@ -105,7 +106,9 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await OutStorManagerContract.CreateOutStors(dtos);
             return result.ToAjaxResult();
         }
-        
+
+
+
         /// <summary>
         /// 更新出库信息
         /// </summary>
@@ -156,6 +159,69 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
             return result.ToAjaxResult();
         }
+
+        /// <summary>
+        /// 更新出库信息
+        /// </summary>Abolish
+        /// <param name="dtos">出库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("批量出库签回")]
+        public virtual async Task<AjaxResult> UpdateCloseAll(OutStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            foreach (OutStorInputDto dto in dtos)
+            {
+                dto.CusCloseAccuntsFlag = true;
+            }
+
+            OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+
+        /// <summary>
+        /// 更新出库信息
+        /// </summary>Abolish
+        /// <param name="dtos">出库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("出库结算")]
+        public virtual async Task<AjaxResult> Updatejiesuan(OutStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+
+        /// <summary>
+        /// 更新出库信息
+        /// </summary>Abolish
+        /// <param name="dtos">出库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("批量出库结算")]
+        public virtual async Task<AjaxResult> UpdatejiesuanAll(OutStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            foreach (OutStorInputDto dto in dtos)
+            {
+                dto.CusjiesuanAccuntsFlag = true;
+            }
+            OperationResult result = await OutStorManagerContract.UpdateOutStors(dtos);
+            return result.ToAjaxResult();
+        }
+
         /// <summary>
         /// 更新出库信息
         /// </summary>
@@ -231,7 +297,49 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         
         private string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=TengKun777;MultipleActiveResultSets=true";
 
- 
+        /// <summary>
+        /// 读取出库列表信息
+        /// </summary>
+        /// <param name="request">页请求信息</param>
+        /// <returns>出库列表分页信息</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("未签回报表")]
+
+        public IActionResult ReportRead()
+        {
+            string sql = @"SELECT  * FROM  OutStorManager_OutStor where PrintState=1 and Abolishflag=0 and RecoilNum<OutstorNum and CusCloseAccuntsFlag=0 order by OutEmpName";
+            DataSet Datas = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+            DataTable Rows = Datas.Tables[0];
+            var Total = Rows.Rows.Count;
+            var Viewdata = new { Rows, Total };
+            return Json(Viewdata);
+        }
+
+        /// <summary>
+        /// 读取出库列表信息
+        /// </summary>
+        /// <param name="request">页请求信息</param>
+        /// <returns>出库列表分页信息</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("疑问报表")]
+
+        public IActionResult ReportAns()
+        {
+            string sql = @"select OutstorNum,OutStorManager_OutStor.RecoilNum,OutstorPrice,InstorPrice,OutstorToIn,OutStorManager_OutStor.MatName,OutstorVoucher from OutStorManager_OutStor left join (select MatName,InstorPrice ,id,InstorVoucher from InStorManager_InStor where  InStorManager_InStor.Abolishflag='0' )  as b on OutStorManager_OutStor.MatName= b.MatName and OutstorToIn=b.InstorVoucher  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorCategory='常规' and InstorPrice is null and OutstorNum>RecoilNum order by OutstorVoucher desc";
+            DataSet Datas = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+            DataTable Rows = Datas.Tables[0];
+            var Total = Rows.Rows.Count;
+            var Viewdata = new { Rows, Total };
+            return Json(Viewdata);
+        }
+
+
         [ModuleInfo]
         [DependOnFunction("Read")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
@@ -261,6 +369,10 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             {
                  sql = @"SELECT ot.*,mat.MatAlias04 as printname,MatUnit FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
             }
+            if (ComName == "华宇")
+            {
+                sql = @"SELECT ot.*,mat.MatAlias04 as printname,MatUnit FROM OutStorManager_OutStor as ot left join BaseModule_MatBasedata as mat on ot.MatId=mat.Id  where  Abolishflag='0' and OutstorVoucher='" + id + "'";
+            }
 
 
             DataSet salesoutline = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
@@ -279,7 +391,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             //如果未打印
             if (currstormatid != "")
             {
-                string sqlselectmat = @"select MatId,OutstorNum from OutStorManager_OutStor where PrintState=0 and OutstorVoucher='" + id + "'"; ;
+                string sqlselectmat = @"select MatId,OutstorNum,OutstorCategory from OutStorManager_OutStor where PrintState=0 and OutstorVoucher='" + id + "'"; ;
                 DataSet currstormat = sq.Select_DateSet_Sqlserver(ConnectionString, sqlselectmat);
 
 
@@ -291,19 +403,35 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
                     for (int i = 0; i < currstormat.Tables[0].Rows.Count; i++)
                     {
+                        if(currstormat.Tables[0].Rows[i]["OutstorCategory"].ToString()=="常规")
+                        { 
                         //修改库存
                         string MatId = currstormat.Tables[0].Rows[i]["MatId"].ToString();
                         string OutstorNum = currstormat.Tables[0].Rows[i]["OutstorNum"].ToString();
 
                         string sqloutstornum = @"update  BaseModule_MatBasedata set CurrStock=CurrStock-"+OutstorNum + " where   Id='" + MatId + "'";
                         int updateoutstor = sq.Update_Sqlserver(ConnectionString, sqloutstornum);
-
+                        }
                     }
 
                 }
             }
             return Json(alldata);
             
+        }
+
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("导出")]
+        //导出未签回数据
+        public IActionResult exp_weiqianhui()
+        {
+
+            string sqlselectmat = @"select MatId,OutstorNum,OutstorCategory from OutStorManager_OutStor where PrintState=1"; 
+            DataSet currstormat = sq.Select_DateSet_Sqlserver(ConnectionString, sqlselectmat);
+            return Json(currstormat);
+        
         }
     }
 }

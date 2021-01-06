@@ -10,6 +10,7 @@ import { OsharpSTColumn } from '../services/alain.types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
 export abstract class STComponentBase {
   moduleName: string;
 
@@ -184,7 +185,6 @@ export abstract class STComponentBase {
 
   save(value: STData) {
     let url = value.Id ? this.updateUrl : this.createUrl;
-
     this.http.post<AjaxResult>(url, [value]).subscribe(result => {
       this.osharp.ajaxResult(result, () => {
         this.st.reload();
@@ -203,7 +203,7 @@ export abstract class STComponentBase {
       });
     });
   }
-  
+
 
   // #endregion
 

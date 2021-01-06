@@ -15,7 +15,7 @@
           "i18n": "menu.nav.home",
           "icon": "anticon-dashboard",
           "link": "/dashboard",
-          "acl": "Root.Admin.Dashboard"
+          "acl": "Root.Admin.Systems"
         }
       ]
     },
@@ -26,6 +26,7 @@
       "group": true,
       "hideInBreadcrumb": true,
       "children": [
+
         {
           "text": "基础数据",
           "group": "true",
@@ -48,9 +49,15 @@
               "link": "/base-module/cus-basedata",
               "acl": "Root.Admin.BaseModule.CusBasedata"
             },
+
             {
               "text": "物品数据",
               "link": "/base-module/mat-basedata",
+              "acl": "Root.Admin.BaseModule.MatBasedata"
+            },
+            {
+              "text": "库存预警",
+              "link": "/base-module/mat-report",
               "acl": "Root.Admin.BaseModule.MatBasedata"
             }
           ]
@@ -85,12 +92,7 @@
               "link": "/in-stor-manager/in-recoil",
               "acl": "Root.Admin.InStorManager.InStor.UpdateRecoil"
             },
-            {
-              "text": "入库作废",
-              "link": "/in-stor-manager/in-aboish",
-              "acl": "Root.Admin.InStorManager.InStor.UpdateAbolish"
-
-            },
+           
             {
               "text": "入库对账",
               "link": "/in-stor-manager/in-reconciliation",
@@ -121,26 +123,38 @@
               "link": "/out-stor-manager/out-stor",
               "acl": "Root.Admin.OutStorManager.OutStor"
             },
-            
+
+
             {
               "text": "出库反冲",
               "link": "/out-stor-manager/out-recoil",
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateRecoil"
             },
-            {
-              "text": "出库作废",
-              "link": "/out-stor-manager/out-aboish",
-              "acl": "Root.Admin.OutStorManager.OutStor.UpdateAbolish"
-            },
+          
             {
               "text": "出库签回",
               "link": "/out-stor-manager/out-close",
               "acl": "Root.Admin.OutStorManager.OutStor.UpdateClose"
             },
             {
+              "text": "出库结算",
+              "link": "/out-stor-manager/out-jiesuan",
+              "acl": "Root.Admin.OutStorManager.OutStor.Updatejiesuan"
+            },
+            {
               "text": "出库报表",
               "link": "/out-stor-manager/out-stor-report",
               "acl": "Root.Admin.OutStorManager.OutStor.ReadReport"
+            },
+            {
+              "text": "未签回报表",
+              "link": "/out-stor-manager/out-close-report",
+              "acl": "Root.Admin.OutStorManager.OutStor"
+            },
+            {
+              "text": "疑问报表",
+              "link": "/out-stor-manager/out-ans-report",
+              "acl": "Root.Admin.OutStorManager.OutStor"
             }
           ]
         }
@@ -190,6 +204,25 @@
         }
       ]
     },
+    {
+      "text": "报表模块",
+      "group": "true",
+      "icon": "anticon-mail",
+      "acl": "Root.Admin.ReportOutIn",
+      "children": [
+        {
+          "text": "入库报表",
+          "link": "/report-out-in/report-in",
+          "acl": "Root.Admin.ReportOutIn"
+        },
+        {
+          "text": "出库报表",
+          "link": "/report-out-in/report-out",
+          "acl": "Root.Admin.ReportOutIn"
+        }
+      ]
+    }
+ ,
     {
       "text": "权限模块",
       "i18n": "menu.nav.permission",

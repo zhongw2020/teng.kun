@@ -1,4 +1,13 @@
 <label style="margin-left: 8px;">搜索：</label>
+
+<nz-select [(ngModel)]="rule2.Field"  style="width:120px;" nzPlaceHolder="选择属性" >
+  <nz-option *ngFor="let column of columns"  [nzLabel]="column.title" [nzValue]="column.index"></nz-option>
+</nz-select>
+
+<nz-date-picker nzShowTime [(ngModel)]="startdate" nzFormat="YYYY-MM-DD" nzPlaceHolder="开始时间" nzSize="default" style="margin-left:8px; width:190px;"></nz-date-picker>
+<nz-date-picker nzShowTime [(ngModel)]="enddate" nzFormat="YYYY-MM-DD" nzPlaceHolder="结束时间" nzSize="default" style="margin-left:8px; width:190px;"></nz-date-picker>
+
+
 <nz-select [(ngModel)]="rule.Field" (ngModelChange)="fieldChange($event)" style="width:120px;" nzPlaceHolder="选择属性">
   <nz-option *ngFor="let column of columns" [nzLabel]="column.title" [nzValue]="column.index"></nz-option>
 </nz-select>
@@ -11,11 +20,11 @@
   <ng-container *ngSwitchCase="'number'">
     <nz-input-number [(ngModel)]="rule.Value" nzSize="default" style="margin-left: 8px;"></nz-input-number>
   </ng-container>
-  <ng-container *ngSwitchCase="'date'">
+  <!--<ng-container *ngSwitchCase="'date'">
     <div style="width:200px;">
       <nz-date-picker nzShowTime [(ngModel)]="rule.Value" nzFormat="yyyy-MM-dd HH:mm" nzPlaceHolder="选择时间" nzSize="default" style="margin-left:8px; width:190px;"></nz-date-picker>
     </div>
-  </ng-container>
+  </ng-container>-->
   <ng-container *ngSwitchCase="'boolean'">
     <nz-switch [(ngModel)]="rule.Value"></nz-switch>
   </ng-container>
@@ -23,6 +32,8 @@
     <input nz-input [(ngModel)]="rule.Value" style="width:150px;margin-left: 8px;" placeholder="搜索字符串">
   </ng-container>
 </ng-container>
+
+
 <nz-button-group style="margin-left: 8px;">
   <button nz-button (click)="search()"><i nz-icon nzType="search" theme="outline"></i> 搜索</button>
   <button nz-button nz-dropdown [nzDropdownMenu]="adSearchMenu"><i nz-icon nzType="ellipsis"></i></button>

@@ -40,7 +40,7 @@ export class StartupService {
 		return this.injector.get(IdentityService);
 	}
 
-	// 心跳业务
+	//// 心跳业务
 	private viaHeartbeats() {
 		const heart = Heartbeats.createHeart(1000);
 		// 每5秒检测AccessToken有效期，如过期则使用RefreshToken来刷新

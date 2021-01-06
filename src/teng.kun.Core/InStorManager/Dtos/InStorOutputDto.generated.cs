@@ -79,6 +79,7 @@ namespace teng.kun.InStorManager.Dtos
 
             SupTicketRemark = entity.SupTicketRemark;
             ReconciliationRemark = entity.ReconciliationRemark;
+            InStorPatch = entity.InStorPatch;
         }
 
         /// <summary>
@@ -277,6 +278,10 @@ namespace teng.kun.InStorManager.Dtos
         /// </summary>
         [DisplayName("对账标记")]
         public bool ReconciliationRemark { get; set; }
-
+        /// <summary>
+        /// 获取或设置 入库批次号
+        /// </summary>
+        [DisplayName("入库批次号")]
+        public string InStorPatch { get; set; }
     }
 }

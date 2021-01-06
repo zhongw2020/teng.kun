@@ -38,7 +38,7 @@ export class OutPrintComponent extends STComponentBase implements OnInit {
         title: '打印', fixed: 'left', width: 65, buttons: [{ text: '签回', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdatePrint', iif: row => !(row.CusCloseAccuntsFlag || row.Abolishflag), click: row => this.printPage(row.OutstorVoucher, row.OutstorComName, row.Id) }]
       },
       { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '出库凭证号', index: 'OutstorVoucher', sort: { key: 'OutstorVoucher', default: "descend" }, readOnly: true, editable: true, filterable: true, ftype: 'string' },
+      { title: '出库凭证号', index: 'OutstorVoucher', sort: { key: 'Id', default: "descend" }, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '出账公司', index: 'OutstorComName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '客户编码', index: 'CusId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },
       { title: '物品编码', index: 'MatId', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string' },

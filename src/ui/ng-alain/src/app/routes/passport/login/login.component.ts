@@ -89,7 +89,7 @@ export class LoginComponent extends ComponentBase implements OnDestroy {
       this.mobile.updateValueAndValidity({ onlySelf: true });
       return;
     }
-    this.count = 59;
+    this.count = 5900;
     this.interval$ = setInterval(() => {
       this.count -= 1;
       if (this.count <= 0) clearInterval(this.interval$);

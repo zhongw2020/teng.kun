@@ -124,6 +124,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             return result.ToAjaxResult();
         }
 
+
         /// <summary>
         /// 更新入库信息
         /// </summary>
@@ -168,10 +169,53 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         [ModuleInfo]
         [DependOnFunction("Read")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("批量入库对账")]
+        public virtual async Task<AjaxResult> UpdateReconciliationAll(InStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            foreach (InStorInputDto dto in dtos)
+            {
+                dto.ReconciliationRemark = true;
+            }
+            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+        /// <summary>
+        /// 更新入库信息
+        /// </summary>
+        /// <param name="dtos">入库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("入库收票")]
         public virtual async Task<AjaxResult> UpdateSupticket(InStorInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
+
+            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+        /// <summary>
+        /// 更新入库信息
+        /// </summary>
+        /// <param name="dtos">入库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("批量入库收票")]
+        public virtual async Task<AjaxResult> UpdateSupticketAll(InStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            foreach (InStorInputDto dto in dtos)
+            {
+                dto.SupTicketRemark = true;
+            }
             OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
             return result.ToAjaxResult();
         }
@@ -194,6 +238,28 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
             return result.ToAjaxResult();
         }
+        /// <summary>
+        /// 更新入库信息
+        /// </summary>Recoil
+        /// <param name="dtos">入库信息输入DTO</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("批量入库结算")]
+        public virtual async Task<AjaxResult> UpdateCloseAll(InStorInputDto[] dtos)
+        {
+            Check.NotNull(dtos, nameof(dtos));
+            foreach (InStorInputDto dto in dtos)
+            {
+                dto.SupCloseAccuntsFlag = true;
+            }
+            OperationResult result = await InStorManagerContract.UpdateInStors(dtos);
+            return result.ToAjaxResult();
+        }
+
+
         /// <summary>
         /// 更新入库信息
         /// </summary>

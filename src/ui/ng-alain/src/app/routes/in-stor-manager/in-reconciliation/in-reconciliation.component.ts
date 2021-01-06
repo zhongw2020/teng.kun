@@ -10,10 +10,12 @@
 //  <last-editor>teng.kun</last-editor>
 // -----------------------------------------------------------------------
 
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, ChangeDetectorRef } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
+import { AjaxResult } from '../../../shared/osharp/osharp.model';
+import { STChange, STData, XlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-in-stor',
@@ -22,7 +24,9 @@ import { STComponentBase } from '@shared/osharp/components/st-component-base';
 })
 export class InReconciliationComponent extends STComponentBase implements OnInit {
 
-  constructor(injector: Injector) {
+  selectedRows: STData[] = [];
+  totalCallNo = 0;
+  constructor(injector: Injector, xlsx: XlsxService, private cdr: ChangeDetectorRef,) {
     super(injector);
     this.moduleName = 'inStor';
   }
@@ -31,22 +35,34 @@ export class InReconciliationComponent extends STComponentBase implements OnInit
     super.InitBase();
   }
 
+ 
+
+  tengkunsum: any = 0;
+
+  SumRow() {
+    this.tengkunsum = 0;
+    for (let i: any = 0; i <= this.st._data.length; i++) {
+      this.tengkunsum = this.tengkunsum + (this.st._data[i]['InstorNum'] - this.st._data[i]['RecoilNum']) * this.st._data[i]['InstorPrice'];
+    }
+    return this.tengkunsum;
+  }
+
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
-     
+      { title: '', index: 'key', type: 'checkbox' },
       {
         title: '对账', fixed: 'left', width: 65, buttons: [{ text: '对账', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateReconciliation', iif: row => !(row.SupTicketRemark || (!(row.InstorVerifyState == "已通过")) || row.Abolishflag || row.ReconciliationRemark), click: row => this.edit(row) }]
       },
 
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: { key: 'InstorVoucher', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: { key: 'Id', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
       { title: '物品名称', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '供应商名称', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '价格', index: 'InstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '入库数量', index: 'InstorNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '反冲数量', index: 'RecoilNum', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
       { title: '入库时间', index: 'InstorDate', sort: true, readOnly: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
-      { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+     // { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '对账标记', index: 'ReconciliationRemark',sort: true, editable: true, filterable: true, type: 'yn' },
       { title: '收票标记', index: 'SupTicketRemark', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       { title: '结算标记', index: 'SupCloseAccuntsFlag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
@@ -100,6 +116,35 @@ export class InReconciliationComponent extends STComponentBase implements OnInit
       $SupCloseAccuntsRemark: { grid: { span: 24 } }
     };
     return ui;
+  }
+  change(e: STChange) {
+  
+    switch (e.type) {
+      case 'checkbox':
+        this.selectedRows = e.checkbox!;
+        this.totalCallNo = this.selectedRows.reduce((total, cv) => total + cv.InstorPrice * (cv.InstorNum - cv.RecoilNum), 0);
+        this.cdr.detectChanges();
+
+        this.SumRow();
+        break;
+      case 'filter':
+        //  this.getData();
+        this.SumRow();
+        break;
+      default: this.SumRow(); break;
+    }
+  }
+  doall(): void {
+
+    let url = 'api/admin/InStor/UpdateReconciliationAll';
+    this.http.post<AjaxResult>(url, this.selectedRows).subscribe(result => {
+      this.osharp.ajaxResult(result, () => {
+        this.st.clearCheck();
+        this.st.reload();
+
+      });
+    });
+
   }
 }
 

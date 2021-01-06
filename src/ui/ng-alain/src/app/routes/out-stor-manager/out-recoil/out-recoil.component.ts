@@ -36,10 +36,10 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
     let columns: OsharpSTColumn[] = [
   
       {
-        title: '反冲', fixed: 'left', width: 65, buttons: [{ text: '反冲', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateRecoil', iif: row => !(row.Abolishflag || !(row.PrintState)), click: row => this.edit(row) }]
+        title: '反冲', fixed: 'left', width: 65, buttons: [{ text: '反冲', icon: 'edit', acl: 'Root.Admin.OutStorManager.OutStor.UpdateRecoil', iif: row => !(row.Abolishflag || !(row.PrintState)) && !(row.OutstorCategory=='凑单'), click: row => this.edit(row) }]
       },
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'OutstorVoucher', default: "descend" },editable: true, filterable: true, ftype: 'string' },
+      { title: '出库凭证号', index: 'OutstorVoucher', readOnly: true, sort: { key: 'Id', default: "descend" },editable: true, filterable: true, ftype: 'string' },
       { title: '出账公司', index: 'OutstorComName', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },
       {
         title: '客户名称', index: 'CusName', readOnly: true,sort: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } }
@@ -66,7 +66,7 @@ export class OutRecoilComponent extends STComponentBase implements OnInit {
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
     
      
-      { title: '作废标记', index: 'Abolishflag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
+     // { title: '作废标记', index: 'Abolishflag', readOnly: true, sort: true, editable: true, filterable: true, type: 'yn', default: '0' },
       { title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
     
       //{ title: '打印模板名称', index: 'PrintMoName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', enum: ['腾坤', '华业', '效信通', '帅坤'] },

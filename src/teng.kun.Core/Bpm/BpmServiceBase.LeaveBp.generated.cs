@@ -38,7 +38,25 @@ namespace teng.kun.Bpm
         /// </summary>
         public IQueryable<LeaveBp> LeaveBps
         {
-            get { return LeaveBpRepository.QueryAsNoTracking(); }
+            get
+            {
+                string v = getuser();
+                string name = v;
+
+
+                if (name == "longshuai" || name == "tk@cdtengkun.com")
+                {
+                    return LeaveBpRepository.QueryAsNoTracking();
+                   
+                }
+                else
+                {
+                    return LeaveBpRepository.QueryAsNoTracking(m => m.BpSponsor == name);
+                }
+            
+            }
+
+          
         }
 
         /// <summary>

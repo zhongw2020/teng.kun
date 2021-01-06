@@ -21,6 +21,11 @@ import { OutCloseComponent } from './out-close/out-close.component';
 import { OutAboishComponent } from './out-aboish/out-aboish.component';
 import { OutStorReportComponent } from './out-stor-report/out-stor-report.component';
 import { OutPrintComponent } from './out-print/out-print.component';
+import { OutCouDanComponent } from './out-coudan/out-coudan.component';
+import { OutJiesuanComponent } from './out-jiesuan/out-jiesuan.component';
+import { OutTestComponent } from './out-test/out-test.component';
+import { OutCloseReportComponent } from './out-close-report/out-close-report.component';
+import { OutAnsReportComponent } from './out-ans-report/out-ans-report.component';
 
 
 @NgModule({
@@ -36,8 +41,11 @@ import { OutPrintComponent } from './out-print/out-print.component';
     OutAboishComponent,
     OutStorReportComponent,
     OutPrintComponent,
-
-
-  ]
+    OutCouDanComponent,
+    OutJiesuanComponent,
+    OutTestComponent,
+    OutCloseReportComponent,
+    OutAnsReportComponent,
+    ]
 })
 export class OutStorManagerModule { }

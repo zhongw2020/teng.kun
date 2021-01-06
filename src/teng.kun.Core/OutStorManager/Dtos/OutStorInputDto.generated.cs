@@ -118,10 +118,16 @@ namespace teng.kun.OutStorManager.Dtos
         public int OutEmpId { get; set; }
 
         /// <summary>
-        /// 获取或设置 客户结算标记
+        /// 获取或设置 客户签回标记
         /// </summary>
         [DisplayName("签回标记")]
         public bool CusCloseAccuntsFlag { get; set; }
+
+        /// <summary>
+        /// 获取或设置 客户结算标记
+        /// </summary>
+        [DisplayName("结算标记")]
+        public bool CusjiesuanAccuntsFlag { get; set; }
 
         /// <summary>
         /// 获取或设置 结算标记人
@@ -200,9 +206,21 @@ namespace teng.kun.OutStorManager.Dtos
 
 
         /// <summary>
-        /// 获取或设置 别用字段
+        /// 获取或设置 备用字段
         /// </summary>
-        [DisplayName("打印名称")]
+        [DisplayName("备用字段")]
         public string OutstorOther { get; set; }
+
+        //增加字段
+
+        //凑单单号
+        [DisplayName("凑单凭证")]
+        public string CDOutstorVoucher { get; set; }
+        //单据类型
+        [DisplayName("单据类型")]
+        public string OutstorCategory { get; set; }
+        //入库凭证号
+        [DisplayName("参考入库凭证")]
+        public string OutstorToIn { get; set; }
     }
 }

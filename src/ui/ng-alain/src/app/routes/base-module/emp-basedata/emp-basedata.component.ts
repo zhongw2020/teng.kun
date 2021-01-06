@@ -14,17 +14,20 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { STData } from '@delon/abc';
+import { STData, XlsxService, STChange } from '@delon/abc';
+import { STComponentBase2 } from '../../../shared/osharp/components/st-component-base2';
 
 @Component({
   selector: 'app-emp-basedata',
   templateUrl: './emp-basedata.component.html',
   styles: []
 })
-export class EmpBasedataComponent extends STComponentBase implements OnInit {
+export class EmpBasedataComponent extends STComponentBase2 implements OnInit {
 
-  constructor(injector: Injector) {
-    super(injector);
+  selectedRows: STData[] = [];
+
+  constructor(injector: Injector, xlsx: XlsxService) {
+    super(injector, xlsx);
     this.moduleName = 'empBasedata';
   }
 
@@ -44,6 +47,7 @@ export class EmpBasedataComponent extends STComponentBase implements OnInit {
       },
      // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
      // { title: '员工编码', index: 'EmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
+     
       { title: '姓名', index: 'EmpName', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '部门', index: 'EmpDep', sort: true, editable: true, filterable: true, ftype: 'string' },
       { title: '联系方式', index: 'EmpPhone', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -76,6 +80,7 @@ export class EmpBasedataComponent extends STComponentBase implements OnInit {
     };
     return ui;
   }
+
 }
  
 

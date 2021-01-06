@@ -10,10 +10,12 @@
 //  <last-editor>teng.kun</last-editor>
 // -----------------------------------------------------------------------
 
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, ChangeDetectorRef } from '@angular/core';
 import { SFUISchema, SFSchema } from '@delon/form';
 import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
+import { AjaxResult } from '../../../shared/osharp/osharp.model';
+import { XlsxService, STData, STChange } from '@delon/abc';
 
 @Component({
   selector: 'app-in-stor',
@@ -22,7 +24,9 @@ import { STComponentBase } from '@shared/osharp/components/st-component-base';
 })
 export class InCloseComponent extends STComponentBase implements OnInit {
 
-  constructor(injector: Injector) {
+  selectedRows: STData[] = [];
+  totalCallNo = 0;
+  constructor(injector: Injector, xlsx: XlsxService, private cdr: ChangeDetectorRef,) {
     super(injector);
     this.moduleName = 'inStor';
   }
@@ -30,6 +34,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
   ngOnInit() {
     super.InitBase();
   }
+  
 
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] = [
@@ -37,16 +42,17 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       //  title: '操作', fixed: 'left', width: 65, buttons: [{
       //    text: '操作', children: [
       //      { text: '结算', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateClose', iif: row => (row.SupTicketRemark && row.ReconciliationRemark),click: row => this.edit(row) },
-      //      //{ text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
+      //      { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.InStorManager.InStor.Delete', click: row => this.delete(row) },
       //    ]
       //  }]
       //},
+      { title: '', index: 'key', type: 'checkbox' },
       {
         title: '结算', fixed: 'left', width: 65, buttons: [{ text: '结算', icon: 'edit', acl: 'Root.Admin.InStorManager.InStor.UpdateClose', iif: row => (row.SupTicketRemark && row.ReconciliationRemark && (!row.SupCloseAccuntsFlag)), click: row => this.edit(row) }]
       },
 
       // { title: '编号', index: 'Id', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'number' },
-      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: { key: 'InstorVoucher', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
+      { title: '入库凭证号', index: 'InstorVoucher', readOnly: true, sort: { key: 'Id', default: "descend" }, editable: true, filterable: true, ftype: 'string' },
       { title: '物品名称', index: 'MatName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '供应商名称', index: 'SupName', sort: true, readOnly: true, editable: true, filterable: true, ftype: 'string', ui: { grid: { span: 24 } } },
       { title: '价格', index: 'InstorPrice', sort: true, readOnly: true, editable: true, filterable: true, type: 'number' },
@@ -68,7 +74,7 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       //{ title: '反冲日期', index: 'RecoilDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       //{ title: '反冲原因', index: 'RecoilReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '反冲操作员', index: 'RecoilEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
-      { title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
+      //{ title: '作废标记', index: 'Abolishflag', sort: true, readOnly: true, editable: true, filterable: true, type: 'yn' },
       //{ title: '作废时间', index: 'AbolishDate', sort: true, editable: true, filterable: true, type: 'date', ui: { grid: { span: 24 } } },
       //{ title: '作废原因', index: 'AbolishReason', sort: true, editable: true, filterable: true, ftype: 'string' },
       //{ title: '作废操作员', index: 'AbolishEmpId', sort: true, editable: true, filterable: true, ftype: 'string' },
@@ -111,6 +117,30 @@ export class InCloseComponent extends STComponentBase implements OnInit {
       $SupCloseAccuntsRemark: { grid: { span: 24 } }
     };
     return ui;
+  }
+  change(e: STChange) {
+    switch (e.type) {
+      case 'checkbox':
+        this.selectedRows = e.checkbox!;
+        this.totalCallNo = this.selectedRows.reduce((total, cv) => total + cv.callNo, 0);
+        this.cdr.detectChanges();
+        break;
+      case 'filter':
+        //  this.getData();
+        break;
+    }
+  }
+  doall(): void {
+
+    let url = 'api/admin/inStor/UpdateCloseAll';
+    this.http.post<AjaxResult>(url, this.selectedRows).subscribe(result => {
+      this.osharp.ajaxResult(result, () => {
+        this.st.clearCheck();
+        this.st.reload();
+
+      });
+    });
+
   }
 }
 

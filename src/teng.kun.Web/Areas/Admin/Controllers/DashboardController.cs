@@ -133,10 +133,10 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             return Json(data);
         }
 
-        [HttpGet]
-        [ModuleInfo]
-        [LoggedIn]
-        [Description("曲线数据")]
+        //[HttpGet]
+        //[ModuleInfo]
+        //[LoggedIn]
+        //[Description("曲线数据")]
         public IActionResult LineData(DateTime start, DateTime end)
         {
             IFunction function = this.GetExecuteFunction();
@@ -170,7 +170,10 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             return Json(infos);
         }
-
+        [HttpGet]
+        [ModuleInfo]
+        [LoggedIn]
+        [Description("曲线数据")]
         private static Expression<Func<TEntity, bool>> GetExpression<TEntity>(DateTime start, DateTime end)
             where TEntity : class, ICreatedTime
         {
@@ -184,20 +187,24 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         //添加报表
 
         //当月销售额数据
+        [HttpGet]
+        [ModuleInfo]
+        [LoggedIn]
+        [Description("销售数据")]
         public IActionResult ReportSeld(DateTime start, DateTime end)
         {
 
             string starttime = start.ToString("yyyy-MM-dd HH:mm:ss");
-            string endtime = end.ToString("yyyy-MM-dd HH:mm:ss");
-
+            string endtime2 = end.ToString("yyyy-MM-dd");
+            string endtime = endtime2 + " 23:59:59";
             //累计销售额
-            string sqlall = @"SELECT convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0";
+            string sqlall = @"SELECT convert(varchar, (sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState = 1 and Abolishflag = 0 and OutstorCategory='常规'";
 
             string salesoutall = sq.Select_Str_Sqlserver(ConnectionString, sqlall);
 
 
             //当月入库额
-            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and InstorVerifyState='已通过' and InstorDate>='" + starttime + "' and InstorDate<='" + endtime + "'";
+            string sql = @"SELECT  convert(varchar,(sum(InstorPrice*(InstorNum-RecoilNum))))  FROM InStorManager_InStor where  Abolishflag=0 and InstorVerifyState='已通过'  and InstorDate>='" + starttime + "' and InstorDate<='" + endtime + "'";
 
             string salesin = sq.Select_Str_Sqlserver(ConnectionString, sql);
 
@@ -210,56 +217,86 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
 
             //当月销售额
-            string sql2 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and Abolishflag=0 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql2 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and Abolishflag=0  and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesout = sq.Select_Str_Sqlserver(ConnectionString, sql2);
 
             //当月签回额
-            string sql3 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and  Abolishflag=0 and CusCloseAccuntsFlag=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql3 = @"SELECT  convert(varchar,(sum(OutstorPrice*(OutstorNum-RecoilNum))))  FROM OutStorManager_OutStor where PrintState=1 and  Abolishflag=0 and CusCloseAccuntsFlag=1 and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
 
             string salesoutcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql3);
 
-            //当月销售单数量
+            //销售单数量
 
-            string sql4 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql4 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorCategory='常规' and OutstorNum>RecoilNum ";
 
             string salesoutnum = sq.Select_Str_Sqlserver(ConnectionString, sql4);
-            //当月签回销售单数量
-            string sql5 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where CusCloseAccuntsFlag=1 and Abolishflag=0 and PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            //签回销售单数量
+            string sql5 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where CusCloseAccuntsFlag=1 and Abolishflag=0 and PrintState=1 and OutstorCategory='常规' and OutstorNum>RecoilNum ";
 
             string salesoutnumcomplete = sq.Select_Str_Sqlserver(ConnectionString, sql5);
+          
+
             //当月陈伟销售额
-            string sql6 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈伟' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql6 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈伟' and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
             string salesoutchenqwei = sq.Select_Str_Sqlserver(ConnectionString, sql6);
             //当月陈琦销售额
-            string sql7 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈琪' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql7 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='陈琪' and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
             string salesoutchenqqi = sq.Select_Str_Sqlserver(ConnectionString, sql7);
+            //当月刘谨明销售额
+            string sql72 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutEmpName='刘谨明' and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string salesoutliujm = sq.Select_Str_Sqlserver(ConnectionString, sql72);
+
+            //单月凑单销售额
+            string sql12 = @"select convert(varchar,sum(OutstorPrice*(OutstorNum-RecoilNum))) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorCategory='凑单' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string salesoutcoudan = sq.Select_Str_Sqlserver(ConnectionString, sql12);
+
             //累计利润
-            string sql8 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1";
+            //string sql8 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1";
+            string sql8 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id,InstorVoucher from InStorManager_InStor where  InStorManager_InStor.Abolishflag='0'  and InStorManager_InStor.InstorVerifyState='已通过')  as b on OutStorManager_OutStor.MatName= b.MatName and OutstorToIn=b.InstorVoucher  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorCategory='常规'";
+
             string salesoutleijilirun = sq.Select_Str_Sqlserver(ConnectionString, sql8);
+
             //月利润
 
-            string sql9 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string sql9 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id,InstorVoucher from InStorManager_InStor where  InStorManager_InStor.Abolishflag='0'  and InStorManager_InStor.InstorVerifyState='已通过')  as b on OutStorManager_OutStor.MatName= b.MatName and OutstorToIn=b.InstorVoucher  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
             string salesoutyuelirun = sq.Select_Str_Sqlserver(ConnectionString, sql9);
 
             //库存估价
             string sql10 = @"select convert(varchar,sum(CurrStock*InstorPrice)) from (select * from BaseModule_MatBasedata where MatState='1') as mattable left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on mattable.MatName= b.MatName ";
             string kucungujia = sq.Select_Str_Sqlserver(ConnectionString, sql10);
 
-            //日利润
-
-            string sql11 = "";
-       
-            if (start.ToString("yyyy-MM-dd") != DateTime.Now.ToString("yyyy-MM-dd"))
-            {
-                sql11 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1  and LEFT(OutstorDate,10) = '" + start.ToString("yyyy-MM-dd") + "'";
-            }
-            else
-            {
-                sql11 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id from InStorManager_InStor where  id in (select max(id) from (select MatName,InstorPrice ,id from InStorManager_InStor where InStorManager_InStor.Abolishflag='0' and InStorManager_InStor.InstorVerifyState='已通过') as a group by  MatName)) as b on OutStorManager_OutStor.MatName= b.MatName where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1  and LEFT(OutstorDate,10) = CONVERT(varchar(10),GETDATE(),120)";
-
-            }
+            //日利润--选定开始时间
+            string sql11 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id,InstorVoucher from InStorManager_InStor where  InStorManager_InStor.Abolishflag='0'  and InStorManager_InStor.InstorVerifyState='已通过')  as b on OutStorManager_OutStor.MatName= b.MatName and OutstorToIn=b.InstorVoucher  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorCategory='常规'  and LEFT(OutstorDate,10) = '" + start.ToString("yyyy-MM-dd") + "'";
             string salesoutrilirun = sq.Select_Str_Sqlserver(ConnectionString, sql11);
+            //日利润--系统当天时间
+            string sql13 = @"select convert(varchar,sum((OutstorNum-OutStorManager_OutStor.RecoilNum)*(OutstorPrice-InstorPrice))) from OutStorManager_OutStor left join (select MatName,InstorPrice ,id,InstorVoucher from InStorManager_InStor where  InStorManager_InStor.Abolishflag='0'  and InStorManager_InStor.InstorVerifyState='已通过')  as b on OutStorManager_OutStor.MatName= b.MatName and OutstorToIn=b.InstorVoucher  where OutStorManager_OutStor.Abolishflag=0 and OutStorManager_OutStor.PrintState=1 and OutstorCategory='常规'  and LEFT(OutstorDate,10) = CONVERT(varchar(10),GETDATE(),120)";
+            string salesoutrilirunxt = sq.Select_Str_Sqlserver(ConnectionString, sql13);
+
+            //人员加班时间统计
+            string sql14 = @"SELECT convert(varchar,sum(DATEDIFF ( HH, ExtraStartTime, ExtraEndTime ))) as total FROM Bpm_ExtraBp where BpState='已通过' and BpSponsor='wanwenying' and ExtraStartTime>='" + starttime + "' and ExtraStartTime<='" + endtime + "'";
+            string jiabanwan = sq.Select_Str_Sqlserver(ConnectionString, sql14);
+
+            string sql15 = @"SELECT convert(varchar,sum(DATEDIFF ( HH, ExtraStartTime, ExtraEndTime ))) as total FROM Bpm_ExtraBp where BpState='已通过' and BpSponsor='chenwei' and ExtraStartTime>='" + starttime + "' and ExtraStartTime<='" + endtime + "'";
+            string jiabancw = sq.Select_Str_Sqlserver(ConnectionString, sql15);
+
+            string sql16 = @"SELECT convert(varchar,sum(DATEDIFF ( HH, ExtraStartTime, ExtraEndTime ))) as total FROM Bpm_ExtraBp where BpState='已通过' and BpSponsor='chenqi' and ExtraStartTime>='" + starttime + "' and ExtraStartTime<='" + endtime + "'";
+            string jiabancq = sq.Select_Str_Sqlserver(ConnectionString, sql16);
+
+            string sql17 = @"SELECT convert(varchar,sum(DATEDIFF ( HH, ExtraStartTime, ExtraEndTime ))) as total FROM Bpm_ExtraBp where BpState='已通过' and BpSponsor='longyuling' and ExtraStartTime>='" + starttime + "' and ExtraStartTime<='" + endtime + "'";
+            string jiabanlong = sq.Select_Str_Sqlserver(ConnectionString, sql17);
+
+            //当月业务员派单数量统计
+
+            string sql18 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorCategory='常规' and  OutEmpName='陈伟' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string paidanchenwei = sq.Select_Str_Sqlserver(ConnectionString, sql18);
+            string sql19 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorCategory='常规' and  OutEmpName='陈琪' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'";
+            string paidanchenqi = sq.Select_Str_Sqlserver(ConnectionString, sql19);
+            //当月总派单数量
+            string sql20 = @"select convert(varchar,count(distinct OutstorVoucher)) from OutStorManager_OutStor where Abolishflag=0 and PrintState=1 and OutstorCategory='常规' and OutstorDate>='" + starttime + "' and OutstorDate<='" + endtime + "'"; 
+
+            string paidannum = sq.Select_Str_Sqlserver(ConnectionString, sql20);
+
             if (salesoutall == "")
             {
                 salesoutall = "0";
@@ -314,7 +351,47 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             {
                 salesoutrilirun = "0";
             }
-
+            if (salesoutrilirunxt == "")
+            {
+                salesoutrilirunxt = "0";
+            }
+            
+            if (salesoutcoudan == "")
+            {
+                salesoutcoudan = "0";
+            }
+            if (jiabanwan == "")
+            {
+                jiabanwan = "0";
+            }
+            if (jiabancw == "")
+            {
+                jiabancw = "0";
+            }
+            if (jiabancq == "")
+            {
+                jiabancq = "0";
+            }
+            if (jiabanlong == "")
+            {
+                jiabanlong = "0";
+            }
+            if (salesoutliujm == "")
+            {
+                salesoutliujm = "0";
+            }
+            if (paidanchenwei == "")
+            {
+                paidanchenwei = "0";
+            }
+            if (paidanchenqi == "")
+            {
+                paidanchenqi = "0";
+            }
+            if (paidannum == "")
+            {
+                paidannum = "0";
+            }
 
             var infos = new
             {
@@ -331,10 +408,22 @@ namespace teng.kun.Web.Areas.Admin.Controllers
                 salesoutyuelirun,
                 kucungujia,
                 salesoutrilirun,
+                salesoutrilirunxt,
+                salesoutcoudan,
+                jiabanwan,
+                jiabancw,
+                jiabancq,
+                jiabanlong,
+                salesoutliujm,
+                paidanchenqi,
+                paidanchenwei,
+                paidannum,
+              
             };
 
             return Json(infos);
         }
+   
         //年度销售额
         public IActionResult ReportSeldLine()
         {
@@ -345,6 +434,7 @@ namespace teng.kun.Web.Areas.Admin.Controllers
 
             return Json(salesoutline);
         }
+
         //获取通知消息
         public IActionResult ReportNotify()
         {
@@ -352,7 +442,14 @@ namespace teng.kun.Web.Areas.Admin.Controllers
             DataSet infos = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
             return Json(infos);
         }
-
+    
+        //获取最新凭证号
+        public IActionResult getnewinstorVoucher(string matname)
+        {
+            string sql = @"SELECT TOP 1 InstorVoucher FROM InStorManager_InStor where MatName='"+matname+"' order by InstorDate desc";
+            string infos = sq.Select_Str_Sqlserver(ConnectionString, sql);
+            return Json(infos);
+        }
 
     }
 }

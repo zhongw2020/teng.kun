@@ -23,8 +23,13 @@ import { NumberFormatStyle } from '@angular/common';
 export class DashboardComponent implements AfterViewInit {
   total: string;
   totalqh: string;
+  totalpd: string;
+  totaljiaban: string;
   salesPieData: G2PieData[] = [];
   salesPieDataqh: G2PieData[] = [];
+  salesPieDatajiaban: G2PieData[] = [];
+  salesPieDataqingjia: G2PieData[] = [];
+  salesPieDatapd: G2PieData[] = [];
   salesData: G2BarData[] = [];
   ngOnInit() {
 
@@ -39,6 +44,7 @@ export class DashboardComponent implements AfterViewInit {
     '昨天': [moment().subtract(1, 'days').toDate(), moment().subtract(1, 'days').toDate()],
     '最近7天': [moment().subtract(6, 'days').toDate(), moment().toDate()],
     '最近30天': [moment().subtract(29, 'days').toDate(), moment().toDate()],
+    '最近40天': [moment().subtract(39, 'days').toDate(), moment().toDate()],
     '本月': [moment().startOf("month").toDate(), moment().endOf("month").toDate()],
     '上月': [moment().subtract(1, "months").startOf("month").toDate(), moment().subtract(1, "months").endOf("month").toDate()],
     '全部': [moment("1-1-1", "MM-DD-YYYY").toDate(), moment("12-31-9999", "MM-DD-YYYY").toDate()]
@@ -60,8 +66,9 @@ export class DashboardComponent implements AfterViewInit {
     if (e.length === 0) {
       return;
     }
-    const start = e[0].toLocaleDateString()
+    const start = e[0].toLocaleDateString();
     const end = e[1].toLocaleDateString();
+
     //this.summaryData(start, end);
     //this.userLine(start, end);
     this.reportseld(start, end);
@@ -98,37 +105,73 @@ export class DashboardComponent implements AfterViewInit {
       this.summariempes = [];
       this.salesPieDataqh = [];
       this.salesPieData = [];
+      this.salesPieDatapd = [];
+      this.salesPieDatajiaban = [];
+
       //第一排
-      this.summaries.push({ data: `${res.salesoutall}`, text: '累计销售总额（元）', bgColor: 'bg-red' });
-      this.summaries.push({ data: `${res.salesout}`, text: '月销售总额（元）', bgColor: 'bg-success' });
-      this.summaries.push({ data: `${res.salesoutrilirun}`, text: '日利润估（元）（最新进价）', bgColor: 'bg-success' });
-      this.summaries.push({ data: `${res.salesoutleijilirun}`, text: '累计利润估（元）（最新进价）', bgColor: 'bg-success' });
-    
+      this.summaries.push({ data: `${res.salesoutall}`, text: '2020-10~至今总销售额', bgColor: 'bg-red' });
+      this.summaries.push({ data: `${res.salesoutleijilirun}`, text: '2020-10~至今总利润', bgColor: 'bg-success' });
+      this.summaries.push({ data: `${res.salesout}`, text: '某时间段销售总额（元）', bgColor: 'bg-success' });
+   
+      this.summaries.push({ data: `${res.salesoutyuelirun}`, text: '某时间段利润（元）', bgColor: 'bg-success' });
 
       //第二排
-      this.summaritotlees.push({ data: `${res.salesoutyuelirun}`, text: '月利润估（元）（最新进价）', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesoutchenqwei}`, text: '陈伟月销售额（元）', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesoutchenqqi}`, text: '陈琪月销售额（元）', bgColor: 'bg-success' });
-      this.summaritotlees.push({ data: `${res.salesin}`, text: '月采购总和（元）', bgColor: 'bg-orange' });
+    
+      this.summaritotlees.push({ data: `${res.salesoutrilirunxt}`, text: '今日利润（元）', bgColor: 'bg-orange' });
+  
+      this.summaritotlees.push({ data: `${res.salesin}`, text: '某时间段采购总和（元）', bgColor: 'bg-orange' });
       //this.summaritotlees.push({ data: `${res.salesoutcomplete}`, text: '月已签回销售额（元）', bgColor: 'bg-orange' });
+      //this.summariempes.push({ data: `${res.salesoutrilirun}`, text: '某日利润（元）', bgColor: 'bg-success' });
+      this.summaritotlees.push({ data: `${res.salesoutcoudan}`, text: '某时间段凑单销售额（元）', bgColor: 'bg-success' });
+      //this.summariempes.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额（元）', bgColor: 'bg-success' });
+
+      this.summaritotlees.push({ data: `${res.kucungujia}`, text: '库存价值（元）（最新进价）', bgColor: 'bg-success' });
       //第三排
-      this.summariempes.push({ data: `${res.salesincomplete}`, text: '月支付供应商总额（元）', bgColor: 'bg-success' });
-      this.summariempes.push({ data: `${res.kucungujia}`, text: '库存价值估（元）（最新进价）', bgColor: 'bg-success' });
-      this.summarinumes.push({ data: `${res.salesoutnum}`, text: '月销售单总量（单）', bgColor: 'bg-orange' });
-      this.summarinumes.push({ data: `${res.salesoutnumcomplete}`, text: '月销售单签回量（单）', bgColor: 'bg-orange' });
+      
+  
+
+
+
+      
       //饼状图月销售情况
       this.salesPieData.push({ x: '陈伟（元）', y: Number.parseFloat(`${res.salesoutchenqwei}`) });
       this.salesPieData.push({ x: '陈琪（元）', y: Number.parseFloat(`${res.salesoutchenqqi}`) });
-      this.salesPieData.push({ x: '其他（元）', y: Number.parseFloat(`${res.salesout}`) - Number.parseFloat(`${res.salesoutchenqwei}`)-Number.parseFloat(`${res.salesoutchenqqi}`) });
+      this.salesPieData.push({ x: '刘谨明（元）', y: Number.parseFloat(`${res.salesoutliujm}`) });
+      this.salesPieData.push({ x: '其他（元）', y: Number.parseFloat(`${res.salesout}`) - Number.parseFloat(`${res.salesoutchenqwei}`) - Number.parseFloat(`${res.salesoutchenqqi}`) - Number.parseFloat(`${res.salesoutliujm}`) });
       this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
 
 
 
-      //饼状图月签回销售情况
+      //饼状图人员派单单量情况
 
-      this.salesPieDataqh.push({ x: '已签回（元）', y: Number.parseFloat(`${res.salesoutcomplete}`)});
-      this.salesPieDataqh.push({ x: '未签回（元）', y: Number.parseFloat(`${res.salesout}`) - Number.parseFloat(`${res.salesoutcomplete}`) });
-      this.totalqh = `&yen ${this.salesPieDataqh.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
+      this.salesPieDatapd.push({ x: '陈伟（单）', y: Number.parseInt(`${res.paidanchenwei}`) });
+      this.salesPieDatapd.push({ x: '陈琪（单）', y: Number.parseInt(`${res.paidanchenqi}`) });
+      this.salesPieDatapd.push({ x: '其他（单）', y: Number.parseInt(`${res.paidannum}`) - Number.parseInt(`${res.paidanchenwei}`) - Number.parseInt(`${res.paidanchenqi}`) });
+
+      this.totalpd = ` ${res.paidannum}` + '单';
+
+
+      //饼状图月签回单量情况
+
+      this.salesPieDataqh.push({ x: '已签回（单）', y: Number.parseInt(`${res.salesoutnumcomplete}`)});
+      this.salesPieDataqh.push({ x: '未签回（单）', y: Number.parseInt(`${res.salesoutnum}`) - Number.parseInt(`${res.salesoutnumcomplete}`) });
+      this.totalqh = ` ${ res.salesoutnum }`+'单';
+
+      //饼状图月加班时间情况
+
+      this.salesPieDatajiaban.push({ x: '万文英', y: Number.parseFloat(`${res.jiabanwan}`) });
+      this.salesPieDatajiaban.push({ x: '龙玉玲', y: Number.parseFloat(`${res.jiabanlong}`) });
+      this.salesPieDatajiaban.push({ x: '陈伟', y: Number.parseFloat(`${res.jiabancw}`) });
+      this.salesPieDatajiaban.push({ x: '陈琪', y: Number.parseFloat(`${res.jiabancq}`) });
+      this.totaljiaban = (Number.parseFloat(`${res.jiabanwan}`) + Number.parseFloat(`${res.jiabanlong}`) + Number.parseFloat(`${res.jiabancw}`) + Number.parseFloat(`${res.jiabancq}`)).toString()+'小时';
+
+      //饼状图月请假时间情况
+
+      //this.salesPieDataqingjia.push({ x: '万文英', y: Number.parseFloat(`${res.jiaban.table[0].BpSponsor}`) });
+      //this.salesPieDataqingjia.push({ x: '龙玉玲', y: Number.parseFloat(`${res.jiaban.table[0].BpSponsor}`) });
+      //this.salesPieDataqingjia.push({ x: '陈伟', y: Number.parseFloat(`${res.jiaban.table[0].BpSponsor}`) });
+      //this.salesPieDataqingjia.push({ x: '陈琪', y: Number.parseFloat(`${res.jiaban.table[0].BpSponsor}`) });
+      //this.totalqh = `${this.salesPieDataqingjia.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
     });
   }
 

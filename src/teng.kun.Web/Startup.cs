@@ -25,6 +25,7 @@ using teng.kun.Identity;
 using teng.kun.Infos;
 using teng.kun.InStorManager;
 using teng.kun.OutStorManager;
+using teng.kun.ReportOutIn;
 using teng.kun.Systems;
 using teng.kun.Web.Startups;
 
@@ -52,6 +53,7 @@ namespace teng.kun.Web
                 .AddPack<InStorManagerPack>()
                 .AddPack<OutStorManagerPack>()
                 .AddPack<BpmPack>()
+                .AddPack<ReportOutInPack>()
                 ;
         }
 

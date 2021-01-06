@@ -3,6 +3,7 @@
 <nz-card>
   <div>
     <button nz-button (click)="st.reload()"><i nz-icon nzType="reload" nzTheme="outline"></i>刷新</button>
+    <button nz-button (click)="download()"><i nz-icon type="plus-circle" theme="outline"></i>导出</button>
     <button nz-button (click)="create()" acl="Root.Admin.BaseModule.MatBasedata.Create"><i nz-icon type="plus-circle" theme="outline"></i>新增</button>
     <osharp-ad-search [request]="request" [columns]="columns" (submited)="search($event)"></osharp-ad-search>
   </div>

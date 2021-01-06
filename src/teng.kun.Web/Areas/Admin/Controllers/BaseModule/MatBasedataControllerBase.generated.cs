@@ -37,7 +37,8 @@ using OSharp.Security;
 using teng.kun.BaseModule;
 using teng.kun.BaseModule.Dtos;
 using teng.kun.BaseModule.Entities;
-
+using System.Data;
+using teng.kun.Common;
 
 namespace teng.kun.Web.Areas.Admin.Controllers
 {
@@ -48,6 +49,9 @@ namespace teng.kun.Web.Areas.Admin.Controllers
     [Description("管理-物品基础数据信息")]
     public abstract class MatBasedataControllerBase : AdminApiController
     {
+        public SqlHelper sq = new SqlHelper();
+        public string ConnectionString = "Server=.\\SQLZHONG;Database=tengkun;User ID=sa;Password=TengKun777;MultipleActiveResultSets=true";
+
         /// <summary>
         /// 初始化一个<see cref="MatBasedataController"/>类型的新实例
         /// </summary>
@@ -79,13 +83,27 @@ namespace teng.kun.Web.Areas.Admin.Controllers
         public virtual PageData<MatBasedataOutputDto> Read(PageRequest request)
         {
             Check.NotNull(request, nameof(request));
-
             Expression<Func<MatBasedata, bool>> predicate = FilterService.GetExpression<MatBasedata>(request.FilterGroup);
             var page = BaseModuleContract.MatBasedatas.ToPage<MatBasedata, MatBasedataOutputDto>(predicate, request.PageCondition);
-
             return page.ToPageData();
+
+         
         }
-        
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("安全库存预警")]
+        public IActionResult ReportRead()
+        {
+            string sql = @"SELECT  * FROM  BaseModule_MatBasedata where CurrStock<SafeStock order by MatName";
+            DataSet Datas = sq.Select_DateSet_Sqlserver(ConnectionString, sql);
+            DataTable Rows = Datas.Tables[0];
+            var Total = Rows.Rows.Count;
+            var Viewdata = new { Rows, Total };
+            return Json(Viewdata);
+        }
+
         /// <summary>
         /// 新增物品基础数据信息
         /// </summary>

@@ -51,6 +51,7 @@ export class RefreshJWTInterceptor implements HttpInterceptor {
     if (!token) {
       const model = this.identity.getAccessToken();
       if (model != null && !!model.token && !model.isExpired(options.token_exp_offset)) {
+      //if (model != null && !!model.token) {
         token = model.token;
       }
     }
